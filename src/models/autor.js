@@ -6,8 +6,7 @@ const autorSchema = new Schema({
     correo: {type:String},
     ciudad: {type:String},
     imagen: {type:String},
-    contraseña: {type:String},
-    librosPublicados: [{idBook:{type:ObjectId}}]
+    contraseña: {type:String}
 })
 
 module.exports = model('autor', autorSchema)
