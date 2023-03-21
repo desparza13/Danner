@@ -1,35 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/autores')
+const controller = require('../controllers/lectores')
 
 /**
  * @swagger
- * /autores:
+ * /lectores:
  *  get:
- *    description: enlistar todos los autores en la base de datos
+ *    description: Enlistar todos los lectores en la base de datos
  *    responses:
  *      200:
- *        description: Arreglo con objetos autor con el resultado de todos los autores
+ *        description: Arreglo con objetos lector con el resultado de todos los lectores en la base de datos
  *      400:
- *        description: Algo salió mal al recuperar los autores
+ *        description: Algo salió mal al recuperar los lectores
  */
 router.get('/',controller.listar);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /lectores/{id}:
  *  get:
- *    description: listar un autor en específico
+ *    description: Listar un lector en específico
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de el autor a obtener
+ *        description: Id de el lector a obtener
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del autor con el id especificado
+ *        description: Objeto del lector con el id especificado
  *      400:
  *        description: Error al encontrar el objeto con ese id
  */
@@ -37,13 +37,13 @@ router.get('/:id', controller.ver);
 
 /**
  * @swagger
- * /autores:
+ * /lectores:
  *  post:
- *    description: crear un nuevo autor en la base de datos
+ *    description: crear un nuevo lector en la base de datos
  *    parameters:
  *      - in: body
- *        name: autorACrear
- *        description: un JSON que contenga la información del autor a crear
+ *        name: lectorACrear
+ *        description: un JSON que contenga la información del lector a crear
  *        required: true
  *        schema: 
  *          type: object
@@ -60,11 +60,19 @@ router.get('/:id', controller.ver);
  *              type: string
  *            contraseña:
  *              type: string
+ *            leidos:
+ *              type: array
+ *              items:
+ *                type: array
+ *                items:
+ *                  oneOf:
+ *                    - type: string
+ *                    - type: date
  *    responses:
  *      201:
- *        description: Objeto del autor creado correctamente
+ *        description: Objeto del lector creado correctamente
  *      400:
- *        description: Error al crear el autor 
+ *        description: Error al crear el lector 
  */
 router.post('/', express.json(), controller.crear);
 
@@ -72,17 +80,17 @@ router.post('/', express.json(), controller.crear);
  * @swagger
  * /autores/{id}:
  *  put:
- *    description: actualizar un autor en específico
+ *    description: actualizar un lector en específico
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del autor que se quiere actualizar
+ *        description: id del lector que se quiere actualizar
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: autorActualizado
- *        description: un JSON que contenga la información del autor a actualizar
+ *        name: lectorActualizado
+ *        description: un JSON que contenga la información del lector actualizado
  *        required: true
  *        schema: 
  *          type: object
@@ -99,23 +107,31 @@ router.post('/', express.json(), controller.crear);
  *              type: string
  *            contraseña:
  *              type: string
+ *            leidos:
+ *              type: array
+ *              items:
+ *                type: array
+ *                items:
+ *                  oneOf:
+ *                    - type: string
+ *                    - type: date
  *    responses:
  *      200:
- *        description: Actualización de autor exitosa
+ *        description: Actualización de lector exitosa
  *      400:
- *        description: Error al actualizar el autor
+ *        description: Error al actualizar el lector
  */
 router.put('/:id', express.json(), controller.actualizar);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /lectores/{id}:
  *  delete:
- *    description: Eliminar un autor de acuerdo a su id
+ *    description: Eliminar un lector de acuerdo a su id
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del autor a eliminar
+ *        description: id del lector a eliminar
  *        required: true
  *        schema:
  *          type: string
@@ -123,7 +139,7 @@ router.put('/:id', express.json(), controller.actualizar);
  *      200:
  *        description: eliminación exitosa
  *      400:
- *        description: error al eliminar el autor
+ *        description: error al eliminar el lector
  */
 router.delete('/:id', controller.eliminar);
 
