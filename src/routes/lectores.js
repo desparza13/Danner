@@ -74,7 +74,23 @@ router.get('/:id', controller.ver);
  *                items:
  *                  oneOf:
  *                    - type: string
- *                    - type: date
+ *                    - type: string
+ *            porLeer:
+ *              type: array
+ *              items:
+ *                type: string
+ *            leyendo:
+ *              type: array
+ *              items:
+ *                type: array
+ *                items:
+ *                  oneOf:
+ *                    - type: string
+ *                    - type: number
+ *            amigos:
+ *              type: array
+ *              items:
+ *                type: string
  *    responses:
  *      201:
  *        description: Objeto del autor creado correctamente
@@ -123,7 +139,23 @@ router.post('/', express.json(), controller.crear);
  *                items:
  *                  oneOf:
  *                    - type: string
- *                    - type: date
+ *                    - type: string
+ *            porLeer:
+ *              type: array
+ *              items:
+ *                type: string
+ *            leyendo:
+ *              type: array
+ *              items:
+ *                type: array
+ *                items:
+ *                  oneOf:
+ *                    - type: string
+ *                    - type: number
+ *            amigos:
+ *              type: array
+ *              items:
+ *                type: string
  *    responses:
  *      200:
  *        description: Actualización de lector exitosa
