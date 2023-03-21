@@ -6,4 +6,4 @@ const solicitudSchema = new Schema({
     estadoSolicitud:{type:Boolean}
 })
 
-module.exports = model('solicitud', solicitudSchema)
+module.exports = model('solicitude', solicitudSchema)
