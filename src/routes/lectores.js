@@ -4,14 +4,17 @@ const controller = require('../controllers/lectores')
 
 /**
  * @swagger
- * /lectores:
- *  get:
- *    description: Enlistar todos los lectores en la base de datos
- *    responses:
- *      200:
- *        description: Arreglo con objetos lector con el resultado de todos los lectores en la base de datos
- *      400:
- *        description: Algo salió mal al recuperar los lectores
+ * lectores:
+ *   /lectores:
+ *   get:
+ *      tags: 
+ *        - Lectores
+ *      description: Enlistar todos los lectores en la base de datos
+ *      responses:
+ *        200:
+ *          description: Arreglo con objetos lector con el resultado de todos los lectores en la base de datos
+ *        400:
+ *          description: Algo salió mal al recuperar los lectores
  */
 router.get('/',controller.listar);
 
@@ -19,6 +22,8 @@ router.get('/',controller.listar);
  * @swagger
  * /lectores/{id}:
  *  get:
+ *    tags: 
+ *      - Lectores
  *    description: Listar un lector en específico
  *    parameters:
  *      - in: path
@@ -39,9 +44,11 @@ router.get('/:id', controller.ver);
  * @swagger
  * /lectores:
  *  post:
+ *    tags:
+ *      - Lectores
  *    description: crear un nuevo lector en la base de datos
  *    parameters:
- *      - in: body
+*      - in: body
  *        name: lectorACrear
  *        description: un JSON que contenga la información del lector a crear
  *        required: true
@@ -70,16 +77,18 @@ router.get('/:id', controller.ver);
  *                    - type: date
  *    responses:
  *      201:
- *        description: Objeto del lector creado correctamente
+ *        description: Objeto del autor creado correctamente
  *      400:
- *        description: Error al crear el lector 
+ *        description: Error al crear el autor 
  */
 router.post('/', express.json(), controller.crear);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /lectores/{id}:
  *  put:
+ *    tags: 
+ *      - Lectores
  *    description: actualizar un lector en específico
  *    parameters:
  *      - in: path
@@ -127,6 +136,8 @@ router.put('/:id', express.json(), controller.actualizar);
  * @swagger
  * /lectores/{id}:
  *  delete:
+ *    tags: 
+ *      - Lectores
  *    description: Eliminar un lector de acuerdo a su id
  *    parameters:
  *      - in: path

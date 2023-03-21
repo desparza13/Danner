@@ -6,6 +6,8 @@ const controller = require('../controllers/autores')
  * @swagger
  * /autores:
  *  get:
+ *    tags:
+ *      - Autores
  *    description: enlistar todos los autores en la base de datos
  *    responses:
  *      200:
@@ -19,6 +21,8 @@ router.get('/',controller.listar);
  * @swagger
  * /autores/{id}:
  *  get:
+ *    tags:
+ *      - Autores
  *    description: listar un autor en específico
  *    parameters:
  *      - in: path
@@ -39,6 +43,8 @@ router.get('/:id', controller.ver);
  * @swagger
  * /autores:
  *  post:
+ *    tags:
+ *      - Autores
  *    description: crear un nuevo autor en la base de datos
  *    parameters:
  *      - in: body
@@ -72,6 +78,8 @@ router.post('/', express.json(), controller.crear);
  * @swagger
  * /autores/{id}:
  *  put:
+ *    tags:
+ *      - Autores
  *    description: actualizar un autor en específico
  *    parameters:
  *      - in: path
@@ -111,6 +119,8 @@ router.put('/:id', express.json(), controller.actualizar);
  * @swagger
  * /autores/{id}:
  *  delete:
+ *    tags:
+ *      - Autores
  *    description: Eliminar un autor de acuerdo a su id
  *    parameters:
  *      - in: path
