@@ -60,10 +60,6 @@ router.get('/:id', controller.ver);
  *              type: string
  *            contraseña:
  *              type: string
- *            librosPublicados:
- *              type: array
- *              items:
- *                type: string
  *    responses:
  *      201:
  *        description: Objeto del autor creado correctamente
@@ -103,10 +99,6 @@ router.post('/', express.json(), controller.crear);
  *              type: string
  *            contraseña:
  *              type: string
- *            librosPublicados:
- *              type: array
- *              items:
- *                type: string
  *    responses:
  *      200:
  *        description: Actualización de autor exitosa
