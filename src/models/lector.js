@@ -11,4 +11,4 @@ const lectorSchema = new Schema({
               fechaTerminoLeer:{type:Date}}]
 })
 
-module.exports = model('lector', lectorSchema)
+module.exports = model('lectore', lectorSchema)
