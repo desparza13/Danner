@@ -7,7 +7,7 @@ const lectorSchema = new Schema({
     ciudad: {type:String},
     imagen: {type:String},
     contraseña: {type:String},
-    leidos: [{idBook:{type:ObjectId},
+    leidos: [{idBook:{type:String},
               fechaTerminoLeer:{type:String}}]
 })
 

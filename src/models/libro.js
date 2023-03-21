@@ -6,7 +6,7 @@ const libroSchema = new Schema({
     autor: {type:String},
     valoracionPromedio: {type:Number},
     descripcion: {type:String},
-    paginas: {type:Number},
+    paginas: {type:Number}
 })
 
 module.exports = model('libro', libroSchema)
