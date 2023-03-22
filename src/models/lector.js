@@ -8,12 +8,12 @@ const lectorSchema = new Schema({
     imagen: {type:String},
     contraseña: {type:String, required:true},
     leidos: [{idBook:{type:String},
-            fechaTerminoLeer:{type:Date}}],
-    porLeer: [{idBook:{type:String}}],
+            fechaTerminoLeer:{type:Date,default:Date.now}}],
+    porLeer: [{type:String}],
     leyendo: [{idBook:{type:String},
             progreso:{type:Number}}],
-    amigos: [{idUsuario:{type:String}}]
+    amigos: [{type:String}]
 
 })
 
-module.exports = model('lectore', lectorSchema)
+module.exports = model('lectores', lectorSchema)
