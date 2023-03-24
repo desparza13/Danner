@@ -48,7 +48,7 @@ router.get('/:id', controller.ver);
  *    description: crear un nuevo review en la base de datos
  *    parameters:
  *      - in: body
- *        name: libroACrear
+ *        name: reviewACrear
  *        description: un JSON que contenga la información del review a crear
  *        required: true
  *        schema: 
