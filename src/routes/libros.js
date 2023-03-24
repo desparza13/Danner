@@ -58,6 +58,8 @@ router.get('/:id', controller.ver);
  *              type: string
  *            fechaPublicacion:
  *              type: string
+ *            genero:
+ *              type: string
  *            autor:
  *              type: string
  *            valoracionPromedio:
@@ -98,6 +100,8 @@ router.post('/', express.json(), controller.crear);
  *            titulo:
  *              type: string
  *            fechaPublicacion:
+ *              type: string
+ *            genero:
  *              type: string
  *            autor:
  *              type: string
