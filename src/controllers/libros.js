@@ -27,14 +27,15 @@ const librosController={
             autor: req.body.autor,
             valoracionPromedio: req.body.valoracionPromedio,
             descripcion: req.body.descripcion,
-            paginas: req.body.paginas
+            paginas: req.body.paginas,
+            genero: req.body.genero
         };
         modelo(libroNuevo).save()
             .then(libro=>{
                 res.status(201).send(libro);
             })
             .catch(error=>{
-                res.status(400).send('No se pudo crear correctamente el libro con título' + libroNuevo.titulo);
+                res.status(400).send('No se pudo crear correctamente el libro con título ' + libroNuevo.titulo + ' por '+error);
             })
     },
     actualizar:(req,res)=>{
@@ -45,14 +46,15 @@ const librosController={
             autor: req.body.autor,
             valoracionPromedio: req.body.valoracionPromedio,
             descripcion: req.body.descripcion,
-            paginas: req.body.paginas
+            paginas: req.body.paginas,
+            genero: req.body.genero
         };
         modelo.findByIdAndUpdate(id, libroActualizado, {new:true})
             .then(libro=>{
                 res.status(200).send(libro);
             })
             .catch(error=>{
-                res.status(400).send('No se pudo actualizar el libro con id '+id);
+                res.status(400).send('No se pudo actualizar el libro con id '+id+' por '+error);
             })
     },
     eliminar:(req,res)=>{

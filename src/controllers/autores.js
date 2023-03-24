@@ -34,7 +34,7 @@ const AutoresController={
                 res.status(201).send(autor);
             })
             .catch(error=>{
-                res.status(400).send('No se pudo crear el autor con usuario '+autorNuevo.usuario);
+                res.status(400).send('No se pudo crear el autor con usuario por '+error);
             })
     },
     actualizar:(req,res)=>{

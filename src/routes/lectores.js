@@ -4,7 +4,6 @@ const controller = require('../controllers/lectores')
 
 /**
  * @swagger
- * lectores:
  *   /lectores:
  *   get:
  *      tags: 
