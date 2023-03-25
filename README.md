@@ -14,7 +14,7 @@ Además, para ampliar el aspecto de comunidad dentro de Danner, los lectores pod
 
 En resumen, Danner es una página web que permite fomentar la lectura y dar un sentido de comunidad. Con sus múltiples funciones como visualizar libros, ver cuales te interesa leer en un futuro, cuales estás leyendo, tu progreso y ver el progreso de tus amigos, permite que Danner sea una página web perfecta para complementar tu lectura con convivencia y evitar el bloqueo lector.
 
-#Integrantes
+# Integrantes
 Daniela Esparza Espinosa 733994
 Jennifer Ariadna Hernández Martínez 734408
 
