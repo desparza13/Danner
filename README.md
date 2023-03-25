@@ -3,7 +3,7 @@
 1. [Descripción](#Descripción)
 2. [Integrantes](#Integrantes)
 
-#Descripción
+# Descripción
 Danner es una aplicación web diseñada para fomentar la lectura y crear una comunidad en línea de lectores y autores, fomentando así la lectura. Al ingresar a la página web, los usuarios encontrarán una interfaz fácil de usar y atractiva, a diferencia de algunos de sus competidores, que les permitirá navegar por los distintos contenidos y features disponibles para ellos.
 
 Danner es un espacio para toda persona de la comunidad lectora. En ella, los autores tienen la posibilidad de crear su cuenta como autor y dar de alta sus libros en la plataforma, para así poder ver las opiniones y valoraciones de sus lectores. De esta manera, los autores podrán conocer la opinión de su público, darse una idea de qué público está conectando con sus libros y de desearlo adaptar sus obras a sus gustos y tomar en cuenta qué está funcionando y qué no.
