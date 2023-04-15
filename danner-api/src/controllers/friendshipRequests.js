@@ -1,10 +1,10 @@
 
-const model = require('./../models/review');
-const ReviewsController={
+const model = require('../models/friendshipRequests');
+const RequestsController={
     list:(req, res)=>{
         model.find({})
-            .then(reviews=>{
-                res.status(200).send(reviews);
+            .then(requests=>{
+                res.status(200).send(requests);
             })
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
@@ -13,23 +13,22 @@ const ReviewsController={
     see:(req,res)=>{
         const id = req.params.id;
         model.findById(id)
-            .then(review=>{
-                res.status(200).send(review);
+            .then(request=>{
+                res.status(200).send(request);
             })
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
             })
     },
     create:(req,res)=>{
-        let newReview = {
-            bookId: req.body.bookId,
-            userId: req.body.userId,
-            rating:req.body.rating,
-            description:req.body.description
+        let newRequest = {
+            idSender: req.body.idSender,
+            idReceiver: req.body.idReceiver,
+            status:req.body.status
         };
-        model(newReview).save()
-            .then(review=>{
-                res.status(201).send(review);
+        model(newRequest).save()
+            .then(request=>{
+                res.status(201).send(request);
             })
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
@@ -37,15 +36,14 @@ const ReviewsController={
     },
     update:(req,res)=>{
         const id = req.params.id;
-        let updatedReview = {
-            bookId: req.body.bookId,
-            userId: req.body.userId,
-            rating:req.body.rating,
-            description:req.body.description
+        let updatedRequest = {
+            idSender: req.body.idSender,
+            idReceiver: req.body.idReceiver,
+            status:req.body.status
         };
-        model.findByIdAndUpdate(id, updatedReview, {new:true})
-            .then(review=>{
-                res.status(200).send(review);
+        model.findByIdAndUpdate(id, updatedRequest, {new:true})
+            .then(request=>{
+                res.status(200).send(request);
             })
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
@@ -54,12 +52,12 @@ const ReviewsController={
     delete:(req,res)=>{
         const id = req.params.id;
         model.findByIdAndDelete(id)
-            .then(review=>{
-                res.status(200).send(review);
+            .then(request=>{
+                res.status(200).send(request);
             })
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
             })
     }
 }
-module.exports = ReviewsController;
+module.exports = RequestsController;

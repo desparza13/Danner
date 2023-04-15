@@ -1,41 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/autores')
+const controller = require('../controllers/authors')
 
 /**
  * @swagger
- * /autores:
+ * /authors:
  *  get:
  *    tags:
- *      - Autores
- *    description: enlistar todos los autores en la base de datos
+ *      - Authors
+ *    description: list all authors in database
  *    responses:
  *      200:
- *        description: Arreglo con objetos autor con el resultado de todos los autores
+ *        description: Array with author objects containing data from all authors on the database
  *      400:
- *        description: Algo salió mal al recuperar los autores
+ *        description: Something went wrong retrieving all authors
  */
-router.get('/',controller.listar);
+router.get('/',controller.list);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /authors/{id}:
  *  get:
  *    tags:
- *      - Autores
- *    description: listar un autor en específico
+ *      - Authors
+ *    description: list a specific author
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de el autor a obtener
+ *        description: id from author you wish to obtain
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del autor con el id especificado
+ *        description: Author object from the specified author
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving author with specified id
  */
 router.get('/:id', controller.ver);
 
