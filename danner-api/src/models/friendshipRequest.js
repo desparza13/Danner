@@ -6,4 +6,4 @@ const requestSchema = new Schema({
     status:{type:Boolean, default:false}
 })
 
-module.exports = model('requests', solicitudSchema)
+module.exports = model('request', requestSchema)

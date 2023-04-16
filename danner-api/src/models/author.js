@@ -9,4 +9,4 @@ const authorSchema = new Schema({
     password: {type:String, required:true}
 })
 
-module.exports = model('authors', authorSchema)
+module.exports = model('author', authorSchema)

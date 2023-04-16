@@ -55,7 +55,7 @@ const AuthorsController={
                 res.status(400).send('Something went wrong '+error);
             })
     },
-    eliminar:(req,res)=>{
+    delete:(req,res)=>{
         const id = req.params.id;
         model.findByIdAndDelete(id)
             .then(author=>{

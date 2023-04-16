@@ -10,4 +10,4 @@ const bookSchema = new Schema({
     pages: {type:Number, required:true}
 })
 
-module.exports = model('book', libroSchema)
+module.exports = model('book', bookSchema)

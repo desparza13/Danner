@@ -1,28 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/libros')
+const controller = require('../controllers/books')
 
 /**
  * @swagger
- * /libros:
+ * /books:
  *  get:
  *    tags:
- *      - Libros
- *    description: enlistar todos los libros en la base de datos
+ *      - Books
+ *    description: enlistar todos los books en la base de datos
  *    responses:
  *      200:
- *        description: Arreglo con objetos libro con el resultado de todos los libros
+ *        description: Arreglo con objetos libro con el resultado de todos los books
  *      400:
- *        description: Algo salió mal al recuperar los libros
+ *        description: Algo salió mal al recuperar los books
  */
-router.get('/',controller.listar);
+router.get('/',controller.list);
 
 /**
  * @swagger
- * /libros/{id}:
+ * /books/{id}:
  *  get:
  *    tags:
- *      - Libros
+ *      - Books
  *    description: listar un libro en específico
  *    parameters:
  *      - in: path
@@ -37,14 +37,14 @@ router.get('/',controller.listar);
  *      400:
  *        description: Error al encontrar el objeto con ese id
  */
-router.get('/:id', controller.ver);
+router.get('/:id', controller.see);
 
 /**
  * @swagger
- * /libros:
+ * /books:
  *  post:
  *    tags:
- *      - Libros
+ *      - Books
  *    description: crear un nuevo libro en la base de datos
  *    parameters:
  *      - in: body
@@ -54,19 +54,19 @@ router.get('/:id', controller.ver);
  *        schema: 
  *          type: object
  *          properties:
- *            titulo:
+ *            title:
  *              type: string
- *            fechaPublicacion:
+ *            date:
  *              type: string
- *            genero:
+ *            genre:
  *              type: string
- *            autor:
+ *            author:
  *              type: string
- *            valoracionPromedio:
+ *            averageRating:
  *              type: number
- *            descripcion:
+ *            description:
  *              type: string
- *            paginas:
+ *            pages:
  *              type: number
  *    responses:
  *      201:
@@ -74,14 +74,14 @@ router.get('/:id', controller.ver);
  *      400:
  *        description: Error al crear el libro 
  */
-router.post('/', express.json(), controller.crear);
+router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
- * /libros/{id}:
+ * /books/{id}:
  *  put:
  *    tags:
- *      - Libros
+ *      - Books
  *    description: actualizar un libro en específico
  *    parameters:
  *      - in: path
@@ -97,19 +97,19 @@ router.post('/', express.json(), controller.crear);
  *        schema: 
  *          type: object
  *          properties:
- *            titulo:
+ *            title:
  *              type: string
- *            fechaPublicacion:
+ *            date:
  *              type: string
- *            genero:
+ *            genre:
  *              type: string
- *            autor:
+ *            author:
  *              type: string
- *            valoracionPromedio:
+ *            averageRating:
  *              type: number
- *            descripcion:
+ *            description:
  *              type: string
- *            paginas:
+ *            pages:
  *              type: number
  *    responses:
  *      200:
@@ -117,14 +117,14 @@ router.post('/', express.json(), controller.crear);
  *      400:
  *        description: Error al actualizar el libro
  */
-router.put('/:id', express.json(), controller.actualizar);
+router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
- * /libros/{id}:
+ * /books/{id}:
  *  delete:
  *    tags:
- *      - Libros
+ *      - Books
  *    description: Eliminar un libro de acuerdo a su id
  *    parameters:
  *      - in: path
@@ -139,6 +139,6 @@ router.put('/:id', express.json(), controller.actualizar);
  *      400:
  *        description: error al eliminar el libro
  */
-router.delete('/:id', controller.eliminar);
+router.delete('/:id', controller.delete);
 
 module.exports = router;

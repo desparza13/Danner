@@ -15,4 +15,4 @@ const readerSchema = new Schema({
     friends: [{type:String}]
 })
 
-module.exports = model('readers', lectorSchema)
+module.exports = model('reader', readerSchema)

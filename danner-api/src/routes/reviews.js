@@ -15,7 +15,7 @@ const controller = require('../controllers/reviews')
  *      400:
  *        description: Algo salió mal al recuperar las reviews
  */
-router.get('/',controller.listar);
+router.get('/',controller.list);
 
 /**
  * @swagger
@@ -37,7 +37,7 @@ router.get('/',controller.listar);
  *      400:
  *        description: Error al encontrar el objeto con ese id
  */
-router.get('/:id', controller.ver);
+router.get('/:id', controller.see);
 
 /**
  * @swagger
@@ -68,7 +68,7 @@ router.get('/:id', controller.ver);
  *      400:
  *        description: Error al crear el review 
  */
-router.post('/', express.json(), controller.crear);
+router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
@@ -105,7 +105,7 @@ router.post('/', express.json(), controller.crear);
  *      400:
  *        description: Error al actualizar el review
  */
-router.put('/:id', express.json(), controller.actualizar);
+router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
@@ -127,6 +127,6 @@ router.put('/:id', express.json(), controller.actualizar);
  *      400:
  *        description: error al eliminar el review
  */
-router.delete('/:id', controller.eliminar);
+router.delete('/:id', controller.delete);
 
 module.exports = router;

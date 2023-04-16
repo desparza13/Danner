@@ -1,5 +1,5 @@
 
-const model = require('../models/friendshipRequests');
+const model = require('../models/friendshipRequest');
 const RequestsController={
     list:(req, res)=>{
         model.find({})

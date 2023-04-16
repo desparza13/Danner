@@ -1,28 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/solicitudesAmistad')
+const controller = require('../controllers/friendshipRequests')
 
 /**
  * @swagger
- * /solicitudes:
+ * /requests:
  *  get:
  *    tags:
- *      - SolicitudesDeAmistad
- *    description: enlistar todas las solicitudes de amistad en la base de datos
+ *      - FriendshipRequests
+ *    description: enlistar todas las requests de amistad en la base de datos
  *    responses:
  *      200:
- *        description: Arreglo con objetos solicitud con el resultado de todas las solicitudes
+ *        description: Arreglo con objetos solicitud con el resultado de todas las requests
  *      400:
- *        description: Algo salió mal al recuperar las solicitudes
+ *        description: Algo salió mal al recuperar las requests
  */
-router.get('/',controller.listar);
+router.get('/',controller.list);
 
 /**
  * @swagger
- * /solicitudes/{id}:
+ * /requests/{id}:
  *  get:
  *    tags:
- *      - SolicitudesDeAmistad
+ *      - FriendshipRequests
  *    description: listar una solicitud de amistad en específico
  *    parameters:
  *      - in: path
@@ -37,14 +37,14 @@ router.get('/',controller.listar);
  *      400:
  *        description: Error al encontrar el objeto con ese id
  */
-router.get('/:id', controller.ver);
+router.get('/:id', controller.see);
 
 /**
  * @swagger
- * /solicitudes:
+ * /requests:
  *  post:
  *    tags:
- *      - SolicitudesDeAmistad
+ *      - FriendshipRequests
  *    description: crear una nueva solicitud de amistad en la base de datos
  *    parameters:
  *      - in: body
@@ -54,11 +54,11 @@ router.get('/:id', controller.ver);
  *        schema: 
  *          type: object
  *          properties:
- *            idUsuarioEnvio:
+ *            idSender:
  *              type: string
- *            idUsuarioRecepcion:
+ *            idReceiver:
  *              type: string
- *            estadoSolicitud:
+ *            status:
  *              type: boolean
  *    responses:
  *      201:
@@ -66,14 +66,14 @@ router.get('/:id', controller.ver);
  *      400:
  *        description: Error al crear la solicitud de amistad 
  */
-router.post('/', express.json(), controller.crear);
+router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
- * /solicitudes/{id}:
+ * /requests/{id}:
  *  put:
  *    tags:
- *      - SolicitudesDeAmistad
+ *      - FriendshipRequests
  *    description: actualizar una solicitud de amistad en específico
  *    parameters:
  *      - in: path
@@ -89,11 +89,11 @@ router.post('/', express.json(), controller.crear);
  *        schema: 
  *          type: object
  *          properties:
- *            idUsuarioEnvio:
+ *            idSender:
  *              type: string
- *            idUsuarioRecepcion:
+ *            idReceiver:
  *              type: string
- *            estadoSolicitud:
+ *            status:
  *              type: boolean
  *    responses:
  *      200:
@@ -101,14 +101,14 @@ router.post('/', express.json(), controller.crear);
  *      400:
  *        description: Error al actualizar la solicitud de amistad
  */
-router.put('/:id', express.json(), controller.actualizar);
+router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
- * /solicitudes/{id}:
+ * /requests/{id}:
  *  delete:
  *    tags:
- *      - SolicitudesDeAmistad
+ *      - FriendshipRequests
  *    description: Eliminar una solicitud de amistad de acuerdo a su id
  *    parameters:
  *      - in: path
@@ -123,6 +123,6 @@ router.put('/:id', express.json(), controller.actualizar);
  *      400:
  *        description: error al eliminar la solicitud de amistad
  */
-router.delete('/:id', controller.eliminar);
+router.delete('/:id', controller.delete);
 
 module.exports = router;

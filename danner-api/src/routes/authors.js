@@ -37,14 +37,14 @@ router.get('/',controller.list);
  *      400:
  *        description: Error retrieving author with specified id
  */
-router.get('/:id', controller.ver);
+router.get('/:id', controller.see);
 
 /**
  * @swagger
- * /autores:
+ * /authors:
  *  post:
  *    tags:
- *      - Autores
+ *      - Authors
  *    description: crear un nuevo autor en la base de datos
  *    parameters:
  *      - in: body
@@ -54,17 +54,17 @@ router.get('/:id', controller.ver);
  *        schema: 
  *          type: object
  *          properties:
- *            nombre:
+ *            name:
  *              type: string
- *            usuario:
+ *            user:
  *              type: string
- *            correo:
+ *            email:
  *              type: string
- *            ciudad:
+ *            city:
  *              type: string
- *            imagen:
+ *            image:
  *              type: string
- *            contraseña:
+ *            password:
  *              type: string
  *    responses:
  *      201:
@@ -72,14 +72,14 @@ router.get('/:id', controller.ver);
  *      400:
  *        description: Error al crear el autor 
  */
-router.post('/', express.json(), controller.crear);
+router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /authors/{id}:
  *  put:
  *    tags:
- *      - Autores
+ *      - Authors
  *    description: actualizar un autor en específico
  *    parameters:
  *      - in: path
@@ -95,17 +95,17 @@ router.post('/', express.json(), controller.crear);
  *        schema: 
  *          type: object
  *          properties:
- *            nombre:
+ *            name:
  *              type: string
- *            usuario:
+ *            user:
  *              type: string
- *            correo:
+ *            email:
  *              type: string
- *            ciudad:
+ *            city:
  *              type: string
- *            imagen:
+ *            image:
  *              type: string
- *            contraseña:
+ *            password:
  *              type: string
  *    responses:
  *      200:
@@ -113,14 +113,14 @@ router.post('/', express.json(), controller.crear);
  *      400:
  *        description: Error al actualizar el autor
  */
-router.put('/:id', express.json(), controller.actualizar);
+router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
- * /autores/{id}:
+ * /authors/{id}:
  *  delete:
  *    tags:
- *      - Autores
+ *      - Authors
  *    description: Eliminar un autor de acuerdo a su id
  *    parameters:
  *      - in: path
@@ -135,6 +135,6 @@ router.put('/:id', express.json(), controller.actualizar);
  *      400:
  *        description: error al eliminar el autor
  */
-router.delete('/:id', controller.eliminar);
+router.delete('/:id', controller.delete);
 
 module.exports = router;
