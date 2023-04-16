@@ -4,16 +4,16 @@ const controller = require('../controllers/readers')
 
 /**
  * @swagger
- *   /readers:
+ * /readers:
  *   get:
- *      tags: 
- *        - Readers
- *      description: Enlistar todos los readers en la base de datos
- *      responses:
- *        200:
- *          description: Arreglo con objetos lector con el resultado de todos los readers en la base de datos
- *        400:
- *          description: Algo salió mal al recuperar los readers
+ *     tags: 
+ *       - Readers
+ *     description: List all readers in database
+ *     responses:
+ *       200:
+ *         description: Array with reader objects containg data from all readers on the database
+ *       400:
+ *         description: Something went wrong retrieving all readers
  */
 router.get('/',controller.list);
 
@@ -23,19 +23,19 @@ router.get('/',controller.list);
  *  get:
  *    tags: 
  *      - Readers
- *    description: Listar un lector en específico
+ *    description: List certain reader in database
  *    parameters:
  *      - in: path
  *        name: id
- *        description: Id de el lector a obtener
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del lector con el id especificado
+ *        description: Reader object from the specified reader
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving reader with specified id
  */
 router.get('/:id', controller.see);
 
@@ -45,11 +45,11 @@ router.get('/:id', controller.see);
  *  post:
  *    tags:
  *      - Readers
- *    description: crear un nuevo lector en la base de datos
+ *    description: Create a new reader on the database
  *    parameters:
 *      - in: body
- *        name: lectorACrear
- *        description: un JSON que contenga la información del lector a crear
+ *        name: newReader
+ *        description: JSON with the new reader information
  *        required: true
  *        schema: 
  *          type: object
@@ -71,9 +71,10 @@ router.get('/:id', controller.see);
  *              items:
  *                type: array
  *                items:
- *                  oneOf:
- *                    - type: string
- *                    - type: string
+ *                    bookID:
+ *                      type: string
+ *                    finishedDate:
+ *                      type: string
  *            toBeRead:
  *              type: array
  *              items:
@@ -92,9 +93,9 @@ router.get('/:id', controller.see);
  *                type: string
  *    responses:
  *      201:
- *        description: Objeto del autor creado correctamente
+ *        description: Reader's object successfully created
  *      400:
- *        description: Error al crear el autor 
+ *        description: Something went wrong while creating the reader
  */
 router.post('/', express.json(), controller.create);
 
@@ -104,17 +105,17 @@ router.post('/', express.json(), controller.create);
  *  put:
  *    tags: 
  *      - Readers
- *    description: actualizar un lector en específico
+ *    description: Update certain reader
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del lector que se quiere actualizar
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: lectorActualizado
- *        description: un JSON que contenga la información del lector actualizado
+ *        name: updatedReader
+ *        description: JSON with the updated reader's information
  *        required: true
  *        schema: 
  *          type: object
@@ -157,9 +158,9 @@ router.post('/', express.json(), controller.create);
  *                type: string
  *    responses:
  *      200:
- *        description: Actualización de lector exitosa
+ *        description: Reader successfully updated
  *      400:
- *        description: Error al actualizar el lector
+ *        description: Something went wrong while updating the reader
  */
 router.put('/:id', express.json(), controller.update);
 
@@ -169,19 +170,19 @@ router.put('/:id', express.json(), controller.update);
  *  delete:
  *    tags: 
  *      - Readers
- *    description: Eliminar un lector de acuerdo a su id
+ *    description: Delete certain reader
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del lector a eliminar
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Reader successfully deleted
  *      400:
- *        description: error al eliminar el lector
+ *        description: Something went wrong while deleting the book
  */
 router.delete('/:id', controller.delete);
 

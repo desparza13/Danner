@@ -8,12 +8,12 @@ const controller = require('../controllers/books')
  *  get:
  *    tags:
  *      - Books
- *    description: enlistar todos los books en la base de datos
+ *    description: List all books in database
  *    responses:
  *      200:
- *        description: Arreglo con objetos libro con el resultado de todos los books
+ *        description: Array with book objects containing data from all books on the database
  *      400:
- *        description: Algo salió mal al recuperar los books
+ *        description: Something went wrong retrieving all books
  */
 router.get('/',controller.list);
 
@@ -23,19 +23,19 @@ router.get('/',controller.list);
  *  get:
  *    tags:
  *      - Books
- *    description: listar un libro en específico
+ *    description: List certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de el libro a obtener
+ *        description: ID from book you wish to obtain
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del libro con el id especificado
+ *        description: Book object from the specified book
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving book with specified id
  */
 router.get('/:id', controller.see);
 
@@ -45,11 +45,11 @@ router.get('/:id', controller.see);
  *  post:
  *    tags:
  *      - Books
- *    description: crear un nuevo libro en la base de datos
+ *    description: Create a new book on the database
  *    parameters:
  *      - in: body
- *        name: libroACrear
- *        description: un JSON que contenga la información del libro a crear
+ *        name: newBook
+ *        description: JSON with the new book information
  *        required: true
  *        schema: 
  *          type: object
@@ -70,9 +70,9 @@ router.get('/:id', controller.see);
  *              type: number
  *    responses:
  *      201:
- *        description: Objeto del libro creado correctamente
+ *        description: Book object successfully created
  *      400:
- *        description: Error al crear el libro 
+ *        description: Something went wrong while creating the book 
  */
 router.post('/', express.json(), controller.create);
 
@@ -82,17 +82,17 @@ router.post('/', express.json(), controller.create);
  *  put:
  *    tags:
  *      - Books
- *    description: actualizar un libro en específico
+ *    description: Update certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del libro que se quiere actualizar
+ *        description: Book's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: libroActualizado
- *        description: un JSON que contenga la información del libro a actualizar
+ *        name: updatedBook
+ *        description: JSON with the updated book's information
  *        required: true
  *        schema: 
  *          type: object
@@ -113,9 +113,9 @@ router.post('/', express.json(), controller.create);
  *              type: number
  *    responses:
  *      200:
- *        description: Actualización de libro exitosa
+ *        description: Book successfully updated
  *      400:
- *        description: Error al actualizar el libro
+ *        description: Something went wrong while updating the book
  */
 router.put('/:id', express.json(), controller.update);
 
@@ -125,19 +125,19 @@ router.put('/:id', express.json(), controller.update);
  *  delete:
  *    tags:
  *      - Books
- *    description: Eliminar un libro de acuerdo a su id
+ *    description: Delete certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del libro a eliminar
+ *        description: Book's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Book successfully deleted
  *      400:
- *        description: error al eliminar el libro
+ *        description: Something went wrong while deleting the book
  */
 router.delete('/:id', controller.delete);
 

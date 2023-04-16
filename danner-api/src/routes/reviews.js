@@ -8,12 +8,12 @@ const controller = require('../controllers/reviews')
  *  get:
  *    tags:
  *      - Reviews
- *    description: enlistar todas las reseñas/reviews en la base de datos
+ *    description: List all reviews in database
  *    responses:
  *      200:
- *        description: Arreglo con objetos review con el resultado de todos las reviews
+ *        description: Array with reviews objects containing data from all books on the database
  *      400:
- *        description: Algo salió mal al recuperar las reviews
+ *        description: Something went wrong retrieving all reviews
  */
 router.get('/',controller.list);
 
@@ -23,19 +23,19 @@ router.get('/',controller.list);
  *  get:
  *    tags:
  *      - Reviews
- *    description: listar un review en específico
+ *    description: List certain revie
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de el review a obtener
+ *        description: ID from review you wish to obtain
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del review con el id especificado
+ *        description: Review object from the specified review
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving review with specified id
  */
 router.get('/:id', controller.see);
 
@@ -45,28 +45,29 @@ router.get('/:id', controller.see);
  *  post:
  *    tags:
  *      - Reviews
- *    description: crear un nuevo review en la base de datos
+ *    description: Create a new revie on the database
  *    parameters:
  *      - in: body
- *        name: reviewACrear
- *        description: un JSON que contenga la información del review a crear
+ *        name: newReview
+ *        description: JSON with the new review information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            idLibro:
+ *            bookId:
  *              type: string
- *            idUsuario:
+ *            userId:
  *              type: string
- *            puntaje:
+ *            rating:
  *              type: number
- *            descripcion:
+ *            description:
  *              type: string
  *    responses:
  *      201:
- *        description: Objeto del review creado correctamente
+ *        description: Book object successfully created
  *      400:
- *        description: Error al crear el review 
+ *        description: Something went wrong while creating the review 
+ *
  */
 router.post('/', express.json(), controller.create);
 
@@ -76,34 +77,34 @@ router.post('/', express.json(), controller.create);
  *  put:
  *    tags:
  *      - Reviews
- *    description: actualizar un review en específico
+ *    description: Update certain review
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del review que se quiere actualizar
+ *        description: Review's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: reviewActualizado
- *        description: un JSON que contenga la información del review a actualizar
+ *        name: updatedReview
+ *        description: JSON with the updated book's information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            idLibro:
+ *            bookId:
  *              type: string
- *            idUsuario:
+ *            userId:
  *              type: string
- *            puntaje:
+ *            rating:
  *              type: number
- *            descripcion:
+ *            description:
  *              type: string
  *    responses:
  *      200:
- *        description: Actualización de review exitosa
+ *        description: Review successfully updated
  *      400:
- *        description: Error al actualizar el review
+ *        description: Something went wrong while updating the review
  */
 router.put('/:id', express.json(), controller.update);
 
@@ -113,19 +114,19 @@ router.put('/:id', express.json(), controller.update);
  *  delete:
  *    tags:
  *      - Reviews
- *    description: Eliminar un review de acuerdo a su id
+ *    description: Delete certain review
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del review a eliminar
+ *        description: Review's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Review successfully deleted
  *      400:
- *        description: error al eliminar el review
+ *        description: Something went wrong while deleting the review
  */
 router.delete('/:id', controller.delete);
 

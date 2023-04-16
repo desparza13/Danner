@@ -8,12 +8,12 @@ const controller = require('../controllers/friendshipRequests')
  *  get:
  *    tags:
  *      - FriendshipRequests
- *    description: enlistar todas las requests de amistad en la base de datos
+ *    description: List all friendship requests in database
  *    responses:
  *      200:
- *        description: Arreglo con objetos solicitud con el resultado de todas las requests
+ *        description: Array with request objects containing data from all requests on the database
  *      400:
- *        description: Algo salió mal al recuperar las requests
+ *        description: Something went wrong retrieving all friendship requests
  */
 router.get('/',controller.list);
 
@@ -23,19 +23,19 @@ router.get('/',controller.list);
  *  get:
  *    tags:
  *      - FriendshipRequests
- *    description: listar una solicitud de amistad en específico
+ *    description: List certain friendship request
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de la solicitud de amistad a obtener
+ *        description: ID from request you wish to obtain
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto de la solicitud de amistad con el id especificado
+ *        description: Request object from the specified request
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving frienship request with specified id
  */
 router.get('/:id', controller.see);
 
@@ -45,11 +45,11 @@ router.get('/:id', controller.see);
  *  post:
  *    tags:
  *      - FriendshipRequests
- *    description: crear una nueva solicitud de amistad en la base de datos
+ *    description: Create a new friendship request on the database
  *    parameters:
  *      - in: body
- *        name: solicitudACrear
- *        description: un JSON que contenga la información de la solicitud de amistad a crear
+ *        name: newRequest
+ *        description: JSON with the new friendship request information
  *        required: true
  *        schema: 
  *          type: object
@@ -62,9 +62,9 @@ router.get('/:id', controller.see);
  *              type: boolean
  *    responses:
  *      201:
- *        description: Objeto de la solicitud de amistad creada correctamente
+ *        description: Friendship request object successfully created
  *      400:
- *        description: Error al crear la solicitud de amistad 
+ *        description: Something went wrong while creating the friendship request 
  */
 router.post('/', express.json(), controller.create);
 
@@ -74,17 +74,17 @@ router.post('/', express.json(), controller.create);
  *  put:
  *    tags:
  *      - FriendshipRequests
- *    description: actualizar una solicitud de amistad en específico
+ *    description: Update certain friendship request
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de la solicitud de amistad que se quiere actualizar
+ *        description: Friendship request's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: solicitudActualizada
- *        description: un JSON que contenga la información del review a actualizar
+ *        name: updatedRequest
+ *        description: JSON with the updated request's information
  *        required: true
  *        schema: 
  *          type: object
@@ -97,9 +97,9 @@ router.post('/', express.json(), controller.create);
  *              type: boolean
  *    responses:
  *      200:
- *        description: Actualización de solicitud de amistad exitosa
+ *        description: Friendship request successfully updated
  *      400:
- *        description: Error al actualizar la solicitud de amistad
+ *        description: Something went wrong while updating the friendship request
  */
 router.put('/:id', express.json(), controller.update);
 
@@ -109,19 +109,19 @@ router.put('/:id', express.json(), controller.update);
  *  delete:
  *    tags:
  *      - FriendshipRequests
- *    description: Eliminar una solicitud de amistad de acuerdo a su id
+ *    description: Delete certain request
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id de la solicitud de amistad a eliminar
+ *        description: Friendship request's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Frienship request successfully deleted
  *      400:
- *        description: error al eliminar la solicitud de amistad
+ *        description: Something went wrong while deleting the friendship request
  */
 router.delete('/:id', controller.delete);
 

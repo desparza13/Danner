@@ -8,7 +8,7 @@ const controller = require('../controllers/authors')
  *  get:
  *    tags:
  *      - Authors
- *    description: list all authors in database
+ *    description: List all authors in database
  *    responses:
  *      200:
  *        description: Array with author objects containing data from all authors on the database
@@ -23,7 +23,7 @@ router.get('/',controller.list);
  *  get:
  *    tags:
  *      - Authors
- *    description: list a specific author
+ *    description: List certain author
  *    parameters:
  *      - in: path
  *        name: id
@@ -45,11 +45,11 @@ router.get('/:id', controller.see);
  *  post:
  *    tags:
  *      - Authors
- *    description: crear un nuevo autor en la base de datos
+ *    description: Create a new author on the database
  *    parameters:
  *      - in: body
- *        name: autorACrear
- *        description: un JSON que contenga la información del autor a crear
+ *        name: newAuthor
+ *        description: JSON with the new author information
  *        required: true
  *        schema: 
  *          type: object
@@ -68,9 +68,9 @@ router.get('/:id', controller.see);
  *              type: string
  *    responses:
  *      201:
- *        description: Objeto del autor creado correctamente
+ *        description: Author object successfully created
  *      400:
- *        description: Error al crear el autor 
+ *        description: Something went wrong while creating the author
  */
 router.post('/', express.json(), controller.create);
 
@@ -80,17 +80,17 @@ router.post('/', express.json(), controller.create);
  *  put:
  *    tags:
  *      - Authors
- *    description: actualizar un autor en específico
+ *    description: Update certain author
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del autor que se quiere actualizar
+ *        description: Author's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: autorActualizado
- *        description: un JSON que contenga la información del autor a actualizar
+ *        name: updatedAuthor
+ *        description: JSON with the updated author's information
  *        required: true
  *        schema: 
  *          type: object
@@ -109,9 +109,9 @@ router.post('/', express.json(), controller.create);
  *              type: string
  *    responses:
  *      200:
- *        description: Actualización de autor exitosa
+ *        description: Author successfully updated
  *      400:
- *        description: Error al actualizar el autor
+ *        description: Something went wrong while updating the author
  */
 router.put('/:id', express.json(), controller.update);
 
@@ -121,19 +121,19 @@ router.put('/:id', express.json(), controller.update);
  *  delete:
  *    tags:
  *      - Authors
- *    description: Eliminar un autor de acuerdo a su id
+ *    description: Delete certain author 
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del autor a eliminar
+ *        description: Author's id
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Author successfully deleted
  *      400:
- *        description: error al eliminar el autor
+ *        description: Something went wrong while deleting the author
  */
 router.delete('/:id', controller.delete);
 
