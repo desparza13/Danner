@@ -1,15 +1,15 @@
 const router = require('express').Router();
 
-const rutaAutores = require('./autores')
-const rutaLectores = require('./lectores')
-const rutaLibros = require('./libros')
-const rutaReviews = require('./reviews')
-const rutaSolicitudes = require('./solicitudesAmistad')
+const authorsRoute = require('./authors')
+const readersRoute = require('./readers')
+const booksRoute = require('./books')
+const reviewsRoute = require('./reviews')
+const requestsRoute = require('./friendshipRequests')
 
-router.use('/autores',rutaAutores);
-router.use('/lectores',rutaLectores);
-router.use('/libros',rutaLibros);
-router.use('/reviews',rutaReviews);
-router.use('/solicitudes',rutaSolicitudes);
+router.use('/authors',authorsRoute);
+router.use('/readers',readersRoute);
+router.use('/books',booksRoute);
+router.use('/reviews',reviewsRoute);
+router.use('/requests',requestsRoute);
 
 module.exports = router;

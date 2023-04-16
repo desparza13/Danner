@@ -1,132 +1,143 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/reviews')
+const controller = require('../controllers/books')
 
 /**
  * @swagger
- * /reviews:
+ * /books:
  *  get:
  *    tags:
- *      - Reviews
- *    description: List all reviews in database
+ *      - Books
+ *    description: List all books in database
  *    responses:
  *      200:
- *        description: Array with reviews objects containing data from all books on the database
+ *        description: Array with book objects containing data from all books on the database
  *      400:
- *        description: Something went wrong retrieving all reviews
+ *        description: Something went wrong retrieving all books
  */
 router.get('/',controller.list);
 
 /**
  * @swagger
- * /reviews/{id}:
+ * /books/{id}:
  *  get:
  *    tags:
- *      - Reviews
- *    description: List certain revie
+ *      - Books
+ *    description: List certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: ID from review you wish to obtain
+ *        description: ID from book you wish to obtain
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Review object from the specified review
+ *        description: Book object from the specified book
  *      400:
- *        description: Error retrieving review with specified id
+ *        description: Error retrieving book with specified id
  */
 router.get('/:id', controller.see);
 
 /**
  * @swagger
- * /reviews:
+ * /books:
  *  post:
  *    tags:
- *      - Reviews
- *    description: Create a new revie on the database
+ *      - Books
+ *    description: Create a new book on the database
  *    parameters:
  *      - in: body
- *        name: newReview
- *        description: JSON with the new review information
+ *        name: newBook
+ *        description: JSON with the new book information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            bookId:
+ *            title:
  *              type: string
- *            userId:
+ *            date:
  *              type: string
- *            rating:
+ *            genre:
+ *              type: string
+ *            author:
+ *              type: string
+ *            averageRating:
  *              type: number
  *            description:
  *              type: string
+ *            pages:
+ *              type: number
  *    responses:
  *      201:
  *        description: Book object successfully created
  *      400:
- *        description: Something went wrong while creating the review 
- *
+ *        description: Something went wrong while creating the book 
  */
 router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
- * /reviews/{id}:
+ * /books/{id}:
  *  put:
  *    tags:
- *      - Reviews
- *    description: Update certain review
+ *      - Books
+ *    description: Update certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: Review's ID
+ *        description: Book's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: updatedReview
+ *        name: updatedBook
  *        description: JSON with the updated book's information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            bookId:
+ *            title:
  *              type: string
- *            userId:
+ *            date:
  *              type: string
- *            rating:
+ *            genre:
+ *              type: string
+ *            author:
+ *              type: string
+ *            averageRating:
  *              type: number
  *            description:
  *              type: string
+ *            pages:
+ *              type: number
  *    responses:
  *      200:
- *        description: Review successfully updated
+ *        description: Book successfully updated
  *      400:
- *        description: Something went wrong while updating the review
+ *        description: Something went wrong while updating the book
  */
 router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
- * /reviews/{id}:
+ * /books/{id}:
  *  delete:
  *    tags:
- *      - Reviews
- *    description: Delete certain review
+ *      - Books
+ *    description: Delete certain book
  *    parameters:
  *      - in: path
  *        name: id
- *        description: Review's ID
+ *        description: Book's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Review successfully deleted
+ *        description: Book successfully deleted
  *      400:
- *        description: Something went wrong while deleting the review
+ *        description: Something went wrong while deleting the book
  */
 router.delete('/:id', controller.delete);
 

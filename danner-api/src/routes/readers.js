@@ -1,84 +1,85 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/lectores')
+const controller = require('../controllers/readers')
 
 /**
  * @swagger
- *   /lectores:
+ * /readers:
  *   get:
- *      tags: 
- *        - Lectores
- *      description: Enlistar todos los lectores en la base de datos
- *      responses:
- *        200:
- *          description: Arreglo con objetos lector con el resultado de todos los lectores en la base de datos
- *        400:
- *          description: Algo salió mal al recuperar los lectores
+ *     tags: 
+ *       - Readers
+ *     description: List all readers in database
+ *     responses:
+ *       200:
+ *         description: Array with reader objects containg data from all readers on the database
+ *       400:
+ *         description: Something went wrong retrieving all readers
  */
-router.get('/',controller.listar);
+router.get('/',controller.list);
 
 /**
  * @swagger
- * /lectores/{id}:
+ * /readers/{id}:
  *  get:
  *    tags: 
- *      - Lectores
- *    description: Listar un lector en específico
+ *      - Readers
+ *    description: List certain reader in database
  *    parameters:
  *      - in: path
  *        name: id
- *        description: Id de el lector a obtener
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: Objeto del lector con el id especificado
+ *        description: Reader object from the specified reader
  *      400:
- *        description: Error al encontrar el objeto con ese id
+ *        description: Error retrieving reader with specified id
  */
-router.get('/:id', controller.ver);
+router.get('/:id', controller.see);
 
 /**
  * @swagger
- * /lectores:
+ * /readers:
  *  post:
  *    tags:
- *      - Lectores
- *    description: crear un nuevo lector en la base de datos
+ *      - Readers
+ *    description: Create a new reader on the database
  *    parameters:
 *      - in: body
- *        name: lectorACrear
- *        description: un JSON que contenga la información del lector a crear
+ *        name: newReader
+ *        description: JSON with the new reader information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            nombre:
+ *            name:
  *              type: string
- *            usuario:
+ *            user:
  *              type: string
- *            correo:
+ *            email:
  *              type: string
- *            ciudad:
+ *            city:
  *              type: string
- *            imagen:
+ *            image:
  *              type: string
- *            contraseña:
+ *            password:
  *              type: string
- *            leidos:
+ *            read:
  *              type: array
  *              items:
  *                type: array
  *                items:
- *                  oneOf:
- *                    - type: string
- *                    - type: string
- *            porLeer:
+ *                    bookID:
+ *                      type: string
+ *                    finishedDate:
+ *                      type: string
+ *            toBeRead:
  *              type: array
  *              items:
  *                type: string
- *            leyendo:
+ *            reading:
  *              type: array
  *              items:
  *                type: array
@@ -86,52 +87,52 @@ router.get('/:id', controller.ver);
  *                  oneOf:
  *                    - type: string
  *                    - type: number
- *            amigos:
+ *            friends:
  *              type: array
  *              items:
  *                type: string
  *    responses:
  *      201:
- *        description: Objeto del autor creado correctamente
+ *        description: Reader's object successfully created
  *      400:
- *        description: Error al crear el autor 
+ *        description: Something went wrong while creating the reader
  */
-router.post('/', express.json(), controller.crear);
+router.post('/', express.json(), controller.create);
 
 /**
  * @swagger
- * /lectores/{id}:
+ * /readers/{id}:
  *  put:
  *    tags: 
- *      - Lectores
- *    description: actualizar un lector en específico
+ *      - Readers
+ *    description: Update certain reader
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del lector que se quiere actualizar
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *      - in: body
- *        name: lectorActualizado
- *        description: un JSON que contenga la información del lector actualizado
+ *        name: updatedReader
+ *        description: JSON with the updated reader's information
  *        required: true
  *        schema: 
  *          type: object
  *          properties:
- *            nombre:
+ *            name:
  *              type: string
- *            usuario:
+ *            user:
  *              type: string
- *            correo:
+ *            email:
  *              type: string
- *            ciudad:
+ *            city:
  *              type: string
- *            imagen:
+ *            image:
  *              type: string
- *            contraseña:
+ *            password:
  *              type: string
- *            leidos:
+ *            read:
  *              type: array
  *              items:
  *                type: array
@@ -139,11 +140,11 @@ router.post('/', express.json(), controller.crear);
  *                  oneOf:
  *                    - type: string
  *                    - type: string
- *            porLeer:
+ *            toBeRead:
  *              type: array
  *              items:
  *                type: string
- *            leyendo:
+ *            reading:
  *              type: array
  *              items:
  *                type: array
@@ -151,38 +152,38 @@ router.post('/', express.json(), controller.crear);
  *                  oneOf:
  *                    - type: string
  *                    - type: number
- *            amigos:
+ *            friends:
  *              type: array
  *              items:
  *                type: string
  *    responses:
  *      200:
- *        description: Actualización de lector exitosa
+ *        description: Reader successfully updated
  *      400:
- *        description: Error al actualizar el lector
+ *        description: Something went wrong while updating the reader
  */
-router.put('/:id', express.json(), controller.actualizar);
+router.put('/:id', express.json(), controller.update);
 
 /**
  * @swagger
- * /lectores/{id}:
+ * /readers/{id}:
  *  delete:
  *    tags: 
- *      - Lectores
- *    description: Eliminar un lector de acuerdo a su id
+ *      - Readers
+ *    description: Delete certain reader
  *    parameters:
  *      - in: path
  *        name: id
- *        description: id del lector a eliminar
+ *        description: Reader's ID
  *        required: true
  *        schema:
  *          type: string
  *    responses:
  *      200:
- *        description: eliminación exitosa
+ *        description: Reader successfully deleted
  *      400:
- *        description: error al eliminar el lector
+ *        description: Something went wrong while deleting the book
  */
-router.delete('/:id', controller.eliminar);
+router.delete('/:id', controller.delete);
 
 module.exports = router;
