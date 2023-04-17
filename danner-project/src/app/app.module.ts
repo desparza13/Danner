@@ -10,6 +10,9 @@ import { NavComponent } from './layouts/authors/nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { HomeReadersComponent } from './components/readers/home-readers/home-readers.component';
+import { RatingsFilterComponent } from './components/readers/home-readers/ratings-filter/ratings-filter.component';
+import { GenreFilterComponent } from './components/readers/home-readers/genre-filter/genre-filter.component';
+import { ReadingChallengeWidgetComponent } from './components/readers/home-readers/reading-challenge-widget/reading-challenge-widget.component';
 
 
 @NgModule({
@@ -17,6 +20,10 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
     AppComponent,
     FooterComponent,
     NavComponent,
+    HomeReadersComponent,
+    RatingsFilterComponent,
+    GenreFilterComponent,
+    ReadingChallengeWidgetComponent,
     HomeReadersComponent
   ],
   imports: [

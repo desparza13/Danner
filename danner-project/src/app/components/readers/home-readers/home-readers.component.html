@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="page">
     <mat-toolbar color="primary">
         <mat-toolbar-row>
@@ -18,99 +19,74 @@
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
-                <div class="ratings">
-                    <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true"
-                                                (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-list-item>
-                                    Ratings
-                                </mat-list-item>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div *ngFor="let rating of ratings; let i = index">
-                                <mat-checkbox (change)="rating.checked = $event.checked">
-                                    {{rating.name}}
-                                </mat-checkbox>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
+                <app-ratings-filter></app-ratings-filter>
                 <mat-divider></mat-divider>
-                <div class="genre">
-                    <form>
-                        <mat-form-field class="genre-chip-list" appearance="fill">
-                            <mat-label>Genres</mat-label>
-                            <mat-chip-grid #chipGrid aria-label="Genre selection">
-                                <mat-chip-option *ngFor="let genre of genres" (removed)="remove(genre)" selected color="primary" >
-                                    {{genre}}
-                                    <button matChipRemove [attr.aria-label]="'remove ' + genre">
-                                    <mat-icon>cancel</mat-icon>
-                                    </button>
-                                </mat-chip-option>
-                            </mat-chip-grid>
-                            <input placeholder="Add genres..." #genreInput [formControl]="genreCtrl"
-                            [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="add($event)"/>                          
-                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                <mat-option *ngFor="let genre of filteredGenres | async" [value]="genre">
-                                    {{genre}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </form>                      
-                </div>
+                <app-genre-filter></app-genre-filter>
                 <mat-divider></mat-divider>
-                <div class="readingChallenge">
-                    <mat-list-item>
-                        Reading challenge
-                    </mat-list-item>
-                    <div class="book-display">
-                        <div class="book-group">
-                            <div class="small-book book" id="book5"></div>
-                            <div class="big-book book" id="book1"></div>
-                            <div class="small-book book" id="book6"></div>
-                            <div class="big-book book" id="book2"></div>
-                            <div class="small-book book" id="book7"></div>
-                            <div class="big-book book" id="book3"></div>
-                            <div class="small-book book" id="book8"></div>
-                            <div class="big-book book" id="book4"></div>
-                        </div>
-                    </div>
-                    <mat-progress-bar mode="determinate" value="{{readingChallengeProgress}}"></mat-progress-bar>
-                    <h3>Progress: {{readingChallengeProgress}}%</h3>
-                </div>
+                <app-reading-challenge-widget></app-reading-challenge-widget>
             </mat-list>
         </mat-sidenav>
         <mat-sidenav-content>
             <mat-tab-group>
                 <mat-tab label="All">
-                    <mat-card *ngFor="let book of books">
-                        <mat-card-header>
-                            <mat-card-title>{{ book.title }}</mat-card-title>
-                            <mat-card-subtitle>{{ book.date | date }}</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <p>Genre: {{ book.genre }}</p>
-                            <p>Author: {{ book.author }}</p>
-                            <div class="rating">
-                                <span class="material-icons star" *ngFor="let star in getStars(book.averageRating)">star</span>
+                    <div class="all-container">
+                        <div class="all Book" *ngFor="let book of allBooks">
+                            <div class="cover">
+                                <img src="{{book.image}}">
                             </div>
-                            <p>Description: {{ book.description }}</p>
-                            <p>Pages: {{ book.pages }}</p>
-                        </mat-card-content>
-                    </mat-card>
+                            <div class="description">
+                                <h2 class="title">{{book.title}}</h2>
+                                <span class="author">By {{book.author}}</span><br>
+                                <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
+                                <p class="plot">{{book.description}}</p>
+                            </div>                      
+                        </div>
+                    </div>
                 </mat-tab>
                 <mat-tab label="Current">
-                    Current
+                    <div class="current-container">
+                        <div class="current Book" *ngFor="let book of currentBooks">
+                            <div class="cover">
+                                <img src="{{book.bookId.image}}">
+                            </div>
+                            <div class="description">
+                                <h2 class="title">{{book.bookId.title}}</h2>
+                                <span class="author">By {{book.bookId.author}}</span><br>
+                                <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
+                                <p class="plot">{{book.bookId.description}}</p>
+                            </div>                      
+                        </div>
+                    </div>
                 </mat-tab>
                 <mat-tab label="To be read">
-                    To be read
+                    <div class="to-be-read-container">
+                        <div class="tbr Book" *ngFor="let book of tbrBooks">
+                            <div class="cover">
+                                <img src="{{book.image}}">
+                            </div>
+                            <div class="description">
+                                <h2 class="title">{{book.title}}</h2>
+                                <span class="author">By {{book.author}}</span><br>
+                                <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
+                                <p class="plot">{{book.description}}</p>
+                            </div>                      
+                        </div>
+                    </div>                
                 </mat-tab>
                 <mat-tab label="Finished">
-                    Finished
+                    <div class="finished-container">
+                        <div class="finished Book" *ngFor="let book of finishedBooks">
+                            <div class="cover">
+                                <img src="{{book.bookId.image}}">
+                            </div>
+                            <div class="description">
+                                <h2 class="title">{{book.bookId.title}}</h2>
+                                <span class="author">By {{book.bookId.author}}</span><br>
+                                <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
+                                <p class="plot">{{book.bookId.description}}</p>
+                            </div>                      
+                        </div>
+                    </div>
                 </mat-tab>
             </mat-tab-group>
         </mat-sidenav-content>
