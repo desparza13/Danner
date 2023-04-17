@@ -1,4 +1,3 @@
-
 const model = require('../models/reader');
 const ReadersController={
     list:(req, res)=>{
@@ -12,7 +11,11 @@ const ReadersController={
     },
     see:(req,res)=>{
         const id = req.params.id;
-        model.findById(id)
+        model.findById(id).populate([
+            {path: 'toBeRead', model: 'book'},
+            {path: 'read.bookId', model: 'book'},
+            {path: 'reading.bookId', model: 'book'}
+        ])
             .then(reader=>{
                 res.status(200).send(reader);
             })

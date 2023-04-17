@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Reader } from 'src/app/shared/interfaces/reader';
+import { Book } from 'src/app/shared/interfaces/book';
+import { ReaderService } from 'src/app/shared/services/reader.service';
 
 @Component({
   selector: 'app-reading-challenge-widget',
@@ -6,8 +9,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./reading-challenge-widget.component.scss']
 })
 export class ReadingChallengeWidgetComponent {
-  readingChallengeProgress: number = 50;
-  constructor(){
+  readerId="643d9026c9e38d96582f4528";
+  currentReader: Reader = {
+    name: "",
+    user: '',
+    email: '',
+    city: '',
+    image: '',
+    password: '',
+    read: [],
+    toBeRead: [],
+    reading: [],
+    friends: [],
+    readingChallenge: 0
+  };
+  finishedBooks: any;
+  readingChallengeProgress: string = '0';
+  
+  constructor(private readerService:ReaderService){
+    this.getCurrentReader();
     window.onload = function() {
       const book1 = document.getElementById('book1') as HTMLElement;
       const book2 = document.querySelector('#book2') as HTMLDivElement;
@@ -27,4 +47,25 @@ export class ReadingChallengeWidgetComponent {
       book8.style.backgroundImage = 'url(https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1602570691l/53138095._SY160_.jpg)';
     }
   }
+  getCurrentReader(){
+    this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
+      this.currentReader=response;
+      console.log("Reader",this.currentReader)
+      this.getFinishedBooks();
+      this.getProgress();
+    })
+  }
+  getFinishedBooks() {
+    const currentYear = new Date().getFullYear();
+    this.finishedBooks = this.currentReader.read.filter((book: any) => {
+      const finishedYear = new Date(book.finishedDate).getFullYear();
+      return finishedYear === currentYear;
+    });
+    console.log("Finished this year",this.finishedBooks);
+  }
+  getProgress(){
+    let progress = (this.finishedBooks.length * 100) / this.currentReader.readingChallenge;
+    this.readingChallengeProgress = (progress.toFixed(2));
+  }
+  
 }

@@ -8,5 +8,6 @@ export interface Reader {
     read: Array<object>,
     toBeRead: Array<string>,
     reading:Array<string>,
-    friends: Array<string>
+    friends: Array<string>,
+    readingChallenge: number
 }

@@ -12,7 +12,7 @@ import { GenreFilterComponent } from './genre-filter/genre-filter.component';
 })
 export class HomeReadersComponent {
   //Variables
-  readerId="643d6261ee6cb5cda8ed6589";
+  readerId="643d9026c9e38d96582f4528";
   allBooks: Array<Book>=[];
   currentBooks: any;
   tbrBooks: any;
@@ -28,14 +28,13 @@ export class HomeReadersComponent {
     read: [],
     toBeRead: [],
     reading: [],
-    friends: []
+    friends: [],
+    readingChallenge: 0
   };
 
   constructor(private bookService:BookService, private readerService:ReaderService) {
     this.getAllBooks();
     this.getCurrentReader();
-    console.log(this.allBooks);
-
   }
 
   //Functions

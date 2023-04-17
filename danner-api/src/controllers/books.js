@@ -24,6 +24,7 @@ const BooksController={
         let newBook = {
             title: req.body.title,
             date: req.body.date,
+            image: req.body.image,
             author: req.body.author,
             averageRating: req.body.averageRating,
             description: req.body.description,
@@ -43,6 +44,7 @@ const BooksController={
         let updatedBook = {
             title: req.body.title,
             date: req.body.date,
+            image: req.body.image,
             author: req.body.author,
             averageRating: req.body.averageRating,
             description: req.body.description,
