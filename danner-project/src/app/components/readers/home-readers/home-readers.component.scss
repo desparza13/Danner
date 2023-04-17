@@ -1,0 +1,145 @@
+.page{
+    margin:0px;
+    padding: 0;
+    height: calc(100vh - 60px - 60px); //altura sin el footer ni el nav
+    .mat-toolbar{
+        height: 8%;
+        background-color: "primary";
+        color: white;
+        display: flex;
+        align-items:center;
+    }
+    .mat-sidenav-container{
+        height: 92%;
+    }
+}
+h2{
+    margin: 0;
+}
+.mat-expansion-panel{
+    background-color: transparent;
+    box-shadow: none;
+    margin: 0;
+}
+
+.mat-sidenav{
+    width: 20%;
+    background-color: 'primary';
+}
+
+.mat-icon {
+    color: white;
+    margin:5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &.active {
+        transform: rotate(180deg);
+    }
+}
+
+.searchBar {
+    margin: 0 5px;
+    width: calc(100% - 10px);
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px;
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+}
+
+
+.ratings {
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+}
+.genre-chip-list {
+    width: 100%;
+
+}
+.form, .mat-form-field, .mat-label, .mat-chip-grid, .mat-chip-row, .button, .input, .mat-autocomplete, .mat-option{
+    background-color: transparent;
+}
+.book-display{
+    margin-top: 10%;
+    margin-bottom: 20%;
+    display:grid;
+    place-items: center;
+}
+.book-group, .book{
+    aspect-ratio: 5 / 7;
+}
+.book-group, .big-book{
+    width: 7vmin;
+}
+.book{
+    background-color: 'accent';
+    position: absolute;
+    transition: transform 800ms cubic-bezier(.05, .43, .25, .95) ;
+}
+.big-book{
+    width: 7vmin;
+    border-radius: 1vmin;
+}
+.small-book{
+    width: 4vmin;
+    border-radius: 0.5vmin;
+}
+/*Acomodo*/
+.big-book:nth-child(2){
+    transform: translateX(-20%) rotate(-2deg);
+}
+.big-book:nth-child(4){
+    transform: rotate(-4deg);
+}
+.big-book:nth-child(6){
+    transform: translateX(-8%) rotate(-5deg);
+}
+.big-book:nth-child(8){
+    transform: translateX(40%, 3%) rotate(5deg);
+}
+/*Transiciones en hover*/
+.book-group:hover > .big-book:nth-child(2){
+    transform:translate(-70%, 15%) rotate(-20deg);
+}
+.book-group:hover > .big-book:nth-child(4){
+    transform:translate(-50%, 5%) rotate(-7deg);
+}
+.book-group:hover > .big-book:nth-child(6){
+    transform:translate(-20%, 5%) rotate(7deg);
+}
+.book-group:hover > .big-book:nth-child(8){
+    transform:translate(25%, 15%) rotate(20deg);
+}
+.book-group:hover > .small-book:nth-child(1){
+    transform:translate(300%, -15%) rotate(-15deg);
+}
+.book-group:hover > .small-book:nth-child(3){
+    transform:translate(250%, 160%) rotate(15deg);
+}
+.book-group:hover > .small-book:nth-child(5){
+    transform:translate(-250%, 160%) rotate(-15deg);
+}
+.book-group:hover > .small-book:nth-child(7){
+    transform:translate(-300%, -15%) rotate(15deg);
+}
+.mat-progress-bar{
+    margin-top: 50px;
+}
+
+@media (max-width: 599px) {
+    .mat-sidenav-container, .toggleMenu {
+        display: none;
+    }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+    .mat-sidenav-container, .toggleMenu {
+        display: none;
+    }
+}

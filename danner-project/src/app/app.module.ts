@@ -9,13 +9,15 @@ import { FooterComponent } from './layouts/authors/footer/footer.component';
 import { NavComponent } from './layouts/authors/nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
+import { HomeReadersComponent } from './components/readers/home-readers/home-readers.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    NavComponent
+    NavComponent,
+    HomeReadersComponent
   ],
   imports: [
     
