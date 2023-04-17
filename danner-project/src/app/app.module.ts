@@ -5,17 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './layouts/authors/footer/footer.component';
-import { NavComponent } from './layouts/authors/nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
-
-
 @NgModule({
   declarations: [
-    AppComponent,
-    FooterComponent,
-    NavComponent
+    AppComponent
   ],
   imports: [
     

@@ -58,6 +58,8 @@ router.get('/:id', controller.see);
  *              type: string
  *            date:
  *              type: string
+ *            image:
+ *              type: string
  *            genre:
  *              type: string
  *            author:
@@ -100,6 +102,8 @@ router.post('/', express.json(), controller.create);
  *            title:
  *              type: string
  *            date:
+ *              type: string
+ *            image:
  *              type: string
  *            genre:
  *              type: string

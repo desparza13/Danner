@@ -3,6 +3,7 @@ const {Schema,model} = require('mongoose');
 const bookSchema = new Schema({
     title: {type:String, required:true},
     date: {type:Date, default:Date.now()},
+    image: {type:String, default:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722941l/6148028._SY75_.jpg"},
     genre: {type:String, required:true},
     author: {type:String, required:true},
     averageRating: {type:Number, default: 0},
