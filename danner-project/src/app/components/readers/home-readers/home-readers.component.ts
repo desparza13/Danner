@@ -15,6 +15,7 @@ export class HomeReadersComponent {
   //Variables
   readerId="643d9026c9e38d96582f4528";
   allBooks: Array<Book>=[];
+  ratingFilters: Array<Number>=[1,2,3,4,5];
   filteredAllBooks: Array<Book>=[];
   filteredCurrentBooks: any;
   filteredTbrBooks: any;
@@ -40,8 +41,12 @@ export class HomeReadersComponent {
   ngOnInit(){
     this.getAllBooks();
     this.getCurrentReader();
+    this.filteredAllBooks = this.allBooks;
+    this.filteredCurrentBooks = this.currentBooks;
+    this.filteredTbrBooks = this.tbrBooks;
+    this.filteredFinishedBooks = this.finishedBooks;
     this.searchControl.valueChanges.subscribe(() => {
-      this.filterBooksSearchBar();
+      this.filterBooks();
     });
   }
   constructor(private bookService:BookService, private readerService:ReaderService) {
@@ -91,19 +96,38 @@ export class HomeReadersComponent {
       this.filteredAllBooks = this.allBooks;
     })
   }
-  filterBooksSearchBar() {
-    if(this.searchControl.value!=null){
+
+  //Filtering
+  //Get selected rating values
+  getRatingFilters(ratings: any[] | undefined){
+    this.ratingFilters=[];
+    if(ratings!=undefined){
+      for(let i=0; i<5; i++){
+        if(ratings[i].checked==true){
+          this.ratingFilters.push(i+1);
+        }
+      }
+      if(this.ratingFilters.length==0){
+        this.ratingFilters=[1,2,3,4,5]
+      }     
+    }else{
+      this.ratingFilters=[1,2,3,4,5]
+    }
+    return this.ratingFilters;
+  }
+  filterBySearchValues(){
+    if(this.searchControl.value!=null && this.searchControl.value!=''){
       const search = this.searchControl.value.toLowerCase();
-      this.filteredAllBooks = this.allBooks.filter(book =>
+      this.filteredAllBooks = this.filteredAllBooks.filter((book:any) =>
         book.title.toLowerCase().includes(search)
       );
-      this.filteredCurrentBooks = this.currentBooks.filter((book:any) =>
+      this.filteredCurrentBooks = this.filteredCurrentBooks.filter((book:any) =>
         book.bookId.title.toLowerCase().includes(search)
       );
-      this.filteredTbrBooks = this.tbrBooks.filter((book:any) =>
+      this.filteredTbrBooks = this.filteredTbrBooks.filter((book:any) =>
         book.title.toLowerCase().includes(search)
       );
-      this.filteredFinishedBooks = this.finishedBooks.filter((book:any) =>
+      this.filteredFinishedBooks = this.filteredFinishedBooks.filter((book:any) =>
         book.bookId.title.toLowerCase().includes(search)
       );
     }else{
@@ -111,36 +135,30 @@ export class HomeReadersComponent {
       this.filteredCurrentBooks = this.currentBooks;
       this.filteredTbrBooks = this.tbrBooks;
       this.filteredFinishedBooks = this.finishedBooks;
+      this.filterByRating(this.ratingFilters);
     }
   }
-  filterBooksRatings(ratings: any[]) {
-    // Aquí se procesan los ratings recibidos (Hacer un arreglo con ratings validos)
-    let ratingFilters:Array<Number> = []
-    for(let i=0; i<5; i++){
-      if(ratings[i].checked==true){
-        ratingFilters.push(i+1);
-      }
-    }
-    if(ratingFilters.length==0){
-      for(let i=1; i<=5; i++){
-        ratingFilters.push(i);
-      }
-    }
-    console.log(ratingFilters)
-    //Restaurar filtrado por barra de busqueda
-    this.filterBooksSearchBar();
-    // Actualizar los libros filtrados según los nuevos ratings
+  filterByRating(ratings: any[] | undefined){
+    this.ratingFilters = this.getRatingFilters(ratings);
+    console.log(this.ratingFilters)
     this.filteredAllBooks = this.filteredAllBooks.filter(book =>
-      ratingFilters.includes(Math.floor(book.averageRating))
+      this.ratingFilters.includes(Math.floor(book.averageRating))
     );
     this.filteredCurrentBooks = this.filteredCurrentBooks.filter((book:any) =>
-      ratingFilters.includes(Math.floor(book.bookId.averageRating))
+      this.ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
     this.filteredTbrBooks = this.filteredTbrBooks.filter((book:any) =>
-      ratingFilters.includes(Math.floor(book.averageRating))
+      this.ratingFilters.includes(Math.floor(book.averageRating))
     );
     this.filteredFinishedBooks = this.filteredFinishedBooks.filter((book:any) =>
-      ratingFilters.includes(Math.floor(book.bookId.averageRating))
+        this.ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
   }
+  filterBooks(ratings?: any[]){
+    this.filterBySearchValues();
+    console.log("Search",this.filteredAllBooks)
+    this.filterByRating(ratings);
+    console.log("Rating",this.filteredAllBooks)
+  }
+
 }
