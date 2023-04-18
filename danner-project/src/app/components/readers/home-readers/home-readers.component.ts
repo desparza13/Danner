@@ -15,7 +15,10 @@ export class HomeReadersComponent {
   //Variables
   readerId="643d9026c9e38d96582f4528";
   allBooks: Array<Book>=[];
-  filteredBooks: Array<Book>=[];
+  filteredAllBooks: Array<Book>=[];
+  filteredCurrentBooks: any;
+  filteredTbrBooks: any;
+  filteredFinishedBooks: any;
   currentBooks: any;
   tbrBooks: any;
   finishedBooks: any;
@@ -69,33 +72,39 @@ export class HomeReadersComponent {
   getCurrentlyReadingBooks(){
     this.currentBooks = this.currentReader.reading;
     console.log("Reading",this.currentBooks);
+    this.filteredCurrentBooks = this.currentBooks;
   }
   getTbrBooks(){
     this.tbrBooks = this.currentReader.toBeRead;
     console.log("To be read",this.tbrBooks);
+    this.filteredTbrBooks = this.tbrBooks;
   }
   getFinishedBooks(){
     this.finishedBooks = this.currentReader.read;
     console.log("Finished",this.finishedBooks);
+    this.filteredFinishedBooks = this.finishedBooks;
   }
   //Get all books from database
   getAllBooks(){
     this.bookService.getBooks().subscribe((response:any)=>{
       console.log("Allbooks",response);
       this.allBooks=response;
-      this.filteredBooks = this.allBooks;
+      this.filteredAllBooks = this.allBooks;
     })
-  }
-  detectEnter(event: KeyboardEvent){
-    if (event.key==='Enter'){
-      this.filterBooks();
-    }
   }
   filterBooks() {
     const search = this.searchControl.value.toLowerCase();
-  
-    this.filteredBooks = this.allBooks.filter(book =>
+    this.filteredAllBooks = this.allBooks.filter(book =>
       book.title.toLowerCase().includes(search)
+    );
+    this.filteredCurrentBooks = this.currentBooks.filter((book:any) =>
+      book.bookId.title.toLowerCase().includes(search)
+    );
+    this.filteredTbrBooks = this.tbrBooks.filter((book:any) =>
+      book.title.toLowerCase().includes(search)
+    );
+    this.filteredFinishedBooks = this.finishedBooks.filter((book:any) =>
+      book.bookId.title.toLowerCase().includes(search)
     );
   }
 }

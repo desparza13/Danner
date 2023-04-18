@@ -14,9 +14,9 @@
                 <br>
                 <div class="searchMyBooks">
                     <mat-form-field appearance="fill" class="searchBar">
-                        <input type="text" matInput placeholder="Search in my books by title" [formControl]="searchControl" [matAutocomplete]="auto">
+                        <input type="text" matInput placeholder="Search in my books by title" [formControl]="searchControl" [matAutocomplete]="auto" >
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let book of filteredBooks" [value]="book.title">
+                            <mat-option *ngFor="let book of filteredAllBooks" [value]="book.title">
                                 {{ book.title }}
                             </mat-option>
                         </mat-autocomplete>
@@ -33,7 +33,7 @@
             <mat-tab-group>
                 <mat-tab label="All">
                     <div class="all-container">
-                        <div class="all Book" *ngFor="let book of filteredBooks">
+                        <div class="all Book" *ngFor="let book of filteredAllBooks">
                             <div class="cover">
                                 <img src="{{book.image}}">
                             </div>
@@ -48,7 +48,7 @@
                 </mat-tab>
                 <mat-tab label="Current">
                     <div class="current-container">
-                        <div class="current Book" *ngFor="let book of currentBooks">
+                        <div class="current Book" *ngFor="let book of filteredCurrentBooks">
                             <div class="cover">
                                 <img src="{{book.bookId.image}}">
                             </div>
@@ -73,7 +73,7 @@
                 </mat-tab>
                 <mat-tab label="To be read">
                     <div class="to-be-read-container">
-                        <div class="tbr Book" *ngFor="let book of tbrBooks">
+                        <div class="tbr Book" *ngFor="let book of filteredTbrBooks">
                             <div class="cover">
                                 <img src="{{book.image}}">
                             </div>
@@ -98,7 +98,7 @@
                 </mat-tab>
                 <mat-tab label="Finished">
                     <div class="finished-container">
-                        <div class="finished Book" *ngFor="let book of finishedBooks">
+                        <div class="finished Book" *ngFor="let book of filteredFinishedBooks">
                             <div class="cover">
                                 <img src="{{book.bookId.image}}">
                             </div>
