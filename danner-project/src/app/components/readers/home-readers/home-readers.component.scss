@@ -46,10 +46,11 @@ h2{
     top: 50%;
     transform: translateY(-50%);
     right: 5px;
-    color: rgba(0, 0, 0, 0.54);
     cursor: pointer;
 }
-
+.mat-divider{
+    margin-bottom: 20px;
+}
 /*Content*/
 .current-container, .all-container, .to-be-read-container, .finished-container {
     display: flex;
@@ -110,6 +111,13 @@ h2{
         }
     }
 }
+.buttonsContainer{
+    display: flex;
+    justify-content:start;
+    align-items: start;
+    flex-direction: column;
+}
+
 
 /*Intento galería*/
 

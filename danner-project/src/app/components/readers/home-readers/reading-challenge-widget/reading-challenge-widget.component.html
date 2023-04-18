@@ -1,6 +1,6 @@
 <div class="readingChallenge">
     <mat-list-item>
-        Reading challenge
+        <h3>Reading challenge</h3>
     </mat-list-item>
     <div class="book-display">
         <div class="book-group">
@@ -15,5 +15,8 @@
         </div>
     </div>
     <mat-progress-bar mode="determinate" value="{{readingChallengeProgress}}"></mat-progress-bar>
-    <h3>Progress: {{readingChallengeProgress}}%</h3>
+    <div class="challengeData">
+        <p>Progress: {{readingChallengeProgress}}%</p>
+        <p>{{finishedBooks.length}} out of {{currentReader.readingChallenge}} books</p>
+    </div>
 </div>

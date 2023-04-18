@@ -11,11 +11,15 @@
     </mat-toolbar>
     <mat-sidenav-container >
         <mat-sidenav [(opened)]="opened" mode="side">
-            <mat-list>
+                <br>
                 <div class="searchMyBooks">
                     <mat-form-field appearance="fill" class="searchBar">
-                        <input matInput type="text" placeholder="Search in my books" class="searchInput">                     
-                        <mat-icon class="searchIcon">search</mat-icon>
+                        <input type="text" matInput placeholder="Search in my books by title" [formControl]="searchControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let book of filteredBooks" [value]="book.title">
+                                {{ book.title }}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
@@ -24,13 +28,12 @@
                 <app-genre-filter></app-genre-filter>
                 <mat-divider></mat-divider>
                 <app-reading-challenge-widget></app-reading-challenge-widget>
-            </mat-list>
         </mat-sidenav>
         <mat-sidenav-content>
             <mat-tab-group>
                 <mat-tab label="All">
                     <div class="all-container">
-                        <div class="all Book" *ngFor="let book of allBooks">
+                        <div class="all Book" *ngFor="let book of filteredBooks">
                             <div class="cover">
                                 <img src="{{book.image}}">
                             </div>
@@ -54,6 +57,16 @@
                                 <span class="author">By {{book.bookId.author}}</span><br>
                                 <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
                                 <p class="plot">{{book.bookId.description}}</p>
+                            </div>
+                            <div class="buttonsContainer">
+                                <button mat-fab extended color="accent">
+                                    <mat-icon>check_circle</mat-icon>
+                                    Mark as finished
+                                </button>
+                                <button mat-fab extended color="accent">
+                                    <mat-icon>book</mat-icon>
+                                    Update progress
+                                </button>       
                             </div>                      
                         </div>
                     </div>
@@ -69,6 +82,16 @@
                                 <span class="author">By {{book.author}}</span><br>
                                 <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
                                 <p class="plot">{{book.description}}</p>
+                            </div>
+                            <div class="buttonsContainer">
+                                <button mat-fab extended color="accent">
+                                    <mat-icon>check_circle</mat-icon>
+                                    Mark as finished
+                                </button>
+                                <button mat-fab extended color="accent">
+                                    <mat-icon>book</mat-icon>
+                                    Update progress
+                                </button>       
                             </div>                      
                         </div>
                     </div>                

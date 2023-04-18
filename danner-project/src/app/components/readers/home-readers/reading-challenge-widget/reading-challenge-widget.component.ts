@@ -25,9 +25,10 @@ export class ReadingChallengeWidgetComponent {
   };
   finishedBooks: any;
   readingChallengeProgress: string = '0';
-  
-  constructor(private readerService:ReaderService){
+  ngOnInit(){
     this.getCurrentReader();
+  }
+  constructor(private readerService:ReaderService){
     window.onload = function() {
       const book1 = document.getElementById('book1') as HTMLElement;
       const book2 = document.querySelector('#book2') as HTMLDivElement;

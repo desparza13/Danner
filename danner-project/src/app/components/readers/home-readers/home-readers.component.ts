@@ -5,6 +5,7 @@ import { Book } from 'src/app/shared/interfaces/book';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { RatingsFilterComponent } from './ratings-filter/ratings-filter.component';
 import { GenreFilterComponent } from './genre-filter/genre-filter.component';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-home-readers',
   templateUrl: './home-readers.component.html',
@@ -14,10 +15,12 @@ export class HomeReadersComponent {
   //Variables
   readerId="643d9026c9e38d96582f4528";
   allBooks: Array<Book>=[];
+  filteredBooks: Array<Book>=[];
   currentBooks: any;
   tbrBooks: any;
   finishedBooks: any;
   opened = false;
+  searchControl = new FormControl();
   currentReader: Reader = {
     name: "",
     user: '',
@@ -31,10 +34,15 @@ export class HomeReadersComponent {
     friends: [],
     readingChallenge: 0
   };
-
-  constructor(private bookService:BookService, private readerService:ReaderService) {
+  ngOnInit(){
     this.getAllBooks();
     this.getCurrentReader();
+    this.searchControl.valueChanges.subscribe(() => {
+      this.filterBooks();
+    });
+  }
+  constructor(private bookService:BookService, private readerService:ReaderService) {
+
   }
 
   //Functions
@@ -75,6 +83,19 @@ export class HomeReadersComponent {
     this.bookService.getBooks().subscribe((response:any)=>{
       console.log("Allbooks",response);
       this.allBooks=response;
+      this.filteredBooks = this.allBooks;
     })
+  }
+  detectEnter(event: KeyboardEvent){
+    if (event.key==='Enter'){
+      this.filterBooks();
+    }
+  }
+  filterBooks() {
+    const search = this.searchControl.value.toLowerCase();
+  
+    this.filteredBooks = this.allBooks.filter(book =>
+      book.title.toLowerCase().includes(search)
+    );
   }
 }
