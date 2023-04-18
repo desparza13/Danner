@@ -101,7 +101,7 @@ export class HomeReadersComponent {
   //Get selected rating values
   getRatingFilters(ratings: any[] | undefined){
     this.ratingFilters=[];
-    if(ratings!=undefined){
+    if(ratings!=undefined && ratings.length>0){
       for(let i=0; i<5; i++){
         if(ratings[i].checked==true){
           this.ratingFilters.push(i+1);
@@ -135,6 +135,7 @@ export class HomeReadersComponent {
       this.filteredCurrentBooks = this.currentBooks;
       this.filteredTbrBooks = this.tbrBooks;
       this.filteredFinishedBooks = this.finishedBooks;
+      console.log("ratings desde no busqueda",this.ratingFilters)
       this.filterByRating(this.ratingFilters);
     }
   }
