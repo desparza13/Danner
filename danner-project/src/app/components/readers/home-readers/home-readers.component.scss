@@ -22,9 +22,11 @@ h2{
     margin: 0;
 }
 
-.mat-sidenav{
+.mat-sidenav {
     width: 20%;
-    background-color: 'primary';
+}
+::ng-deep .mat-sidenav{
+    background-color: #fae5df;
 }
 
 .mat-icon {

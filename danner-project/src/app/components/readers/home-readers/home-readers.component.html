@@ -23,7 +23,7 @@
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
-                <app-ratings-filter></app-ratings-filter>
+                <app-ratings-filter (ratingsChanged)="filterBooksRatings($event)"></app-ratings-filter>
                 <mat-divider></mat-divider>
                 <app-genre-filter></app-genre-filter>
                 <mat-divider></mat-divider>

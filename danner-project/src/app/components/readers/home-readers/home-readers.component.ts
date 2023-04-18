@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { BookService } from 'src/app/shared/services/book.service';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Book } from 'src/app/shared/interfaces/book';
@@ -41,11 +41,10 @@ export class HomeReadersComponent {
     this.getAllBooks();
     this.getCurrentReader();
     this.searchControl.valueChanges.subscribe(() => {
-      this.filterBooks();
+      this.filterBooksSearchBar();
     });
   }
   constructor(private bookService:BookService, private readerService:ReaderService) {
-
   }
 
   //Functions
@@ -53,7 +52,7 @@ export class HomeReadersComponent {
   getStars(averageRating: number): string[] {
     const integer = Math.floor(averageRating);
     const stars =[];
-    for(let i = 0; i < 3; i++){
+    for(let i = 0; i < integer; i++){
       stars.push('★');
     }
     return stars;
@@ -92,19 +91,56 @@ export class HomeReadersComponent {
       this.filteredAllBooks = this.allBooks;
     })
   }
-  filterBooks() {
-    const search = this.searchControl.value.toLowerCase();
-    this.filteredAllBooks = this.allBooks.filter(book =>
-      book.title.toLowerCase().includes(search)
+  filterBooksSearchBar() {
+    if(this.searchControl.value!=null){
+      const search = this.searchControl.value.toLowerCase();
+      this.filteredAllBooks = this.allBooks.filter(book =>
+        book.title.toLowerCase().includes(search)
+      );
+      this.filteredCurrentBooks = this.currentBooks.filter((book:any) =>
+        book.bookId.title.toLowerCase().includes(search)
+      );
+      this.filteredTbrBooks = this.tbrBooks.filter((book:any) =>
+        book.title.toLowerCase().includes(search)
+      );
+      this.filteredFinishedBooks = this.finishedBooks.filter((book:any) =>
+        book.bookId.title.toLowerCase().includes(search)
+      );
+    }else{
+      this.filteredAllBooks = this.allBooks;
+      this.filteredCurrentBooks = this.currentBooks;
+      this.filteredTbrBooks = this.tbrBooks;
+      this.filteredFinishedBooks = this.finishedBooks;
+    }
+  }
+  filterBooksRatings(ratings: any[]) {
+    // Aquí se procesan los ratings recibidos (Hacer un arreglo con ratings validos)
+    let ratingFilters:Array<Number> = []
+    for(let i=0; i<5; i++){
+      if(ratings[i].checked==true){
+        ratingFilters.push(i+1);
+      }
+    }
+    if(ratingFilters.length==0){
+      for(let i=1; i<=5; i++){
+        ratingFilters.push(i);
+      }
+    }
+    console.log(ratingFilters)
+    //Restaurar filtrado por barra de busqueda
+    this.filterBooksSearchBar();
+    // Actualizar los libros filtrados según los nuevos ratings
+    this.filteredAllBooks = this.filteredAllBooks.filter(book =>
+      ratingFilters.includes(Math.floor(book.averageRating))
     );
-    this.filteredCurrentBooks = this.currentBooks.filter((book:any) =>
-      book.bookId.title.toLowerCase().includes(search)
+    this.filteredCurrentBooks = this.filteredCurrentBooks.filter((book:any) =>
+      ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
-    this.filteredTbrBooks = this.tbrBooks.filter((book:any) =>
-      book.title.toLowerCase().includes(search)
+    this.filteredTbrBooks = this.filteredTbrBooks.filter((book:any) =>
+      ratingFilters.includes(Math.floor(book.averageRating))
     );
-    this.filteredFinishedBooks = this.finishedBooks.filter((book:any) =>
-      book.bookId.title.toLowerCase().includes(search)
+    this.filteredFinishedBooks = this.filteredFinishedBooks.filter((book:any) =>
+      ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
   }
 }

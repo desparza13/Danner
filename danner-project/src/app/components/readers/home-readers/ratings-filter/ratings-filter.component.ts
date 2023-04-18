@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, Output, EventEmitter} from '@angular/core';
 @Component({
   selector: 'app-ratings-filter',
   templateUrl: './ratings-filter.component.html',
@@ -15,4 +14,11 @@ export class RatingsFilterComponent {
     { name: '4 stars', checked: false, index:3 },
     { name: '5 stars', checked: false, index:4 }
   ];
+  @Output() ratingsChanged = new EventEmitter<any>();
+
+  onRatingChange(isChecked:boolean, index:any) {
+    this.ratings[index].checked = isChecked;
+    console.log(this.ratings);
+    this.ratingsChanged.emit(this.ratings);
+  }
 }

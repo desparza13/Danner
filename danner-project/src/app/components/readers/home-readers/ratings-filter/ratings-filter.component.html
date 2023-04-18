@@ -1,7 +1,7 @@
 <div class="ratings">
     <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true"
-                                (closed)="panelOpenState = false">
+                                (closed)="panelOpenState = false" class="mat-elevation-z0">
             <mat-expansion-panel-header>
             <mat-panel-title>
                 <mat-list-item>
@@ -10,7 +10,7 @@
             </mat-panel-title>
             </mat-expansion-panel-header>
             <div *ngFor="let rating of ratings; let i = index">
-                <mat-checkbox (change)="rating.checked = $event.checked">
+                <mat-checkbox (change)="onRatingChange($event.checked, i)">
                     {{rating.name}}
                 </mat-checkbox>
             </div>
