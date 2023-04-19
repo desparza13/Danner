@@ -7,5 +7,6 @@ export interface Book {
     author: string,
     averageRating: number,
     description: string,
-    pages: number
+    pages: number,
+    showDescription: boolean
 }

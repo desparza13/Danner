@@ -3,8 +3,6 @@ import { BookService } from 'src/app/shared/services/book.service';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Book } from 'src/app/shared/interfaces/book';
 import { Reader } from 'src/app/shared/interfaces/reader';
-import { RatingsFilterComponent } from './ratings-filter/ratings-filter.component';
-import { GenreFilterComponent } from './genre-filter/genre-filter.component';
 import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-home-readers',
@@ -12,20 +10,30 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./home-readers.component.scss']
 })
 export class HomeReadersComponent {
+hideDescription() {
+throw new Error('Method not implemented.');
+}
   //Variables
+  //Id proof of concept until login and register is implemented
   readerId="643d9026c9e38d96582f4528";
+  //Storing books
+    //Originals
   allBooks: Array<Book>=[];
-  ratingFilters: Array<Number>=[1,2,3,4,5];
-  genresFilters: Array<string>=[];
+  currentBooks: any;
+  tbrBooks: any;
+  finishedBooks: any;
+    //Filtered
   filteredAllBooks: Array<Book>=[];
   filteredCurrentBooks: any;
   filteredTbrBooks: any;
   filteredFinishedBooks: any;
-  currentBooks: any;
-  tbrBooks: any;
-  finishedBooks: any;
-  opened = false;
+  //Chosen filters
   searchControl = new FormControl();
+  ratingFilters: Array<Number>=[1,2,3,4,5];
+  ratingFiltersObject: any;
+  genresFilters: Array<string>=[];
+  //
+  opened = false;
   currentReader: Reader = {
     name: "",
     user: '',
@@ -39,6 +47,7 @@ export class HomeReadersComponent {
     friends: [],
     readingChallenge: 0
   };
+  showDescription = false;
   ngOnInit(){
     this.getAllBooks();
     this.getCurrentReader();
@@ -67,7 +76,6 @@ export class HomeReadersComponent {
   getCurrentReader(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
-      console.log("Reader",this.currentReader)
       this.getCurrentlyReadingBooks();
       this.getTbrBooks();
       this.getFinishedBooks();
@@ -97,12 +105,11 @@ export class HomeReadersComponent {
   //Filtering
   //Get selected rating values
   getRatingFilters(ratings: any[] | undefined){
+    this.ratingFiltersObject = ratings;
     this.ratingFilters=[];
-    console.log("getting Ratings");
-    console.log(ratings)
     if(ratings!=undefined && ratings.length>0){
       for(let i=0; i<5; i++){
-        if(ratings[i]!=undefined && ratings[i].checked==true){
+        if(ratings[i].checked==true){
           this.ratingFilters.push(i+1);
         }
       }
@@ -151,12 +158,10 @@ export class HomeReadersComponent {
       this.filteredCurrentBooks = this.currentBooks;
       this.filteredTbrBooks = this.tbrBooks;
       this.filteredFinishedBooks = this.finishedBooks;
-      this.filterByRating(this.ratingFilters);
     }
   }
   filterByRating(ratings: any[] | undefined){
     this.ratingFilters = this.getRatingFilters(ratings);
-    console.log(this.ratingFilters)
     this.filteredAllBooks = this.filteredAllBooks.filter(book =>
       this.ratingFilters.includes(Math.floor(book.averageRating))
     );
@@ -170,7 +175,8 @@ export class HomeReadersComponent {
         this.ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
   }
-  filterByGenres(){
+  filterByGenres(genres?:any){
+    this.getGenresFilters(genres);
     this.filteredAllBooks = this.filteredAllBooks.filter(book =>
       this.genresFilters.includes(book.genre.toLowerCase())
     );
@@ -184,25 +190,22 @@ export class HomeReadersComponent {
       this.genresFilters.includes(book.bookId.genre.toLowerCase())
     );
   }
-  filterBooksWithGenres(genres?:any){
-    console.log("Genres",genres);
-    this.getGenresFilters(genres);
+  filterBooks(ratings?: any[], genres?:any){
     this.filterBySearchValues();
-    this.filterByRating(this.ratingFilters);
-    this.filterByGenres();
-  }
-  filterBooks(ratings?: any[]){
-    console.log("All books before filter",this.filteredAllBooks)
-    this.filterBySearchValues();
-    console.log("Search value",this.searchControl.value)
-    console.log("All books after Search",this.filteredAllBooks)
-    
-    this.filterByRating(ratings);
-    console.log("Ratings",this.ratingFilters)
-    console.log("All books after rating", this.filteredAllBooks)
-    this.filterByGenres();
-    console.log("Genres",this.genresFilters)
-    console.log("All books after genres", this.filteredAllBooks)
+    let ratingToUse:any;
+    if(ratings!=undefined){
+      ratingToUse=ratings
+    }else{
+      ratingToUse=this.ratingFiltersObject
+    }
+    this.filterByRating(ratingToUse);
+    let genreToUse:any;
+    if(genres!=undefined){
+      genreToUse=genres
+    }else{
+      genreToUse=this.genresFilters
+    }
+    this.filterByGenres(genreToUse);
 
   }
 

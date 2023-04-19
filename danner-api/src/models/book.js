@@ -8,7 +8,8 @@ const bookSchema = new Schema({
     author: {type:String, required:true},
     averageRating: {type:Number, default: 0},
     description: {type:String, required:true},
-    pages: {type:Number, required:true}
+    pages: {type:Number, required:true},
+    showDescription: {type:Boolean, default:false}
 })
 
 module.exports = model('book', bookSchema)

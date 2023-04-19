@@ -23,9 +23,9 @@
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
-                <app-ratings-filter (ratingsChanged)="filterBooks($event)"></app-ratings-filter>
+                <app-ratings-filter (ratingsChanged)="filterBooks($event,undefined)"></app-ratings-filter>
                 <mat-divider></mat-divider>
-                <app-genre-filter (genresChanged)="filterBooksWithGenres($event)"></app-genre-filter>
+                <app-genre-filter (genresChanged)="filterBooks(undefined,$event)"></app-genre-filter>
                 <mat-divider></mat-divider>
                 <app-reading-challenge-widget></app-reading-challenge-widget>
         </mat-sidenav>
@@ -33,83 +33,79 @@
             <mat-tab-group>
                 <mat-tab label="All">
                     <div class="all-container">
-                        <div class="all Book" *ngFor="let book of filteredAllBooks">
-                            <div class="cover">
-                                <img src="{{book.image}}">
+                        <div class="book-card" *ngFor="let book of filteredAllBooks">
+                                <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
+                                <img [src]="book.image" alt="Book cover">
+                                <div *ngIf="book.showDescription" class="book-description">
+                                    {{book.description}}
+                                </div>
                             </div>
-                            <div class="description">
-                                <h2 class="title">{{book.title}}</h2>
-                                <span class="author">By {{book.author}}</span><br>
-                                <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
-                                <p class="plot">{{book.description}}</p>
-                            </div>                      
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.title}}</h3>
+                                <p class="book-author">{{book.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </mat-tab>
                 <mat-tab label="Current">
                     <div class="current-container">
-                        <div class="current Book" *ngFor="let book of filteredCurrentBooks">
-                            <div class="cover">
-                                <img src="{{book.bookId.image}}">
+                        <div class="book-card" *ngFor="let book of filteredCurrentBooks">
+                                <div class="book-image" (mouseenter)="book.bookId.showDescription=true" (mouseleave)="book.bookId.showDescription=false">
+                                <img [src]="book.bookId.image" alt="Book cover">
+                                <div *ngIf="book.bookId.showDescription" class="book-description">
+                                    {{book.bookId.description}}
+                                </div>
                             </div>
-                            <div class="description">
-                                <h2 class="title">{{book.bookId.title}}</h2>
-                                <span class="author">By {{book.bookId.author}}</span><br>
-                                <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
-                                <p class="plot">{{book.bookId.description}}</p>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.bookId.title}}</h3>
+                                <p class="book-author">{{book.bookId.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
+                                </div>
                             </div>
-                            <div class="buttonsContainer">
-                                <button mat-fab extended color="accent">
-                                    <mat-icon>check_circle</mat-icon>
-                                    Mark as finished
-                                </button>
-                                <button mat-fab extended color="accent">
-                                    <mat-icon>book</mat-icon>
-                                    Update progress
-                                </button>       
-                            </div>                      
                         </div>
                     </div>
                 </mat-tab>
                 <mat-tab label="To be read">
                     <div class="to-be-read-container">
-                        <div class="tbr Book" *ngFor="let book of filteredTbrBooks">
-                            <div class="cover">
-                                <img src="{{book.image}}">
+                        <div class="book-card" *ngFor="let book of filteredTbrBooks">
+                                <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
+                                <img [src]="book.image" alt="Book cover">
+                                <div *ngIf="book.showDescription" class="book-description">
+                                    {{book.description}}
+                                </div>
                             </div>
-                            <div class="description">
-                                <h2 class="title">{{book.title}}</h2>
-                                <span class="author">By {{book.author}}</span><br>
-                                <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
-                                <p class="plot">{{book.description}}</p>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.title}}</h3>
+                                <p class="book-author">{{book.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
+                                </div>
                             </div>
-                            <div class="buttonsContainer">
-                                <button mat-fab extended color="accent">
-                                    <mat-icon>check_circle</mat-icon>
-                                    Mark as finished
-                                </button>
-                                <button mat-fab extended color="accent">
-                                    <mat-icon>book</mat-icon>
-                                    Update progress
-                                </button>       
-                            </div>                      
                         </div>
-                    </div>                
+                    </div>
                 </mat-tab>
                 <mat-tab label="Finished">
                     <div class="finished-container">
-                        <div class="finished Book" *ngFor="let book of filteredFinishedBooks">
-                            <div class="cover">
-                                <img src="{{book.bookId.image}}">
+                        <div class="book-card" *ngFor="let book of filteredFinishedBooks">
+                                <div class="book-image" (mouseenter)="book.bookId.showDescription=true" (mouseleave)="book.bookId.showDescription=false">
+                                <img [src]="book.bookId.image" alt="Book cover">
+                                <div *ngIf="book.bookId.showDescription" class="book-description">
+                                    {{book.bookId.description}}
+                                </div>
                             </div>
-                            <div class="description">
-                                <h2 class="title">{{book.bookId.title}}</h2>
-                                <span class="author">By {{book.bookId.author}}</span><br>
-                                <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
-                                <p class="plot">{{book.bookId.description}}</p>
-                            </div>                      
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.bookId.title}}</h3>
+                                <p class="book-author">{{book.bookId.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)" class="fa fa-star checked"></span>
+                                </div>
+                            </div>
                         </div>
-                    </div> 
+                    </div>
                 </mat-tab>
             </mat-tab-group>
         </mat-sidenav-content>
