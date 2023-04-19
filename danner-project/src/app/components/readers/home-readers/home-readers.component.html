@@ -25,7 +25,7 @@
                 <mat-divider></mat-divider>
                 <app-ratings-filter (ratingsChanged)="filterBooks($event)"></app-ratings-filter>
                 <mat-divider></mat-divider>
-                <app-genre-filter></app-genre-filter>
+                <app-genre-filter (genresChanged)="filterBooksWithGenres($event)"></app-genre-filter>
                 <mat-divider></mat-divider>
                 <app-reading-challenge-widget></app-reading-challenge-widget>
         </mat-sidenav>

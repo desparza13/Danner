@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -17,6 +17,8 @@ export class GenreFilterComponent {
       map((genre: string | null) => (genre ? this._filter(genre) : this.allGenres.slice())),
     );
   }
+  @Output() genresChanged = new EventEmitter<any>();
+
   //Genre chips' variables
   separatorKeysCodes: number[] = [ENTER, COMMA];
   genreCtrl = new FormControl('');
@@ -54,6 +56,7 @@ export class GenreFilterComponent {
     // Clear the input value
     event.chipInput!.clear();
     this.genreCtrl.setValue(null);
+    this.genresChanged.emit(this.genres);
   }
 
   //Delete a chip
@@ -62,6 +65,7 @@ export class GenreFilterComponent {
     if (index >= 0) {
       this.genres.splice(index, 1);
     }
+    this.genresChanged.emit(this.genres);
   }
 
   //Create a chip when autocomplete value gets selected
@@ -69,6 +73,7 @@ export class GenreFilterComponent {
     this.genres.push(event.option.viewValue);
     this.genreInput.nativeElement.value = '';
     this.genreCtrl.setValue(null);
+    this.genresChanged.emit(this.genres);
   }
 
   //Autocomplete filter function

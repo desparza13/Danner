@@ -1,9 +1,9 @@
 export interface Book {
     finishedDate: string | number | Date;
     title: string,
-    date: string,
+    date: Date,
     image: string,
-    genre: Date,
+    genre: string,
     author: string,
     averageRating: number,
     description: string,

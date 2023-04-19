@@ -16,6 +16,7 @@ export class HomeReadersComponent {
   readerId="643d9026c9e38d96582f4528";
   allBooks: Array<Book>=[];
   ratingFilters: Array<Number>=[1,2,3,4,5];
+  genresFilters: Array<string>=[];
   filteredAllBooks: Array<Book>=[];
   filteredCurrentBooks: any;
   filteredTbrBooks: any;
@@ -75,23 +76,19 @@ export class HomeReadersComponent {
   //Get books
   getCurrentlyReadingBooks(){
     this.currentBooks = this.currentReader.reading;
-    console.log("Reading",this.currentBooks);
     this.filteredCurrentBooks = this.currentBooks;
   }
   getTbrBooks(){
     this.tbrBooks = this.currentReader.toBeRead;
-    console.log("To be read",this.tbrBooks);
     this.filteredTbrBooks = this.tbrBooks;
   }
   getFinishedBooks(){
     this.finishedBooks = this.currentReader.read;
-    console.log("Finished",this.finishedBooks);
     this.filteredFinishedBooks = this.finishedBooks;
   }
   //Get all books from database
   getAllBooks(){
     this.bookService.getBooks().subscribe((response:any)=>{
-      console.log("Allbooks",response);
       this.allBooks=response;
       this.filteredAllBooks = this.allBooks;
     })
@@ -101,9 +98,11 @@ export class HomeReadersComponent {
   //Get selected rating values
   getRatingFilters(ratings: any[] | undefined){
     this.ratingFilters=[];
+    console.log("getting Ratings");
+    console.log(ratings)
     if(ratings!=undefined && ratings.length>0){
       for(let i=0; i<5; i++){
-        if(ratings[i].checked==true){
+        if(ratings[i]!=undefined && ratings[i].checked==true){
           this.ratingFilters.push(i+1);
         }
       }
@@ -114,6 +113,23 @@ export class HomeReadersComponent {
       this.ratingFilters=[1,2,3,4,5]
     }
     return this.ratingFilters;
+  }
+  getGenresFilters(genres: any[] | undefined){
+    this.genresFilters=[];
+    if(genres!=undefined && genres.length>0){
+      for(let i=0; i<genres.length; i++){
+          this.genresFilters.push(genres[i].toLowerCase());
+      }
+      if(this.genresFilters.length==0){
+        for(let i=0; i<this.allBooks.length; i++){
+          this.genresFilters.push(this.allBooks[i].genre.toLowerCase());
+        }      
+      }     
+    }else{
+      for(let i=0; i<this.allBooks.length; i++){
+        this.genresFilters.push(this.allBooks[i].genre.toLowerCase());
+      }
+    }
   }
   filterBySearchValues(){
     if(this.searchControl.value!=null && this.searchControl.value!=''){
@@ -135,7 +151,6 @@ export class HomeReadersComponent {
       this.filteredCurrentBooks = this.currentBooks;
       this.filteredTbrBooks = this.tbrBooks;
       this.filteredFinishedBooks = this.finishedBooks;
-      console.log("ratings desde no busqueda",this.ratingFilters)
       this.filterByRating(this.ratingFilters);
     }
   }
@@ -155,11 +170,40 @@ export class HomeReadersComponent {
         this.ratingFilters.includes(Math.floor(book.bookId.averageRating))
     );
   }
-  filterBooks(ratings?: any[]){
+  filterByGenres(){
+    this.filteredAllBooks = this.filteredAllBooks.filter(book =>
+      this.genresFilters.includes(book.genre.toLowerCase())
+    );
+    this.filteredCurrentBooks = this.filteredCurrentBooks.filter((book:any) =>
+      this.genresFilters.includes(book.bookId.genre.toLowerCase())
+    );
+    this.filteredTbrBooks = this.filteredTbrBooks.filter((book:any) =>
+      this.genresFilters.includes(book.genre.toLowerCase())
+    );
+    this.filteredFinishedBooks = this.filteredFinishedBooks.filter((book:any) =>
+      this.genresFilters.includes(book.bookId.genre.toLowerCase())
+    );
+  }
+  filterBooksWithGenres(genres?:any){
+    console.log("Genres",genres);
+    this.getGenresFilters(genres);
     this.filterBySearchValues();
-    console.log("Search",this.filteredAllBooks)
+    this.filterByRating(this.ratingFilters);
+    this.filterByGenres();
+  }
+  filterBooks(ratings?: any[]){
+    console.log("All books before filter",this.filteredAllBooks)
+    this.filterBySearchValues();
+    console.log("Search value",this.searchControl.value)
+    console.log("All books after Search",this.filteredAllBooks)
+    
     this.filterByRating(ratings);
-    console.log("Rating",this.filteredAllBooks)
+    console.log("Ratings",this.ratingFilters)
+    console.log("All books after rating", this.filteredAllBooks)
+    this.filterByGenres();
+    console.log("Genres",this.genresFilters)
+    console.log("All books after genres", this.filteredAllBooks)
+
   }
 
 }

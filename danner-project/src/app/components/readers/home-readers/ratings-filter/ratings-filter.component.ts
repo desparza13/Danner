@@ -18,6 +18,7 @@ export class RatingsFilterComponent {
 
   onRatingChange(isChecked:boolean, index:any) {
     this.ratings[index].checked = isChecked;
+    console.log("Ratings in component",this.ratings)
     this.ratingsChanged.emit(this.ratings);
   }
 }
