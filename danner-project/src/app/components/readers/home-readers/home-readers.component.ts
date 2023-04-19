@@ -10,9 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./home-readers.component.scss']
 })
 export class HomeReadersComponent {
-hideDescription() {
-throw new Error('Method not implemented.');
-}
+
   //Variables
   //Id proof of concept until login and register is implemented
   readerId="643d9026c9e38d96582f4528";
@@ -32,7 +30,6 @@ throw new Error('Method not implemented.');
   ratingFilters: Array<Number>=[1,2,3,4,5];
   ratingFiltersObject: any;
   genresFilters: Array<string>=[];
-  //
   opened = false;
   currentReader: Reader = {
     name: "",
@@ -47,14 +44,17 @@ throw new Error('Method not implemented.');
     friends: [],
     readingChallenge: 0
   };
-  showDescription = false;
+
   ngOnInit(){
+    //Get initial data from the database
     this.getAllBooks();
     this.getCurrentReader();
+    //Initialize filtered books as original books
     this.filteredAllBooks = this.allBooks;
     this.filteredCurrentBooks = this.currentBooks;
     this.filteredTbrBooks = this.tbrBooks;
     this.filteredFinishedBooks = this.finishedBooks;
+    //Whenever the search bar texts changes filterBooks, this way while the user types he/she can see the books with that filter criteria (like netflix)
     this.searchControl.valueChanges.subscribe(() => {
       this.filterBooks();
     });
@@ -72,7 +72,7 @@ throw new Error('Method not implemented.');
     }
     return stars;
   }
-  //Get current reader
+  //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentReader(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
@@ -81,7 +81,7 @@ throw new Error('Method not implemented.');
       this.getFinishedBooks();
     })
   }
-  //Get books
+  //Get books functions
   getCurrentlyReadingBooks(){
     this.currentBooks = this.currentReader.reading;
     this.filteredCurrentBooks = this.currentBooks;
@@ -107,16 +107,19 @@ throw new Error('Method not implemented.');
   getRatingFilters(ratings: any[] | undefined){
     this.ratingFiltersObject = ratings;
     this.ratingFilters=[];
+    //If a valid event is triggered (check/uncheck boxes)
     if(ratings!=undefined && ratings.length>0){
       for(let i=0; i<5; i++){
+        //Check which ratings were chosen by the reader and save them 
         if(ratings[i].checked==true){
           this.ratingFilters.push(i+1);
         }
       }
+      //If no checkboxes are marked, show all ratings
       if(this.ratingFilters.length==0){
         this.ratingFilters=[1,2,3,4,5]
       }     
-    }else{
+    }else{ //Not a valid event, show all ratings
       this.ratingFilters=[1,2,3,4,5]
     }
     return this.ratingFilters;
