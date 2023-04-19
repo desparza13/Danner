@@ -1,5 +1,7 @@
+import { Reader } from "./reader";
+
 export interface FriendshipRequest {
-    idSender: string,
-    idReceiver: string,
+    idSender: Reader,
+    idReceiver: Reader,
     status: boolean
 }

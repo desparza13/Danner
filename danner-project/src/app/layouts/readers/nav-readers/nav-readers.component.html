@@ -1,0 +1,107 @@
+<div class="wrapper">
+    <div class="navbar">
+        <mat-toolbar color="accent">
+            <mat-toolbar-row>
+                <div class="logo">
+                    <a href="#">Danner</a>
+                </div>
+                <span class="spacer"></span>
+
+                <div class="navbar_right">
+                    <div class="notifications">
+                        <div class="icon_wrap">
+                            <button mat-icon-button class="notification-icon" (click)="iconWrapNotifications()">
+                                <mat-icon>notifications</mat-icon>
+                            </button>
+                        </div>
+
+                        <div *ngIf="hiddenNotifications==false" class="notification_dd">
+                            <ul class="notification_ul">
+                                <li class="notifications-li">
+                                    <a>Notifications</a>
+                                </li>
+                                <div *ngFor="let notification of filterReviews" class="notification">
+                                    <li *ngFor="let like of notification.likes">
+                                        <div class="notify_icon">
+                                            <img src={{like.image}} class="icon">
+                                        </div>
+                                        <div class="notify_data">
+                                            <div class="title">
+                                                {{like.name}}
+                                            </div>
+                                            <div class="sub_title">
+                                                liked your review of
+                                            </div>
+                                            <div class="sub_title">
+                                                "{{notification.bookId.title}}"
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <mat-icon color="primary">favorite</mat-icon>
+                                        </div>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="requests">
+                        <div class="icon_wrap">
+                            <button mat-icon-button class="request-icon" (click)="iconWrapRequests()">
+                                <mat-icon>group_add</mat-icon>
+                            </button>
+                        </div>
+
+                        <div *ngIf="hiddenRequests==false" class="request_dd">
+                            <ul class="notification_ul">
+                                <li class="friend-li">
+                                    <a>Friend requests</a>
+                                </li>
+                                <li *ngFor="let request of filterRequests" class="request">
+                                    <div class="notify_icon">
+                                        <img src={{request.idSender.image}} class="icon">
+                                    </div>
+                                    <div class="notify_data">
+                                        <div class="title" >
+                                            {{request.idSender.name}}
+                                        </div>
+                                        <div class="buttons">
+                                            <button mat-flat-button color="accent" class="confirm-btn">Confirm</button>
+                                            <button mat-flat-button color="primary" class="delete-btn">Delete</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="profile">
+                        <div>
+                            <div>
+                                <button class="profile-icon" mat-icon-button [matMenuTriggerFor]="menu"
+                                    (click)="iconWrapProfile()">
+                                    <img src={{reader.image}} alt="profile_pic">
+                                </button>
+                            </div>
+
+                            <mat-menu #menu="matMenu" class="customize">
+                                <button mat-menu-item class="profile-option">
+                                    <mat-icon>person</mat-icon>
+                                    <p>Friends</p>
+                                </button>
+                                <button mat-menu-item class="profile-option">
+                                    <mat-icon>book</mat-icon>
+                                    <p>Reading Challenge</p>
+                                </button>
+                                <button mat-menu-item class="profile-option">
+                                    <mat-icon>exit_to_app</mat-icon>
+                                    <p>Sign out</p>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+</div>

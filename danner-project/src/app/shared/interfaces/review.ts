@@ -1,6 +1,12 @@
+import { Book } from "./book";
+import { Reader } from "./reader";
+
 export interface Review {
-    bookId: string,
-    userId: string,
-    rating: Number,
-    description: string
+    _id: string,
+    bookId: Book,
+    userId: Reader,
+    rating: number,
+    description: string,
+    likes: Array<Reader>,
+    __v?:number
 }
