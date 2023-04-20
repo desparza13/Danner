@@ -48,7 +48,6 @@ export class HomeReadersComponent {
 
   ngOnInit(){
     //Get initial data from the database
-    this.getAllBooks();
     this.getCurrentReader();
     //Initialize filtered books as original books
     this.filteredAllBooks = this.allBooks;
@@ -80,6 +79,11 @@ export class HomeReadersComponent {
       this.getCurrentlyReadingBooks();
       this.getTbrBooks();
       this.getFinishedBooks();
+      this.getAllBooks();
+      console.log("current",this.currentBooks)
+      console.log("tbr",this.tbrBooks)
+      console.log("finished",this.finishedBooks)
+      console.log("all",this.allBooks)
     })
   }
   //Get books functions
@@ -97,11 +101,55 @@ export class HomeReadersComponent {
   }
   //Get all books from database
   getAllBooks(){
-    this.bookService.getBooks().subscribe((response:any)=>{
-      this.allBooks=response;
-      this.filteredAllBooks = this.allBooks;
-    })
-  }
+    let allBooksWithPossibleDuplicates = []
+    for (let i=0; i<this.currentBooks.length; i++){
+      let book = {
+        author : this.currentBooks[i].bookId.author,
+        averageRating : this.currentBooks[i].bookId.averageRating,
+        date : this.currentBooks[i].bookId.date,
+        description : this.currentBooks[i].bookId.author,
+        genre : this.currentBooks[i].bookId.genre,
+        image : this.currentBooks[i].bookId.image,
+        pages : this.currentBooks[i].bookId.pages,
+        showDescription : this.currentBooks[i].bookId.showDescription,
+        title : this.currentBooks[i].bookId.title
+      }
+      allBooksWithPossibleDuplicates.push(book);
+    }
+    for (let i=0; i<this.finishedBooks.length; i++){
+      let book = {
+        author : this.finishedBooks[i].bookId.author,
+        averageRating : this.finishedBooks[i].bookId.averageRating,
+        date : this.finishedBooks[i].bookId.date,
+        description : this.finishedBooks[i].bookId.author,
+        genre : this.finishedBooks[i].bookId.genre,
+        image : this.finishedBooks[i].bookId.image,
+        pages : this.finishedBooks[i].bookId.pages,
+        showDescription : this.finishedBooks[i].bookId.showDescription,
+        title : this.finishedBooks[i].bookId.title
+      }
+      allBooksWithPossibleDuplicates.push(book);
+    }
+    for (let i=0; i<this.tbrBooks.length; i++){
+      let book = {
+        author : this.tbrBooks[i].author,
+        averageRating : this.tbrBooks[i].averageRating,
+        date : this.tbrBooks[i].date,
+        description : this.tbrBooks[i].author,
+        genre : this.tbrBooks[i].genre,
+        image : this.tbrBooks[i].image,
+        pages : this.tbrBooks[i].pages,
+        showDescription : this.tbrBooks[i].showDescription,
+        title : this.tbrBooks[i].title
+      }
+      allBooksWithPossibleDuplicates.push(book);
+    }
+    allBooksWithPossibleDuplicates.forEach((item) => {
+      if (!this.allBooks.includes(item)) {
+        this.allBooks.push(item);
+      }
+  })  
+}
 
   //Filtering
   //Get selected rating values
