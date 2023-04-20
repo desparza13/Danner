@@ -34,7 +34,8 @@ const ReadersController={
             read: req.body.read,
             toBeRead: req.body.toBeRead,
             reading:req.body.reading,
-            friends:req.body.friends
+            friends:req.body.friends,
+            readingChallenge:req.body.readingChallenge
         };
         model(newReader).save()
             .then(reader=>{
@@ -56,7 +57,8 @@ const ReadersController={
             read: req.body.read,
             toBeRead: req.body.toBeRead,
             reading:req.body.reading,
-            friends: req.body.friends
+            friends: req.body.friends,
+            readingChallenge:req.body.readingChallenge
         };
         model.findByIdAndUpdate(id, updatedReader, {new:true})
             .then(reader=>{

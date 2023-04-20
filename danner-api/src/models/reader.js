@@ -12,7 +12,8 @@ const readerSchema = new Schema({
         toBeRead: [{type:String}],
         reading: [{bookId:{type:String},
                 progress:{type:Number}}],
-        friends: [{type:String}]
+        friends: [{type:String}],
+        readingChallenge: {type:Number}
 })
 
 module.exports = model('reader', readerSchema)
