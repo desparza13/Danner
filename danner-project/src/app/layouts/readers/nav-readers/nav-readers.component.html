@@ -3,8 +3,23 @@
         <mat-toolbar color="accent">
             <mat-toolbar-row>
                 <div class="logo">
-                    <a href="#">Danner</a>
+                    <a routerLink="/readers">Danner</a>
                 </div>
+                <div class="search">
+                    <form submit="/readers/books" class="example-form">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Search books" name="search" [(ngModel)]="search">
+                        </mat-form-field>
+                        <div>
+                            <button routerLink="/readers/books" mat-icon-button class="search-btn">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+
+
+                </div>
+
                 <span class="spacer"></span>
 
                 <div class="navbar_right">
@@ -62,12 +77,14 @@
                                         <img src={{request.idSender.image}} class="icon">
                                     </div>
                                     <div class="notify_data">
-                                        <div class="title" >
+                                        <div class="title">
                                             {{request.idSender.name}}
                                         </div>
                                         <div class="buttons">
-                                            <button mat-flat-button color="accent" class="confirm-btn">Confirm</button>
-                                            <button mat-flat-button color="primary" class="delete-btn">Delete</button>
+                                            <button mat-flat-button color="accent"
+                                                (click)="confirmFriendRequest(request._id,request.idSender._id,request.idSender.name)"
+                                                class="confirm-btn">Confirm</button>
+                                            <button (click)="deleteFriendRequest(request._id,request.idSender.name)" mat-flat-button color="primary" class="delete-btn">Delete</button>
                                         </div>
                                     </div>
                                 </li>
@@ -85,17 +102,17 @@
                             </div>
 
                             <mat-menu #menu="matMenu" class="customize">
-                                <button mat-menu-item class="profile-option">
+                                <button routerLink="/readers/friends" mat-menu-item class="profile-option">
                                     <mat-icon>person</mat-icon>
-                                    <p>Friends</p>
+                                    <a class="ruta" >Friends</a>
                                 </button>
-                                <button mat-menu-item class="profile-option">
+                                <button routerLink="/readers/readingChallenge" mat-menu-item class="profile-option">
                                     <mat-icon>book</mat-icon>
-                                    <p>Reading Challenge</p>
+                                    <a class="ruta" >Reading Challenge</a>
                                 </button>
-                                <button mat-menu-item class="profile-option">
+                                <button routerLink="/readers/login" mat-menu-item class="profile-option">
                                     <mat-icon>exit_to_app</mat-icon>
-                                    <p>Sign out</p>
+                                    <a class="ruta" >Sign out</a>
                                 </button>
                             </mat-menu>
                         </div>
