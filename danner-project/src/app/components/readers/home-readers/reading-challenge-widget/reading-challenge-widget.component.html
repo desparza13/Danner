@@ -1,0 +1,22 @@
+<div class="readingChallenge">
+    <mat-list-item>
+        <h3>Reading challenge</h3>
+    </mat-list-item>
+    <div class="book-display">
+        <div class="book-group">
+            <div class="small-book book" id="book5"></div>
+            <div class="big-book book" id="book1"></div>
+            <div class="small-book book" id="book6"></div>
+            <div class="big-book book" id="book2"></div>
+            <div class="small-book book" id="book7"></div>
+            <div class="big-book book" id="book3"></div>
+            <div class="small-book book" id="book8"></div>
+            <div class="big-book book" id="book4"></div>
+        </div>
+    </div>
+    <mat-progress-bar mode="determinate" value="{{readingChallengeProgress}}"></mat-progress-bar>
+    <div class="challengeData">
+        <p>Progress: {{readingChallengeProgress}}%</p>
+        <p>{{finishedBooks.length}} out of {{currentReader.readingChallenge}} books</p>
+    </div>
+</div>

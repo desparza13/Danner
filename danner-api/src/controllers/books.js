@@ -28,7 +28,8 @@ const BooksController={
             averageRating: req.body.averageRating,
             description: req.body.description,
             pages: req.body.pages,
-            genre: req.body.genre
+            genre: req.body.genre,
+            showDescription: req.body.showDescription
         };
         model(newBook).save()
             .then(book=>{
@@ -48,7 +49,8 @@ const BooksController={
             averageRating: req.body.averageRating,
             description: req.body.description,
             pages: req.body.pages,
-            genre: req.body.genre
+            genre: req.body.genre,
+            showDescription: req.body.showDescription
         };
         model.findByIdAndUpdate(id, updatedBook, {new:true})
             .then(book=>{

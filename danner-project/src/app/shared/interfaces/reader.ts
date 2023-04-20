@@ -10,5 +10,6 @@ export interface Reader {
     toBeRead: Array<string>,
     reading:Array<string>,
     friends: Array<string>,
-    __v?:number
+    __v?:number,
+    readingChallenge: number
 }
