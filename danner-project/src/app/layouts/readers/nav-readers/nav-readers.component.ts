@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -20,10 +20,9 @@ interface Notification {
   styleUrls: ['./nav-readers.component.scss']
 })
 
-
 export class NavReadersComponent {
   search: string = '';
-  userId = '643ebe548e5f84dad3b0c99c'
+  userId = '643d9026c9e38d96582f4528'
   reader: Reader = {
     _id: "",
     name: "",
@@ -50,15 +49,17 @@ export class NavReadersComponent {
   hiddenProfile = true;
   hiddenRequests = true;
 
+  @Output() searchBooksTriggered = new EventEmitter<any>();
+
   ngOnInit() {
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();
   }
 
-  fil(){
+  sendSearch(){
     console.log('hiciste click',this.search);
-
+    this.searchBooksTriggered.emit(this.search);
   }
   constructor(private friendshipRequestService: FriendshipRequestService,
     private reviewService: ReviewService,

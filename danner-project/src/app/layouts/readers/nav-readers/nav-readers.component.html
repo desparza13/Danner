@@ -6,7 +6,7 @@
                     <a routerLink="/readers">Danner</a>
                 </div>
                 <div class="search">
-                    <form submit="/readers/books" class="example-form">
+                    <form (submit)="sendSearch()" class="example-form">
                         <mat-form-field class="example-full-width">
                             <input matInput placeholder="Search books" name="search" [(ngModel)]="search">
                         </mat-form-field>

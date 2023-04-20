@@ -145,16 +145,16 @@ export class HomeReadersComponent {
   filterBySearchValues(){
     if(this.searchControl.value!=null && this.searchControl.value!=''){
       const search = this.searchControl.value.toLowerCase();
-      this.filteredAllBooks = this.filteredAllBooks.filter((book:any) =>
+      this.filteredAllBooks = this.allBooks.filter((book:any) =>
         book.title.toLowerCase().includes(search)
       );
-      this.filteredCurrentBooks = this.filteredCurrentBooks.filter((book:any) =>
+      this.filteredCurrentBooks = this.allBooks.filter((book:any) =>
         book.bookId.title.toLowerCase().includes(search)
       );
-      this.filteredTbrBooks = this.filteredTbrBooks.filter((book:any) =>
+      this.filteredTbrBooks = this.allBooks.filter((book:any) =>
         book.title.toLowerCase().includes(search)
       );
-      this.filteredFinishedBooks = this.filteredFinishedBooks.filter((book:any) =>
+      this.filteredFinishedBooks = this.allBooks.filter((book:any) =>
         book.bookId.title.toLowerCase().includes(search)
       );
     }else{
