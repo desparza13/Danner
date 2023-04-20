@@ -36,6 +36,7 @@ export class NavReadersComponent {
     toBeRead: [],
     reading: [],
     friends: [],
+    readingChallenge: 1
   };
 
   friendName: string = '';

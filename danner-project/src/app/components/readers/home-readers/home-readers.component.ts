@@ -32,6 +32,7 @@ export class HomeReadersComponent {
   genresFilters: Array<string>=[];
   opened = false;
   currentReader: Reader = {
+    _id: "",
     name: "",
     user: '',
     email: '',

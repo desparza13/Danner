@@ -11,6 +11,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 export class ReadingChallengeWidgetComponent {
   readerId="643d9026c9e38d96582f4528";
   currentReader: Reader = {
+    _id: "",
     name: "",
     user: '',
     email: '',
