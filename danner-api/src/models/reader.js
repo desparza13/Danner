@@ -5,7 +5,7 @@ const readerSchema = new Schema({
         user: {type:String, required:true},
         email: {type:String, required:true},
         city: {type:String, required:true},
-        image: {type:String},
+        image: {type:String,defafult:'https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png'},
         password: {type:String, required:true},
         read: [{bookId:{type:String},
                 finishedDate:{type:Date,default:Date.now}}],

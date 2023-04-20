@@ -1,4 +1,3 @@
-
 const model = require('../models/book');
 const BooksController={
     list:(req, res)=>{

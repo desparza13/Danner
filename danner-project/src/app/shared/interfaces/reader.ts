@@ -1,4 +1,5 @@
 export interface Reader {
+    _id: string,
     name: string,
     user: string,
     email: string,
@@ -9,5 +10,6 @@ export interface Reader {
     toBeRead: Array<string>,
     reading:Array<string>,
     friends: Array<string>,
+    __v?:number,
     readingChallenge: number
 }

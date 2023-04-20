@@ -62,6 +62,10 @@ router.get('/:id', controller.see);
  *              type: number
  *            description:
  *              type: string
+ *            likes:
+ *              type: array
+ *              items:
+ *                type: string
  *    responses:
  *      201:
  *        description: Book object successfully created
@@ -100,6 +104,10 @@ router.post('/', express.json(), controller.create);
  *              type: number
  *            description:
  *              type: string
+ *            likes:
+ *              type: array
+ *              items:
+ *                type: string
  *    responses:
  *      200:
  *        description: Review successfully updated

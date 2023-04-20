@@ -2,8 +2,11 @@
 const model = require('../models/friendshipRequest');
 const RequestsController={
     list:(req, res)=>{
-        model.find({})
-            .then(requests=>{
+        model.find({}).populate([
+            {path:'idSender', model: 'reader'},
+            {path:'idReceiver', model: 'reader'},
+            
+        ]).then(requests=>{
                 res.status(200).send(requests);
             })
             .catch(error=>{

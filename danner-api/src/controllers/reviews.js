@@ -2,8 +2,11 @@
 const model = require('./../models/review');
 const ReviewsController={
     list:(req, res)=>{
-        model.find({})
-            .then(reviews=>{
+        model.find({}).populate([
+            {path: 'bookId',model:'book'},
+            {path: 'userId', model:'reader'},
+            {path: 'likes',model:'reader'}
+        ]).then(reviews=>{
                 res.status(200).send(reviews);
             })
             .catch(error=>{
@@ -25,7 +28,8 @@ const ReviewsController={
             bookId: req.body.bookId,
             userId: req.body.userId,
             rating:req.body.rating,
-            description:req.body.description
+            description:req.body.description,
+            likes: req.body.likes
         };
         model(newReview).save()
             .then(review=>{
@@ -41,7 +45,9 @@ const ReviewsController={
             bookId: req.body.bookId,
             userId: req.body.userId,
             rating:req.body.rating,
-            description:req.body.description
+            description:req.body.description,
+            likes: req.body.likes
+
         };
         model.findByIdAndUpdate(id, updatedReview, {new:true})
             .then(review=>{
