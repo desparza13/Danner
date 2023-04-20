@@ -36,6 +36,7 @@ export class NavReadersComponent {
     toBeRead: [],
     reading: [],
     friends: [],
+    readingChallenge: 0
   };
 
   friendName: string = '';
@@ -153,9 +154,31 @@ export class NavReadersComponent {
   }
 
   confirmFriendRequest(idRequest: string, idReader: string, name: string) {
+    var friend: Reader = {
+      _id: "",
+      name: "",
+      user: '',
+      email: '',
+      city: '',
+      image: '',
+      password: '',
+      read: [],
+      toBeRead: [],
+      reading: [],
+      friends: [],
+      readingChallenge: 0
+    };
     this.reader.friends.push(idReader);
     console.log(this.reader);
-    this.readerService.updateReader(this.reader, this.reader._id)
+    //update the current reader friends
+    this.readerService.updateReader(this.reader, this.reader._id).subscribe()
+
+    this.readerService.getOneReader(idReader).subscribe((response:any)=>{
+        friend = response;
+        friend.friends.push(this.reader._id);
+        this.readerService.updateReader(friend, idReader).subscribe()
+        
+    })
     
     this.updateRequest(name,idRequest);
     
