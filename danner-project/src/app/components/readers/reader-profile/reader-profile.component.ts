@@ -41,7 +41,7 @@ export class ReaderProfileComponent {
     this.profileForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]],
       city: ['', Validators.required],
       readingChallenge: [1, Validators.min(1)]
     });

@@ -48,6 +48,12 @@
             <mat-error *ngIf="profileForm.get('password').hasError('required')">
               Password is required
             </mat-error>
+            <mat-error *ngIf="profileForm.get('password').hasError('minlength')">
+              Password must have at least 6 characters
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('password').hasError('pattern')">
+              Password must contain at least 6 characters, 1 capital letter and 1 number.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Enter your city</mat-label>
