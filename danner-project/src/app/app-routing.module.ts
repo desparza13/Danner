@@ -7,14 +7,21 @@ import { BooksReadersComponent } from './components/readers/books-readers/books-
 import { HomeReadersComponent } from './components/readers/home-readers/home-readers.component';
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
+import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
+
 const routes: Routes = [
+  //Readers
   {path: 'readers', component: HomeReadersComponent},
   {path: 'readers/friends', component:FriendsReadersComponent},
   {path: 'readers/readingChallenge', component: ReadingChallengeComponent},
   {path: 'readers/login', component: LoginReadersComponent},
   {path: 'readers/books', component: BooksReadersComponent},
   {path: 'readers/profile', component: ReaderProfileComponent},
-  {path: 'readers/addFriends', component:AddFriendsReadersComponent}
+  {path: 'readers/addFriends', component:AddFriendsReadersComponent},
+
+  //Authors
+  {path: 'authors', component:HomeAuthorsComponent},
+
 ];
 
 @NgModule({

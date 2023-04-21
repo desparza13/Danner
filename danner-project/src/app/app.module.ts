@@ -19,6 +19,7 @@ import { ReadingChallengeWidgetComponent } from './components/readers/home-reade
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
+import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AddFriendsReadersComponent } from './components/readers/add-friends-rea
     HomeReadersComponent,
     ReaderProfileComponent,
     ConfirmationDialogComponent,
-    AddFriendsReadersComponent
+    AddFriendsReadersComponent,
+    HomeAuthorsComponent
   ],
   imports: [
     

@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="page">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <mat-icon class="toggleMenu" (click)="opened=!opened" [ngClass]="{'active': opened}">
+                <ng-container *ngIf="!opened">menu</ng-container>
+                <ng-container *ngIf="opened">close</ng-container>
+            </mat-icon>
+            <h2>My published books</h2>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container >
+        <mat-sidenav [(opened)]="opened" mode="side">
+                <br>
+                <div class="searchMyBooks">
+                    <mat-form-field appearance="fill" class="searchBar">
+                        <input type="text" matInput placeholder="Search in my books by title" [formControl]="searchControl" [matAutocomplete]="auto" >
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let book of filteredAuthorBooks" [value]="book.title">
+                                {{ book.title }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <mat-divider></mat-divider>
+                <app-ratings-filter (ratingsChanged)="filterBooks($event,undefined)"></app-ratings-filter>
+                <mat-divider></mat-divider>
+                <app-genre-filter (genresChanged)="filterBooks(undefined,$event)"></app-genre-filter>
+                <mat-divider></mat-divider>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="all-container">
+                <div class="book-card" *ngFor="let book of filteredAuthorBooks">
+                        <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
+                        <img [src]="book.image" alt="Book cover">
+                        <div *ngIf="book.showDescription" class="book-description">
+                            {{book.description}}
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <h3 class="book-title">{{book.title}}</h3>
+                        <p class="book-author">{{book.author}}</p>
+                        <div class="book-rating">
+                            <span class="stars" *ngFor="let star of getStars(book.averageRating)" class="fa fa-star checked"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
