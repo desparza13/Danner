@@ -1,0 +1,92 @@
+<div class="profile-container">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="profile-image">
+        <img src="{{profile.image}}" alt="Profile pic"/>
+      </div>
+      <mat-card-title>{{profile.name}}</mat-card-title>
+      <mat-card-subtitle>@{{profile.user}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Email:</strong> {{profile.email}}</p>
+      <p><strong>City:</strong> {{profile.city}}</p>
+      <p><strong>Reading Challenge:</strong> {{profile.readingChallenge}}</p>
+      <p><strong>Friends:</strong> {{profile.friends.length}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="enableEditMode()">
+        <mat-icon>edit</mat-icon> Edit Profile
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="edit-profile-container" *ngIf="isEditModeEnabled">
+    <mat-card>
+      <mat-card-title>Edit Profile</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="profileForm">
+          <mat-form-field>
+            <mat-label>Enter your name</mat-label>
+            <input matInput placeholder="Name" formControlName="name"/>
+            <mat-error *ngIf="profileForm.get('name').hasError('required')">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input matInput placeholder="Email" formControlName="email"/>
+            <mat-error *ngIf="profileForm.get('email').hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('email').hasError('email')">
+              Email is invalid
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter your password</mat-label>
+            <input matInput type="password" placeholder="Password" formControlName="password"/>
+            <mat-error *ngIf="profileForm.get('password').hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('password').hasError('minlength')">
+              Password must have at least 6 characters
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('password').hasError('pattern')">
+              Password must contain at least 6 characters, 1 capital letter and 1 number.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter your city</mat-label>
+            <input matInput placeholder="City" formControlName="city"/>
+            <mat-error *ngIf="profileForm.get('city').hasError('required')">
+              City is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter your reading goal this year</mat-label>
+            <input matInput type="number" placeholder="Reading Challenge" formControlName="readingChallenge"/>
+            <mat-error *ngIf="profileForm.get('readingChallenge').hasError('required')">
+              Reading Challenge is required
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('readingChallenge').hasError('min')">
+              The minimum value is 1
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="confirmEdit()" [disabled]="profileForm.invalid">Save</button>
+        <button mat-button (click)="cancelEdit()">Cancel</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="overlay">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div *ngIf="isError" class="error-message">
+  <mat-icon>error_outline</mat-icon>
+  <span>There was an error loading the profile. Please try again later.</span>
+</div>
