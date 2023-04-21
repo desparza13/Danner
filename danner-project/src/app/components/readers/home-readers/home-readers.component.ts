@@ -80,10 +80,6 @@ export class HomeReadersComponent {
       this.getTbrBooks();
       this.getFinishedBooks();
       this.getAllBooks();
-      console.log("current",this.currentBooks)
-      console.log("tbr",this.tbrBooks)
-      console.log("finished",this.finishedBooks)
-      console.log("all",this.allBooks)
     })
   }
   //Get books functions
@@ -107,7 +103,7 @@ export class HomeReadersComponent {
         author : this.currentBooks[i].bookId.author,
         averageRating : this.currentBooks[i].bookId.averageRating,
         date : this.currentBooks[i].bookId.date,
-        description : this.currentBooks[i].bookId.author,
+        description : this.currentBooks[i].bookId.description,
         genre : this.currentBooks[i].bookId.genre,
         image : this.currentBooks[i].bookId.image,
         pages : this.currentBooks[i].bookId.pages,
