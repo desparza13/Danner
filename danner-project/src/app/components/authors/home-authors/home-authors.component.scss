@@ -97,7 +97,14 @@
 .book-rating {
     margin-top: 5px;
 }
-
+.add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ed7966;
+    color: white;
+}
+  
 /*Responsivo*/
 @media (max-width: 509px){
     .mat-sidenav {

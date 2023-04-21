@@ -8,6 +8,7 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
+import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
 
 const routes: Routes = [
   //Readers
@@ -21,6 +22,7 @@ const routes: Routes = [
 
   //Authors
   {path: 'authors', component:HomeAuthorsComponent},
+  {path: 'authors/addBook', component:AddBookAuthorsComponent},
 
 ];
 

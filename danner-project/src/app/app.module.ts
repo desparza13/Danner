@@ -20,6 +20,7 @@ import { ReaderProfileComponent } from './components/readers/reader-profile/read
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
+import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { HomeAuthorsComponent } from './components/authors/home-authors/home-aut
     ReaderProfileComponent,
     ConfirmationDialogComponent,
     AddFriendsReadersComponent,
-    HomeAuthorsComponent
+    HomeAuthorsComponent,
+    AddBookAuthorsComponent
   ],
   imports: [
     
