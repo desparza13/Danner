@@ -5,5 +5,6 @@ export interface Author {
     email: string,
     city: string,
     image: string,
-    password: string
+    password: string,
+    __v?:number
 }
