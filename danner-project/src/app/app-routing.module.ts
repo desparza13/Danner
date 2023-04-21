@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'readers', component: HomeReadersComponent},
   {path: 'readers/friends', component:FriendsReadersComponent},
   {path: 'readers/readingChallenge', component: ReadingChallengeComponent},
-  {path: 'readers/login', component: LoginReadersComponent},
+  {path: '', component: LoginReadersComponent},
   {path: 'readers/books', component: BooksReadersComponent}
 ];
 

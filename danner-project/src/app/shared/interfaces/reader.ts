@@ -4,7 +4,7 @@ export interface Reader {
     user: string,
     email: string,
     city: string,
-    image: string,
+    image?: string,
     password: string
     read: Array<object>,
     toBeRead: Array<string>,

@@ -13,7 +13,8 @@ export class HomeReadersComponent {
 
   //Variables
   //Id proof of concept until login and register is implemented
-  readerId="643d9026c9e38d96582f4528";
+  readerId:string='';
+  reader: any;
   //Storing books
     //Originals
   allBooks: Array<Book>=[];
@@ -47,6 +48,9 @@ export class HomeReadersComponent {
   };
 
   ngOnInit(){
+    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.readerId = this.reader.userId;
     //Get initial data from the database
     this.getCurrentReader();
     //Initialize filtered books as original books

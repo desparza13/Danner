@@ -16,6 +16,9 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
 import { RatingsFilterComponent } from './components/readers/home-readers/ratings-filter/ratings-filter.component';
 import { GenreFilterComponent } from './components/readers/home-readers/genre-filter/genre-filter.component';
 import { ReadingChallengeWidgetComponent } from './components/readers/home-readers/reading-challenge-widget/reading-challenge-widget.component';
+import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
+import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
+import { RegisterReadersComponent } from './components/readers/register-readers/register-readers.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { ReadingChallengeWidgetComponent } from './components/readers/home-reade
     RatingsFilterComponent,
     GenreFilterComponent,
     ReadingChallengeWidgetComponent,
-    HomeReadersComponent
+    HomeReadersComponent,
+    ConfirmationDialogComponent,
+    NotificationDialogComponent,
+    RegisterReadersComponent
   ],
   imports: [
     
@@ -41,7 +47,9 @@ import { ReadingChallengeWidgetComponent } from './components/readers/home-reade
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

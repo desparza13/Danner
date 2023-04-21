@@ -23,7 +23,8 @@ interface Notification {
 
 export class NavReadersComponent {
   search: string = '';
-  userId = '643ebe548e5f84dad3b0c99c'
+  currentUser: any;
+  userId = ''
   reader: Reader = {
     _id: "",
     name: "",
@@ -51,6 +52,9 @@ export class NavReadersComponent {
   hiddenRequests = true;
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.userId = this.currentUser.userId;
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();
