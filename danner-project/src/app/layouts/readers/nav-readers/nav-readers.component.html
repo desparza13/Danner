@@ -6,14 +6,21 @@
                     <a routerLink="/readers">Danner</a>
                 </div>
                 <div class="search">
-                    <form submit="/readers/books" class="example-form">
-                        <mat-form-field class="example-full-width">
+                    <form (submit)="sendSearch()" class="searchForm">
+                        <mat-form-field class="searchInput">
                             <input matInput placeholder="Search books" name="search" [(ngModel)]="search">
                         </mat-form-field>
                         <div>
-                            <button routerLink="/readers/books" mat-icon-button class="search-btn">
-                                <mat-icon>search</mat-icon>
+                            <a class="searchButton"(click)="sendSearch()" [routerLink]="['/readers/books']">
+
+                            <button mat-icon-button class="search-btn">
+
+                                <mat-icon class="searchIcon">search</mat-icon>
+
                             </button>
+                        </a>
+
+                            
                         </div>
                     </form>
 
