@@ -12,10 +12,10 @@ const ReadersController={
     see:(req,res)=>{
         const id = req.params.id;
         model.findById(id).populate([
+            {path: 'friends', model: 'reader'},
             {path: 'toBeRead', model: 'book'},
             {path: 'read.bookId', model: 'book'},
-            {path: 'reading.bookId', model: 'book'},
-            {path: 'friends', model: 'reader'}
+            {path: 'reading.bookId', model: 'book'}
         ])
             .then(reader=>{
                 res.status(200).send(reader);

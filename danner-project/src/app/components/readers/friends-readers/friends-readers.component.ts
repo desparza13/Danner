@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-friends-readers',
@@ -26,63 +31,83 @@ export class FriendsReadersComponent {
   friends: any[] = [];
   filteredFriends: any[] = [];
   searchValue = '';
+  displayedColumns: string[] = ['image','name', 'user', 'email', 'city', 'actions'];
+  dataSource = new MatTableDataSource<Reader>([]);
 
-  constructor(private readerService: ReaderService) { }
+  // @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(
+    private readerService: ReaderService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+    ) { 
+      // this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+    }
 
   ngOnInit(){
-    this.currentReader = {
-      name: "John Doe",
-      user: "johndoe",
-      email: "johndoe@example.com",
-      city: "New York",
-      image: "https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png",
-      password: "password123",
-      read: [
-        { bookId: "123", finishedDate: new Date("2022-03-01") },
-        { bookId: "456", finishedDate: new Date("2022-04-15") }
-      ],
-      toBeRead: ["789", "101112"],
-      reading: [
-        { bookId: "131415", progress: 30 },
-        { bookId: "161718", progress: 50 }
-      ],
-      friends: [
-        {
-          name: "Jane Smith",
-          user: "janesmith",
-          email: "janesmith@example.com",
-          city: "Los Angeles",
-          image: "https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png"
-        },
-        {
-          name: "Bob Johnson",
-          user: "bobjohnson",
-          email: "bobjohnson@example.com",
-          city: "Chicago",
-          image: "https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png"
-        },
-        {
-          name: "Sarah Lee",
-          user: "sarahlee",
-          email: "sarahlee@example.com",
-          city: "San Francisco",
-          image: "https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png"
-        }
-      ],
-      readingChallenge: 20
-    }
-    this.friends = this.currentReader.friends;
-    this.filteredFriends = this.currentReader.friends;
+    this.getCurrentReader();
+
+  }
+  getCurrentReader(){
+    this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
+      this.currentReader=response;
+      console.log("Reader",this.currentReader)
+      this.friends = this.currentReader.friends;
+      console.log(this.friends)
+      this.filteredFriends = this.friends;
+      this.dataSource.data = this.friends;
+    });
+  }
+  applyFilter(): void {
+    this.dataSource.filter = this.searchValue.trim().toLowerCase();
+  }
+  clearSearch(): void {
+    this.searchValue = '';
+    this.applyFilter();
   }
 
-  filterFriends() {
-    this.filteredFriends = this.friends.filter(friend =>
-      friend.name.toLowerCase().includes(this.searchValue.toLowerCase())
-      || friend.user.toLowerCase().includes(this.searchValue.toLowerCase())
-      || friend.email.toLowerCase().includes(this.searchValue.toLowerCase())
-      || friend.city.toLowerCase().includes(this.searchValue.toLowerCase())
+
+  removeFriend(reader: Reader, friendId:string) {
+    let updatedReader = this.currentReader
+    updatedReader.friends = updatedReader.friends.filter((friend:any) => friend._id !== friendId);
+    let friendProfile
+    this.readerService.getOneReader(friendId).subscribe((response:any)=>{
+      friendProfile=response;
+      console.log(friendProfile)
+      friendProfile.friends = friendProfile.friends.filter((friend:any) => friend._id !== this.currentReader._id);
+      this.readerService.updateReader(friendProfile, friendProfile._id).subscribe(
+        (response: any) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+          this.snackBar.open('There was an error removing the friend. Please try again later.', 'Close', {
+            duration: 3000
+          });
+        }
+      );
+    });
+    this.readerService.updateReader(updatedReader, this.currentReader._id).subscribe(
+      (response: any) => {
+        this.snackBar.open('Friend removed successfully', 'Close', {
+          duration: 3000
+        });
+        console.log("update response",response)
+        this.getCurrentReader()
+      },
+      (error) => {
+        console.log(error);
+        this.snackBar.open('There was an error removing the friend. Please try again later.', 'Close', {
+          duration: 3000
+        });
+      }
     );
   }
+  
+  
+
 
 
 }

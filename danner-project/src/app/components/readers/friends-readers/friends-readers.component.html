@@ -1,33 +1,59 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="page">
-    <mat-toolbar color="primary">
-        <mat-toolbar-row>
-            <h2>My friends</h2>
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <div class="friends-container">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchValue" (ngModelChange)="filterFriends()">
-        </div>
-        <div *ngIf="filteredFriends.length > 0">
-          <div class="row">
-            <div class="col-md-2 font-weight-bold">Name</div>
-            <div class="col-md-2 font-weight-bold">Username</div>
-            <div class="col-md-4 font-weight-bold">Email</div>
-            <div class="col-md-2 font-weight-bold">City</div>
-            <div class="col-md-2 font-weight-bold">Reading Challenge</div>
-          </div>
-          <div *ngFor="let friend of filteredFriends" class="row">
-            <div class="col-md-2">{{ friend.name }}</div>
-            <div class="col-md-2">{{ friend.user }}</div>
-            <div class="col-md-4">{{ friend.email }}</div>
-            <div class="col-md-2">{{ friend.city }}</div>
-            <div class="col-md-2">{{ friend.readingChallenge }}</div>
-          </div>
-        </div>
-        <div *ngIf="filteredFriends.length == 0">
-          <p>No friends found.</p>
-        </div>
-      </div>
-      
+<!-- reader-list.component.html -->
+<mat-form-field appearance="fill">
+  <mat-label>Search friends</mat-label>
+  <input matInput [(ngModel)]="searchValue" (input)="applyFilter()">
+  <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchValue" (click)="clearSearch()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+<div class="table-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Profile picture</th>
+      <td mat-cell *matCellDef="let reader">
+        <img src="{{reader.image }}">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let reader">
+        {{ reader.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+      <td mat-cell *matCellDef="let reader">@{{ reader.user }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let reader">
+        {{ reader.email }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+      <td mat-cell *matCellDef="let reader">{{ reader.city }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let reader">
+        <button mat-button color="warn" (click)="removeFriend(reader, reader._id)">
+          Remove
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
 </div>
