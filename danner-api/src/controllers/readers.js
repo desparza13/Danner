@@ -14,7 +14,8 @@ const ReadersController={
         model.findById(id).populate([
             {path: 'toBeRead', model: 'book'},
             {path: 'read.bookId', model: 'book'},
-            {path: 'reading.bookId', model: 'book'}
+            {path: 'reading.bookId', model: 'book'},
+            {path: 'friends', model: 'reader'}
         ])
             .then(reader=>{
                 res.status(200).send(reader);
