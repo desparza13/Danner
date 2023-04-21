@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 import { FriendshipRequest } from 'src/app/shared/interfaces/friendship-request';
 import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
@@ -8,6 +9,7 @@ import { Review } from 'src/app/shared/interfaces/review';
 import { ReviewService } from 'src/app/shared/services/review.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
+import { SearchValueService } from 'src/app/shared/services/search-value.service';
 
 interface Notification {
   likes: [],
@@ -20,7 +22,8 @@ interface Notification {
   styleUrls: ['./nav-readers.component.scss']
 })
 
-export class NavReadersComponent {
+export class NavReadersComponent implements OnInit{
+  books:boolean = false;
   search: string = '';
   userId = '643d9026c9e38d96582f4528'
   reader: Reader = {
@@ -48,22 +51,28 @@ export class NavReadersComponent {
   hiddenNotifications = true;
   hiddenProfile = true;
   hiddenRequests = true;
-
-  @Output() searchBooksTriggered = new EventEmitter<any>();
-
+  subscription: Subscription = new Subscription;
+  searchValue = '';
   ngOnInit() {
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();
+    this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue)=>{
+      this.searchValue = searchValue;
+    })
+    console.log('nav '+ this.searchValue);
   }
 
   sendSearch(){
-    console.log('hiciste click',this.search);
-    this.searchBooksTriggered.emit(this.search);
+    this.books=true;
+    console.log(this.search);
+    this._searchValueService.setSearchValue(this.search);
+    console.log('redirigir');
+
   }
   constructor(private friendshipRequestService: FriendshipRequestService,
     private reviewService: ReviewService,
-    private readerService: ReaderService, private _snackBar: MatSnackBar) {
+    private readerService: ReaderService, private _snackBar: MatSnackBar, private _searchValueService: SearchValueService) {
   }
 
   //Get the current reader
@@ -183,4 +192,7 @@ export class NavReadersComponent {
     this._snackBar.open('Se rechazo la solicitud de ' + message, action);
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
