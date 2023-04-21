@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 60px);
+    position: relative;
+  }
+  .image-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+  
+  .image-overlay h1 {
+    font-size: 5rem;
+    text-align: center;
+    color: #141850;
+    opacity: 100%;
+  }
+  .image-overlay b{
+    font-size: 4rem;
+    color: #303179;
+  }
+  .image-overlay p{
+    font-size: 3rem;
+    text-align: center;
+  }
+  .gallery-container {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .gallery {
+    display: flex;
+    animation: carousel 30s linear infinite;
+  }
+  
+  .gallery img {
+    max-width: 400px;
+    height: auto;
+    margin-right: 20px;
+    opacity: 35%;
+  }
+  
+  @keyframes carousel {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(calc(-220px * 10));
+    }
+  }
+  
