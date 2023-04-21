@@ -1,7 +1,7 @@
 <div class="page">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <h2>Friends</h2>
+        <h2>My friends</h2>
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="search">
@@ -14,7 +14,7 @@
     </mat-form-field>
   </div>
   <div class="table-container mat-elevation-z8">
-    <button mat-button color="primary" class="add-friend-button" routerLink="/add-friends-readers">
+    <button mat-button color="primary" class="add-friend-button" routerLink="/readers/addFriends">
       <mat-icon>add</mat-icon>Add more friends
     </button>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
