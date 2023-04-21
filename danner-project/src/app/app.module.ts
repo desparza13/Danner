@@ -18,6 +18,7 @@ import { GenreFilterComponent } from './components/readers/home-readers/genre-fi
 import { ReadingChallengeWidgetComponent } from './components/readers/home-readers/reading-challenge-widget/reading-challenge-widget.component';
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
+import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ConfirmationDialogComponent } from './components/readers/confirmation-d
     ReadingChallengeWidgetComponent,
     HomeReadersComponent,
     ReaderProfileComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    AddFriendsReadersComponent
   ],
   imports: [
     

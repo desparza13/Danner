@@ -1,10 +1,17 @@
 .profile-container {
+    width: 100%;
+    height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
+    margin: 0px;
     box-shadow: none;
+
+    .card-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
     mat-card {
         max-width: 900px;
@@ -31,9 +38,11 @@
     }
 
     .edit-profile-container {
-        max-width: 900px;
         width: 100%;
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         mat-card {
             max-width: 900px;
             width: 100%;

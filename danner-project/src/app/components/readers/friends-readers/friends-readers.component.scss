@@ -1,11 +1,7 @@
 .page {
-margin:0;
-  display: flex;
-  flex-direction: column;
+  margin:0;
   height: calc(100vh - 60px);
   width: 100%;
-  justify-content: flex-start;
-  align-items: center;
   
   .friends-container {
     width: 100%;
@@ -13,28 +9,6 @@ margin:0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    .form-group {
-      width: 50%;
-      margin-bottom: 10px;
-      
-      input[type="text"] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-        border: none;
-        border-bottom: 2px solid #ccc;
-        font-size: 16px;
-        background-color: white;
-        background-image: none;
-        outline: none;
-        
-        &:focus {
-          border-bottom: 2px solid dodgerblue;
-        }
-      }
-    }
     
     .row {
       display: flex;
@@ -81,6 +55,8 @@ img{
 }
 mat-form-field {
   width: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 .table-container {
   width: 100%;
@@ -96,4 +72,18 @@ table {
 th.mat-header-cell,
 td.mat-cell {
   white-space: nowrap;
+}
+.add-friend-button {
+  position: absolute;
+  left: 0;
+}
+.searchbar-container {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.no-results-found {
+  margin-top: 16px;
+  text-align: center;
 }
