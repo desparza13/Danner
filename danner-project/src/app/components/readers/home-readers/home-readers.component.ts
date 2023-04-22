@@ -104,6 +104,7 @@ export class HomeReadersComponent {
     let allBooksWithPossibleDuplicates = []
     for (let i=0; i<this.currentBooks.length; i++){
       let book = {
+        _id: this.currentBooks[i].bookId._id,
         author : this.currentBooks[i].bookId.author,
         averageRating : this.currentBooks[i].bookId.averageRating,
         date : this.currentBooks[i].bookId.date,
@@ -118,6 +119,7 @@ export class HomeReadersComponent {
     }
     for (let i=0; i<this.finishedBooks.length; i++){
       let book = {
+        _id: this.finishedBooks[i].bookId._id,
         author : this.finishedBooks[i].bookId.author,
         averageRating : this.finishedBooks[i].bookId.averageRating,
         date : this.finishedBooks[i].bookId.date,
@@ -132,6 +134,7 @@ export class HomeReadersComponent {
     }
     for (let i=0; i<this.tbrBooks.length; i++){
       let book = {
+        _id: this.tbrBooks[i]._id,
         author : this.tbrBooks[i].author,
         averageRating : this.tbrBooks[i].averageRating,
         date : this.tbrBooks[i].date,
@@ -259,6 +262,11 @@ export class HomeReadersComponent {
     }
     this.filterByGenres(genreToUse);
 
+  }
+
+  selectBook(book: Book){
+    console.log(book);
+    this.bookService.setBook(book);
   }
 
 }

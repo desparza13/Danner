@@ -2,13 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http' //importar
 
 import { environment } from 'src/environments/environment';
+import { Book } from '../interfaces/book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
+  bookSelected: Book = {
+    title: '',
+    date: new Date(),
+    image: '',
+    genre: '',
+    author: '',
+    averageRating: 0,
+    description: '',
+    pages: 0,
+    showDescription: false,
+    _id: ''
+  }
 
   constructor(private httpClient: HttpClient) { }
+  setBook(book: Book): void{
+    this.bookSelected = book;
+  }
+
+  getBook(): Book{
+    return this.bookSelected;
+  }
   getBooks(){
     const url:string = environment.apiUrl + 'books'; //Definir url para el get
     return this.httpClient.get(url); //Regresar llamada tipo get
