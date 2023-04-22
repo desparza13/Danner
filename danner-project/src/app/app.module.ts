@@ -20,6 +20,8 @@ import { ConfirmationDialogComponent } from './components/readers/confirmation-d
 import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
 import { RegisterReadersComponent } from './components/readers/register-readers/register-readers.component';
 import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
+import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
+import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { LoginAuthorsComponent } from './components/authors/login-authors/login-
     ConfirmationDialogComponent,
     NotificationDialogComponent,
     RegisterReadersComponent,
-    LoginAuthorsComponent
+    LoginAuthorsComponent,
+    ReaderProfileComponent,
+    AddFriendsReadersComponent
   ],
   imports: [
     

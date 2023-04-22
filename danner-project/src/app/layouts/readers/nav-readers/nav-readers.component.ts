@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 import { FriendshipRequest } from 'src/app/shared/interfaces/friendship-request';
 import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
@@ -8,6 +9,7 @@ import { Review } from 'src/app/shared/interfaces/review';
 import { ReviewService } from 'src/app/shared/services/review.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
+import { SearchValueService } from 'src/app/shared/services/search-value.service';
 
 interface Notification {
   likes: [],
@@ -20,8 +22,8 @@ interface Notification {
   styleUrls: ['./nav-readers.component.scss']
 })
 
-
-export class NavReadersComponent {
+export class NavReadersComponent implements OnInit{
+  books:boolean = false;
   search: string = '';
   currentUser: any;
   userId = ''
@@ -37,7 +39,7 @@ export class NavReadersComponent {
     toBeRead: [],
     reading: [],
     friends: [],
-    readingChallenge: 1
+    readingChallenge: 0
   };
 
   friendName: string = '';
@@ -46,11 +48,10 @@ export class NavReadersComponent {
   notifications: Array<Notification> = [];
   filterReviews: Array<Review> = [];
   filterRequests: Array<FriendshipRequest> = [];
-
-  hiddenNotifications = true;
-  hiddenProfile = true;
-  hiddenRequests = true;
-
+  lengthRequests:number =0;
+  lengthNotifications: number = 0;
+  subscription: Subscription = new Subscription;
+  searchValue = '';
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
     console.log(this.reader);
@@ -58,15 +59,22 @@ export class NavReadersComponent {
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();
+    this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue)=>{
+      this.searchValue = searchValue;
+    })
+    console.log('nav '+ this.searchValue);
   }
 
-  fil(){
-    console.log('hiciste click',this.search);
+  sendSearch(){
+    this.books=true;
+    console.log(this.search);
+    this._searchValueService.setSearchValue(this.search);
+    console.log('redirigir');
 
   }
   constructor(private friendshipRequestService: FriendshipRequestService,
     private reviewService: ReviewService,
-    private readerService: ReaderService, private _snackBar: MatSnackBar) {
+    private readerService: ReaderService, private _snackBar: MatSnackBar, private _searchValueService: SearchValueService) {
   }
 
   //Get the current reader
@@ -108,6 +116,11 @@ export class NavReadersComponent {
       return review.userId._id === this.reader._id;
     });
     this.filterReviews = filter;
+    this.filterReviews.forEach((review)=>{
+      this.lengthNotifications+= review.likes.length;
+
+    })
+    console.log(this.lengthNotifications);
     console.log(this.filterReviews)
   }
 
@@ -116,65 +129,71 @@ export class NavReadersComponent {
     console.log('filtrar request');
     const filter = this.requests.filter((request) => {
       console.log(request.status)
-      return request.idReceiver._id === this.reader._id && request.status == true;
+      return request.idReceiver._id === this.reader._id && request.status == false;
     });
     console.log(filter)
     this.filterRequests = filter;
+    this.lengthRequests= this.filterRequests.length;
+    console.log(this.lengthRequests);
   }
 
-  //Function that is activated when the profile button is clicked.
-  iconWrapProfile() {
-    this.hiddenNotifications = true;
-    this.hiddenRequests = true;
-  }
   //Function that is activated when the notification button is clicked.
   iconWrapNotifications() {
-    //open the FriendshipRequest window and hide the other windows.
-    this.hiddenNotifications = !this.hiddenNotifications;
-    this.hiddenProfile = true;
-    this.hiddenRequests = true;
-    //If the window is active, the reviews are consulted again.
-    if (!this.hiddenNotifications) {
-      this.getReviews();
-    }
+    this.getReviews();
   }
 
   //Function that is activated when the FriendshipRequest button is clicked.
   iconWrapRequests() {
-    //open the FriendshipRequest window and hide the other windows.
-    this.hiddenRequests = !this.hiddenRequests;
-    this.hiddenProfile = true;
-    this.hiddenNotifications = true;
-    //If the window is active, the FriendshipRequest are consulted again.
-    if (!this.hiddenRequests) {
-      this.getRequests();
-    }
+    this.getRequests();
+
   }
 
-  updateRequest(name: string, idRequest: string){
-    this.friendshipRequestService.updateRequest({ status: false }, idRequest).subscribe(response => {
+  updateRequest( idRequest: string){
+    this.friendshipRequestService.updateRequest({ status: true }, idRequest).subscribe(response => {
       console.log(response);
+      this.getRequests();
     })
   }
 
+  deleteRequest(idRequest: string){
+    this.friendshipRequestService.deleteRequest(idRequest).subscribe((response:any)=>{
+      console.log(response);
+      this.getRequests();
+    })
+  }
   confirmFriendRequest(idRequest: string, idReader: string, name: string) {
+    var friend: Reader = {
+      _id: "",
+      name: "",
+      user: '',
+      email: '',
+      city: '',
+      image: '',
+      password: '',
+      read: [],
+      toBeRead: [],
+      reading: [],
+      friends: [],
+      readingChallenge: 0
+    };
     this.reader.friends.push(idReader);
     console.log(this.reader);
-    this.readerService.updateReader(this.reader, this.reader._id)
+    //update the current reader friends
+    this.readerService.updateReader(this.reader, this.reader._id).subscribe()
+
+    this.readerService.getOneReader(idReader).subscribe((response:any)=>{
+        friend = response;
+        friend.friends.push(this.reader._id);
+        this.readerService.updateReader(friend, idReader).subscribe()
+        this.updateRequest(idRequest);
+        this.openConfirmSnackBar(name,'Aceptar');
+    })
     
-    this.updateRequest(name,idRequest);
-    
-    this.hiddenRequests=!this.hiddenRequests;
-    this.openConfirmSnackBar(name, 'Aceptar');
-    this.getRequests();
   }
 
   deleteFriendRequest(idRequest: string, name: string) {
-    this.updateRequest(name,idRequest);
-
-    this.hiddenRequests=!this.hiddenRequests;
+    this.deleteRequest(idRequest)
     this.openDeleteSnackBar(name, 'Aceptar');
-    this.getRequests();
   }
 
   openConfirmSnackBar(message: string, action: string) {
@@ -186,4 +205,7 @@ export class NavReadersComponent {
     this._snackBar.open('Se rechazo la solicitud de ' + message, action);
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

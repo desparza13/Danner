@@ -7,7 +7,7 @@
 
 }
 
-.example-form {
+.searchForm {
   margin-top: 20px;
   min-width: 150px;
   width: 80%;
@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
 }
-.example-full-width {
+.searchInput{
   width: 100%;
 }
 ::ng-deep .notification-icon:hover {
@@ -37,6 +37,12 @@
   background-color: #172374;
 }
 
+.search-btn{
+  top:5px
+}
+.searchIcon{
+  color: white;
+}
 
 .buttons {
   margin-top: 5px
@@ -70,6 +76,9 @@
 .notifications-li a {
   color: black;
   font-weight: 800;
+  width: 195px;
+  display: block;
+  justify-content: center;
 }
 
 
@@ -95,53 +104,20 @@
       cursor: pointer;
     }
 
-    li {
-      border-bottom: 1px solid #f1f2f4;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-
-      .notify_icon {
-        display: flex;
-
-        .icon {
-          display: inline-block;
-          width: 45px;
-          height: 45px;
-        }
-      }
-    }
-
-    .request{
-      display: flex;
-    }
-
     .notifications,
     .requests {
       position: relative;
     }
 
-    .notification_dd,
-    .request_dd {
-      position: absolute;
-      top: 48px;
-      right: -1px;
-      background: #fff;
-      border: 1px solid #c7d8e2;
-      width: 350px;
-      height: auto;
-      border-radius: 3px;
-      box-shadow: 10px 10px 35px rgba(0, 0, 0, 0.125),
-        -10px -10px 35px rgba(0, 0, 0, 0.125);
-    }
+    
   }
 }
 
-.notify_data {
+.notify_data,.request_data {
   margin: 0 15px;
-  width: 200px;
+  width: 195px;
 
-  .title {
+  >.title {
     color: #000;
     font-weight: 600;
 
@@ -151,7 +127,7 @@
     text-overflow: ellipsis;
   }
 
-  .sub_title {
+  >.sub_title {
     color: #000;
     font-size: 14px;
     margin-top: 5px;
@@ -161,3 +137,34 @@
     text-overflow: ellipsis;
   }
 }
+
+li {
+  border-bottom: 1px solid #f1f2f4;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+
+  .notify_icon, .request_icon {
+    display: flex;
+    align-items: center;
+
+
+    >.icon {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+    }
+  }
+}
+
+
+.noti, .request{
+  display: flex;
+}
+
+.menuNotifications,.menuRequests{
+  width: 100%;
+  max-height: 300px;
+
+}
+

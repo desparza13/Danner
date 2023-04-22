@@ -5,13 +5,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-
+import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
+import { response } from 'express';
 @Component({
-  selector: 'app-friends-readers',
-  templateUrl: './friends-readers.component.html',
-  styleUrls: ['./friends-readers.component.scss']
+  selector: 'app-add-friends-readers',
+  templateUrl: './add-friends-readers.component.html',
+  styleUrls: ['./add-friends-readers.component.scss']
 })
-export class FriendsReadersComponent {
+export class AddFriendsReadersComponent {
   readerId="643d9026c9e38d96582f4528";
   currentReader: any = {
     _id: "",
@@ -28,32 +29,49 @@ export class FriendsReadersComponent {
     readingChallenge: 0
   };
   friends: any[] = [];
-  filteredFriends: any[] = [];
+  readers: any[] = [];
+  filteredReaders: any[] = [];
+  requests: any[] = [];
   searchValue = '';
   displayedColumns: string[] = ['image','name', 'user', 'email', 'city', 'actions'];
   dataSource = new MatTableDataSource<Reader>([]);
+  function = "add";
 
   constructor(
     private readerService: ReaderService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private requestService:FriendshipRequestService
     ) { 
 
     }
 
   ngOnInit(){
     this.getCurrentReader();
-
+    this.getReaders();
+    this.getRequests();
   }
   getCurrentReader(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
       console.log("Reader",this.currentReader)
       this.friends = this.currentReader.friends;
-      console.log(this.friends)
-      this.filteredFriends = this.friends;
-      this.dataSource.data = this.friends;
     });
+  }
+  getReaders(){
+    this.readerService.getReaders().subscribe((response:any)=>{
+      this.readers=response;
+      console.log("Readers",this.readers)
+      this.filteredReaders = this.readers;
+      this.dataSource.data = this.filteredReaders;
+    });  
+  }
+  getRequests(){
+    console.log("BUSCAR REQUESTS")
+    this.requestService.getRequests().subscribe((response:any)=>{
+      console.log("RESPONSE",response)
+      this.requests = response;
+    })
   }
   applyFilter(): void {
     this.dataSource.filter = this.searchValue.trim().toLowerCase();
@@ -63,7 +81,56 @@ export class FriendsReadersComponent {
     this.applyFilter();
   }
 
-
+  chooseAction(reader: Reader, friendId:string){
+    if (this.currentReader.friends.some((friend: any) => friend._id === reader._id)) {
+      return "remove";
+    }
+    return this.checkPending(reader, friendId);
+  }
+  checkPending(reader: Reader, friendId:string){
+    console.log("requests sent",this.requests)
+    let requestsSent = this.requests.filter((request:any) => this.currentReader._id == request.idSender);
+    console.log("requests filter1",requestsSent)
+    requestsSent = this.requests.filter((request:any) => friendId == request.idReceiver);
+    console.log("requests filter2",requestsSent)
+    if(requestsSent.length>0){
+      return "pending"
+    }
+    return "add"
+  }
+  action(reader: Reader, friendId:string){
+    if (this.currentReader.friends.some((friend: any) => friend._id === reader._id)) {
+      this.removeFriend(reader, friendId);
+    }else{
+      this.addFriend(reader, friendId);
+    }
+  }
+  addFriend(reader: Reader, friendId:string){
+    let updatedReader = this.currentReader;
+    updatedReader.friends.push(friendId);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        message: 'Do you want to send the friendship request?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        let request = {
+          idSender: this.currentReader._id,
+          idReceiver: friendId,
+          status: false
+        }
+        this.requestService.postRequest(request).subscribe((response:any)=>{
+          console.log(response)
+          this.snackBar.open('Friend request sent', 'Close', {
+            duration: 3000
+          });
+        })
+      }
+    });
+    
+  }
   removeFriend(reader: Reader, friendId:string) {
     let updatedReader = this.currentReader
     updatedReader.friends = updatedReader.friends.filter((friend:any) => friend._id !== friendId);
@@ -110,9 +177,5 @@ export class FriendsReadersComponent {
       }
     });
   }
-  
-  
-
-
-
 }
+

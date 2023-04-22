@@ -1,12 +1,17 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <h2>Reading challenge</h2>
+  </mat-toolbar-row>
+</mat-toolbar>
 <div class="container">
     <div class="gallery-container">
       <div class="gallery" [@carousel]="carouselState">
-        <img  *ngFor="let book of finishedBooksCarrousel" src="{{book.bookId.image}}" alt="Image cover">
+        <img  *ngFor="let book of finishedBooksCarrousel" src="{{book?.bookId.image}}" alt="Image cover">
       </div>
     </div>
     <div class="image-overlay">
         <h1>This year you have read</h1>
-        <p> <b>{{finishedBooks.length}}</b>  books out of your goal of  <b>{{currentReader.readingChallenge}}</b></p>
+        <p> <b>{{finishedBooks?.length}}</b>  books out of your goal of  <b>{{currentReader.readingChallenge}}</b></p>
     </div>
 </div>
 

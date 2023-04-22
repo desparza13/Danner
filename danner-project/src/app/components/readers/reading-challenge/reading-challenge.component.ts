@@ -51,12 +51,6 @@ export class ReadingChallengeComponent {
         console.log("Reader",this.currentReader)
         this.getFinishedBooks();
         this.getProgress();
-        let widthString = 'calc(250px * '+ this.finishedBooks.length.toString() + ' )'
-        console.log(this.track)
-        if(this.track!=null){
-          this.track.style.width = widthString;
-          console.log("track width",this.track.style.width)
-        }
       })
     }
     getFinishedBooks() {
