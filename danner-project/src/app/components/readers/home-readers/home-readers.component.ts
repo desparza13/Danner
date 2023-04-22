@@ -146,7 +146,6 @@ export class HomeReadersComponent {
       }
   })  
 }
-
   //Filtering
   //Get selected rating values
   getRatingFilters(ratings: any[] | undefined){
@@ -254,7 +253,6 @@ export class HomeReadersComponent {
       genreToUse=this.genresFilters
     }
     this.filterByGenres(genreToUse);
-
   }
 
 }
