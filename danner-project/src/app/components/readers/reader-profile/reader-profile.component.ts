@@ -12,7 +12,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./reader-profile.component.scss']
 })
 export class ReaderProfileComponent {
-  readerId="643d9026c9e38d96582f4528";
+  readerId="";
+  reader: any;
   isLoading = true;
   isError = false;
   isEditModeEnabled = false;
@@ -48,6 +49,9 @@ export class ReaderProfileComponent {
   }
 
   ngOnInit(): void {
+    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.readerId = this.reader.userId;
     this.getCurrentReader();
   }
   getCurrentReader(){
