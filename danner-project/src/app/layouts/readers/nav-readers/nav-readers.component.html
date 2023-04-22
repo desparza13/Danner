@@ -32,15 +32,15 @@
                 <div class="navbar_right">
                     <div class="notifications">
                         <div class="icon_wrap">
-                            <button matTooltip="Notifications" mat-icon-button class="notification-icon" [matMenuTriggerFor]="notifications"
-                                (click)="iconWrapNotifications()">
+                            <button matTooltip="Notifications" mat-icon-button class="notification-icon"
+                                [matMenuTriggerFor]="notifications" (click)="iconWrapNotifications()">
                                 <mat-icon>notifications</mat-icon>
                             </button>
                         </div>
 
                         <mat-menu xPosition="before" #notifications="matMenu" class="menuNot">
 
-                            <div class="menuNotifications">
+                            <ul class="menuNotifications">
                                 <li class="notifications-li">
                                     <a>Notifications</a>
                                     <span class="spacer"></span>
@@ -50,43 +50,44 @@
                                     </div>
                                 </li>
                                 <li *ngIf="lengthNotifications==0">
-                                    <div>
-                                        <iframe src="https://giphy.com/embed/TjGWPdo73thjg7el5A" width="100%"
+                                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
+                                        <img src="https://i.giphy.com/media/TjGWPdo73thjg7el5A/giphy.webp" width="100%"
                                             height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"
-                                            allowFullScreen></iframe>
+                                            allowFullScreen>
                                     </div>
                                 </li>
-                                <div *ngFor="let notification of filterReviews">
+                                <div mat-menu-item *ngFor="let notification of filterReviews">
                                     <li mat-menu-item *ngFor="let like of notification.likes">
                                         <div class="noti">
-                                            <div class="notify_icon">
-                                                <img src={{like.image}} class="icon">
-                                            </div>
-                                            <div class="notify_data">
-                                                <div class="title">
-                                                    {{like.name}}
-                                                </div>
-                                                <div class="sub_title">
-                                                    liked your review of
-                                                </div>
-                                                <div class="sub_title">
-                                                    "{{notification.bookId.title}}"
-                                                </div>
-                                            </div>
-
+                                        <div class="notify_icon">
+                                            <img src={{like.image}} class="icon">
                                         </div>
-
+                                        <div class="notify_data">
+                                            <div class="title">
+                                                {{like.name}}
+                                            </div>
+                                            <div class="sub_title">
+                                                liked your review of
+                                            </div>
+                                            <div class="sub_title">
+                                                "{{notification.bookId.title}}"
+                                            </div>
+                                        </div>
+                                    </div>
                                     </li>
+                                    
+
                                 </div>
-                            </div>
+                                
+                            </ul>
 
                         </mat-menu>
 
                     </div>
                     <div class="requests">
                         <div class="icon_wrap">
-                            <button matTooltip="Friends Requests" mat-icon-button class="request-icon" [matMenuTriggerFor]="requests"
-                                (click)="iconWrapRequests()">
+                            <button matTooltip="Friends Requests" mat-icon-button class="request-icon"
+                                [matMenuTriggerFor]="requests" (click)="iconWrapRequests()">
                                 <mat-icon>group_add</mat-icon>
                             </button>
                         </div>
@@ -96,16 +97,17 @@
                                     <a>Friends Requests</a>
                                     <span class="spacer"></span>
 
-                                        <mat-icon color="primary">person_add</mat-icon>
-                                    
+                                    <mat-icon color="primary">person_add</mat-icon>
+
                                 </li>
                                 <li *ngIf="lengthRequests==0">
-                                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe
-                                            src="https://giphy.com/embed/mPIZAWkLSFpqcJpf18" width="100%" height="100%"
+                                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
+                                        <img
+                                            src="https://i.giphy.com/media/mPIZAWkLSFpqcJpf18/giphy.webp" width="100%" height="100%"
                                             style="position:absolute" frameBorder="0" class="giphy-embed"
-                                            allowFullScreen></iframe>
+                                            allowFullScreen>
                                     </div>
-                                    
+
                                 </li>
                                 <li mat-menu-item *ngFor="let request of filterRequests">
                                     <div class="request">
@@ -129,12 +131,13 @@
                                 </li>
                             </ul>
                         </mat-menu>
-                        
+
                     </div>
                     <div class="profile">
                         <div>
                             <div>
-                                <button  matTooltip="Menu"class="profile-icon" mat-icon-button [matMenuTriggerFor]="menu">
+                                <button matTooltip="Menu" class="profile-icon" mat-icon-button
+                                    [matMenuTriggerFor]="menu">
                                     <img src={{reader.image}} alt="profile_pic">
                                 </button>
                             </div>

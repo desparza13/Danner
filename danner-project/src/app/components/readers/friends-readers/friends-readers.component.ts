@@ -12,7 +12,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
   styleUrls: ['./friends-readers.component.scss']
 })
 export class FriendsReadersComponent {
-  readerId="643d9026c9e38d96582f4528";
+  readerId="";
+  reader: any;
   currentReader: any = {
     _id: "",
     name: "",
@@ -42,6 +43,9 @@ export class FriendsReadersComponent {
     }
 
   ngOnInit(){
+    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.readerId = this.reader.userId;
     this.getCurrentReader();
 
   }

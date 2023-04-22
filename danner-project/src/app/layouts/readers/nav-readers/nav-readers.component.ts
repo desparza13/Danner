@@ -54,7 +54,6 @@ export class NavReadersComponent implements OnInit{
   searchValue = '';
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
     this.userId = this.currentUser.userId;
     this.getReviews();
     this.getRequests();
@@ -101,7 +100,7 @@ export class NavReadersComponent implements OnInit{
   getReviews() {
     this.reviewService.getReviews().subscribe((response: any) => {
       this.reviews = response;
-      this.filterReviews = this.reviews;
+      
     })
 
     //Filter the reviews by active reader
