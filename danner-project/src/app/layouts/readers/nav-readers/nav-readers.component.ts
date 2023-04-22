@@ -25,7 +25,8 @@ interface Notification {
 export class NavReadersComponent implements OnInit{
   books:boolean = false;
   search: string = '';
-  userId = '643ebe548e5f84dad3b0c99c'
+  currentUser: any;
+  userId = ''
   reader: Reader = {
     _id: "",
     name: "",
@@ -52,6 +53,9 @@ export class NavReadersComponent implements OnInit{
   subscription: Subscription = new Subscription;
   searchValue = '';
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.userId = this.currentUser.userId;
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();

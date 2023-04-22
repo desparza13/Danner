@@ -16,9 +16,12 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
 import { RatingsFilterComponent } from './components/readers/home-readers/ratings-filter/ratings-filter.component';
 import { GenreFilterComponent } from './components/readers/home-readers/genre-filter/genre-filter.component';
 import { ReadingChallengeWidgetComponent } from './components/readers/home-readers/reading-challenge-widget/reading-challenge-widget.component';
-import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
+import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
+import { RegisterReadersComponent } from './components/readers/register-readers/register-readers.component';
+import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
+import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +36,11 @@ import { AddFriendsReadersComponent } from './components/readers/add-friends-rea
     GenreFilterComponent,
     ReadingChallengeWidgetComponent,
     HomeReadersComponent,
-    ReaderProfileComponent,
     ConfirmationDialogComponent,
+    NotificationDialogComponent,
+    RegisterReadersComponent,
+    LoginAuthorsComponent,
+    ReaderProfileComponent,
     AddFriendsReadersComponent
   ],
   imports: [
@@ -47,7 +53,9 @@ import { AddFriendsReadersComponent } from './components/readers/add-friends-rea
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
