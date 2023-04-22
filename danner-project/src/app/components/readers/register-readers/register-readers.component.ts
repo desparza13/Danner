@@ -30,6 +30,7 @@ export class RegisterReadersComponent {
     toBeRead: [],
     reading: [],
     friends: [],
+    image: 'https://pbs.twimg.com/media/E9WKMzwXEAQ_zt2.png',
     readingChallenge: 0
   }
 

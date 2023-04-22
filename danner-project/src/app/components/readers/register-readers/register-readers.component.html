@@ -33,7 +33,7 @@
                 <div>
                     <mat-form-field appearance="fill">
                         <mat-label>Enter your password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+                        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required >
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -42,18 +42,18 @@
 
                     </mat-form-field>
                 </div>
-                <div>
+                <!-- <div>
                     <mat-form-field appearance="fill">
                         <mat-label>Confirm password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="confirmPassword" required>
+                        <input matInput [type]="hide ? 'confirmPassword' : 'text'" [formControl]="confirmPassword"  required>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-error *ngIf="password.invalid">{{getConPasswordErrorMessage()}}</mat-error>
+                        <mat-error *ngIf="confirmPassword.invalid">{{getConPasswordErrorMessage()}}</mat-error>
 
                     </mat-form-field>
-                </div>
+                </div> -->
 
                 <div>
                     <mat-form-field appearance="fill">
@@ -73,6 +73,10 @@
                     <button color="accent" mat-raised-button
                     [disabled]="email.invalid || password.invalid || name.invalid || user.invalid || city.invalid || readingChallenge.invalid">Save</button>
                 </a>
+                <div class="linkAuthor">
+                    <a  [routerLink]="['/authors/login']">¿Are you an author?
+                        Click Here</a>
+                </div>
                 
             </form>
         </div>

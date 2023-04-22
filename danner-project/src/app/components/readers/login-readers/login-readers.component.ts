@@ -19,7 +19,7 @@ export class LoginReadersComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   reader: Array<Reader> = [];
-
+  
   ngOnInit() {
     console.log(this.title);
     this._readerServide.getReaders().subscribe((response: any) => {

@@ -19,6 +19,7 @@ import { ReadingChallengeWidgetComponent } from './components/readers/home-reade
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
 import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
 import { RegisterReadersComponent } from './components/readers/register-readers/register-readers.component';
+import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RegisterReadersComponent } from './components/readers/register-readers/
     HomeReadersComponent,
     ConfirmationDialogComponent,
     NotificationDialogComponent,
-    RegisterReadersComponent
+    RegisterReadersComponent,
+    LoginAuthorsComponent
   ],
   imports: [
     
