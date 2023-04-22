@@ -3,7 +3,7 @@
         <mat-toolbar-row>
             <h2>My profile</h2>
         </mat-toolbar-row>
-      </mat-toolbar>
+    </mat-toolbar>
     <div class="col-md-6 form-container">
         <form [formGroup]="bookForm">
             <h1>Tell us more about your book</h1>
@@ -22,10 +22,10 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Enter the genre</mat-label>
+                <mat-label>Enter the release date</mat-label>
                     <input type="date" matInput placeholder="Date" formControlName="date"/>
                 <mat-error *ngIf="bookForm.get('date').hasError('required')">
-                    Genre is required
+                    Date is required
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -56,6 +56,6 @@
         </form>
     </div>
     <div class="col-md-6 image-container">
-        <img src="https://st4.depositphotos.com/3215143/22655/v/600/depositphotos_226555000-stock-illustration-vector-illustration-writer-desktop-typewriter.jpg" alt="Book Cover Image" class="img-fluid">
+        <img src="https://st4.depositphotos.com/1001599/38657/v/600/depositphotos_386576744-stock-illustration-public-library-vector-concept-metaphor.jpg" alt="Book Cover Image" class="img-fluid">
     </div>
 </div>
