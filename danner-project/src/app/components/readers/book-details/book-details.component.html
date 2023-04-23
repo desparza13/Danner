@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="book-actions">
-            <button mat-raised-button color="primary">Mark as finished</button>
-            <button mat-raised-button color="primary">Mark as currently reading</button>
-            <button mat-raised-button color="primary">Add to to be read</button>
+            <button mat-raised-button color="primary" (click)="modifyFinishedList()">{{finishedBtn()}}</button>
+            <button mat-raised-button color="primary" (click)="modifyCurrentList()">{{currentBtn()}}</button>
+            <button mat-raised-button color="primary" (click)="modifyTbrList()">{{tbrBtn()}}</button>
         </div>
     </div>
     <mat-divider></mat-divider>
