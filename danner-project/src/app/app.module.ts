@@ -22,6 +22,7 @@ import { AddFriendsReadersComponent } from './components/readers/add-friends-rea
 import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
 import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
 import { AuthorProfileComponent } from './components/authors/author-profile/author-profile.component';
+import { NavAuthorsComponent } from './layouts/authors/nav-authors/nav-authors.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AuthorProfileComponent } from './components/authors/author-profile/auth
     AddFriendsReadersComponent,
     HomeAuthorsComponent,
     AddBookAuthorsComponent,
-    AuthorProfileComponent
+    AuthorProfileComponent,
+    NavAuthorsComponent
   ],
   imports: [
     
