@@ -12,23 +12,14 @@
                         </mat-form-field>
                         <div>
                             <a class="searchButton" (click)="sendSearch()" [routerLink]="['/readers/books']">
-
                                 <button matTooltip="Search" mat-icon-button class="search-btn">
-
                                     <mat-icon class="searchIcon">search</mat-icon>
-
                                 </button>
                             </a>
-
-
                         </div>
                     </form>
-
-
                 </div>
-
                 <span class="spacer"></span>
-
                 <div class="navbar_right">
                     <div class="reviews">
                         <button matTooltip="Reviews" mat-icon-button class="reviews-icon" routerLink="/readers/reviews">
@@ -42,14 +33,11 @@
                                 <mat-icon>notifications</mat-icon>
                             </button>
                         </div>
-
                         <mat-menu xPosition="before" #notifications="matMenu" class="menuNot">
-
                             <ul class="menuNotifications">
                                 <li class="notifications-li">
                                     <a>Notifications</a>
                                     <span class="spacer"></span>
-
                                     <div>
                                         <mat-icon color="primary">favorite</mat-icon>
                                     </div>
@@ -64,30 +52,25 @@
                                 <div *ngFor="let notification of filterReviews">
                                     <li mat-menu-item *ngFor="let like of notification.likes">
                                         <div class="noti">
-                                        <div class="notify_icon">
-                                            <img src={{like.image}} class="icon">
+                                            <div class="notify_icon">
+                                                <img src={{like.image}} class="icon">
+                                            </div>
+                                            <div class="notify_data">
+                                                <div class="title">
+                                                    {{like.name}}
+                                                </div>
+                                                <div class="sub_title">
+                                                    liked your review of
+                                                </div>
+                                                <div class="sub_title">
+                                                    "{{notification.bookId.title}}"
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="notify_data">
-                                            <div class="title">
-                                                {{like.name}}
-                                            </div>
-                                            <div class="sub_title">
-                                                liked your review of
-                                            </div>
-                                            <div class="sub_title">
-                                                "{{notification.bookId.title}}"
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </li>
-                                    
-
-                                </div>
-                                
+                                    </li>                   
+                                </div>                               
                             </ul>
-
                         </mat-menu>
-
                     </div>
                     <div class="requests">
                         <div class="icon_wrap">
@@ -101,9 +84,7 @@
                                 <li class="friend-li">
                                     <a>Friends Requests</a>
                                     <span class="spacer"></span>
-
                                     <mat-icon color="primary">person_add</mat-icon>
-
                                 </li>
                                 <li *ngIf="lengthRequests==0">
                                     <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
@@ -112,7 +93,6 @@
                                             style="position:absolute" frameBorder="0" class="giphy-embed"
                                             allowFullScreen>
                                     </div>
-
                                 </li>
                                 <li mat-menu-item *ngFor="let request of filterRequests">
                                     <div class="request">
@@ -132,11 +112,9 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </li>
                             </ul>
                         </mat-menu>
-
                     </div>
                     <div class="profile">
                         <div>
@@ -146,7 +124,6 @@
                                     <img src={{reader.image}} alt="profile_pic">
                                 </button>
                             </div>
-
                             <mat-menu #menu="matMenu" class="customize">
                                 <button routerLink="/readers/profile" mat-menu-item class="profile-option">
                                     <mat-icon>person</mat-icon>
