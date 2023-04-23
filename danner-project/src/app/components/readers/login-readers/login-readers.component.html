@@ -49,10 +49,9 @@
                                         </mat-form-field>
                                     </div>
                                     <div class="login-btn">
-                                        <a (click)="login()" [routerLink]="[route]"> 
-                                        <button color="accent" mat-raised-button 
+                                        <button (click)="login()"  color="accent" mat-raised-button 
                                         [disabled]="email.invalid || password.invalid">Login</button>
-                                    </a>
+                                    
                                     </div>
                                     
                                     <div class="linkAuthor">
