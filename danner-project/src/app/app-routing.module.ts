@@ -8,6 +8,7 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
 import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
+import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 const routes: Routes = [
   {path: 'readers', component: HomeReadersComponent},
   {path: 'readers/friends', component:FriendsReadersComponent},
@@ -16,7 +17,9 @@ const routes: Routes = [
   {path: 'readers/books', component: BooksReadersComponent},
   {path: 'authors/login',component: LoginAuthorsComponent},
   {path: 'readers/profile', component: ReaderProfileComponent},
-  {path: 'readers/addFriends', component:AddFriendsReadersComponent}
+  {path: 'readers/addFriends', component:AddFriendsReadersComponent},
+  {path: 'readers/:id', component: BookDetailsComponent},
+  {path: 'readers/books/:id', component: BookDetailsComponent}
 ];
 
 @NgModule({

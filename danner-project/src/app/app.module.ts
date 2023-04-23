@@ -22,6 +22,7 @@ import { RegisterReadersComponent } from './components/readers/register-readers/
 import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
+import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ReaderProfileComponent } from './components/readers/reader-profile/read
     RegisterReadersComponent,
     LoginAuthorsComponent,
     ReaderProfileComponent,
-    AddFriendsReadersComponent
+    AddFriendsReadersComponent,
+    BookDetailsComponent
   ],
   imports: [
     
