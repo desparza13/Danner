@@ -13,7 +13,7 @@ export class HomeReadersComponent {
 
   //Variables
   //Id proof of concept until login and register is implemented
-  readerId:string='';
+  readerId:string='643d9026c9e38d96582f4528';
   reader: any;
   //Storing books
     //Originals
