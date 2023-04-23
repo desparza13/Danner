@@ -8,7 +8,7 @@ import { AuthorService } from 'src/app/shared/services/author.service';
   styleUrls: ['./nav-authors.component.scss']
 })
 export class NavAuthorsComponent {
-  userId = '643d9026c9e38d96582f4528'
+  userId = '643b5cee991bff556bbdb0f3'
   author: Author = {
     _id: "",
     name: "",
@@ -28,7 +28,7 @@ export class NavAuthorsComponent {
   constructor(private authorService: AuthorService) {
   }
 
-  //Get the current reader
+  //Get the current author
   getCurrentAuthor() {
     this.authorService.getOneAuthor(this.userId).subscribe((response: any) => {
       this.author = response;
