@@ -5,42 +5,27 @@
             <h2>Reviews</h2>
         </mat-toolbar-row>
     </mat-toolbar>
-    <!-- <div class="reviews">
-        <div class="friendReviews">
-            <div class="review" *ngFor="let review of filterReviews">
-                <mat-card>
-                    <mat-card-header>
-                        <img src={{review.userId.image}}>
-                        <a class="reader">{{review.userId.name}}</a>
-                    </mat-card-header>
-                    <mat-card-content>{{review.description}}</mat-card-content>
-                </mat-card>
-            </div>
-        </div>
-    </div> -->
     <div class="feed">
-        <div class="review" *ngFor="let review of reviews">
-          <div class="user-info">
-            <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
-            <div>
-              <p class="user">{{ review.userId.user }}</p>
-              <p class="name">{{ review.userId.name }}</p>
+        <div class="review" *ngFor="let review of filterReviews">
+            <div class="user-info">
+                <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
+                <div>
+                    <p class="user">{{ review.userId.user }}</p>
+                    <p class="name">{{ review.userId.name }}</p>
+                </div>
             </div>
-          </div>
-          <div class="review-info">
-            <p class="rating">Rated {{ review.bookId.title }} with {{ review.rating }}<span class="star-icon"><mat-icon>star</mat-icon></span></p>
-            <p class="description">{{ review.description }}</p>
-            <div class="likes">
-                <button mat-icon-button class="like-button"color="warn" aria-label="Example icon button with a heart icon">
-                    <mat-icon>favorite</mat-icon>
-                  </button>
-              <p class="like-count">{{ review.likes.length }}</p>
+            <div class="review-info">
+                <p class="rating">Rated {{ review.bookId.title }} with {{ review.rating }}<span class="star-icon"><mat-icon>star</mat-icon></span></p>
+                <p class="description">{{ review.description }}</p>
+                <div class="likes">
+                    <button mat-icon-button class="like-button"color="warn" aria-label="Example icon button with a heart icon" (click)="likeReview(review)">
+                        <mat-icon>{{likeIcon(review)}}</mat-icon>
+                    </button>
+                    <p class="like-count">{{ review.likes.length }}</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      
-
+    </div>
 </div>
 <div *ngIf="isLoading" class="overlay">
     <mat-spinner diameter="50"></mat-spinner>

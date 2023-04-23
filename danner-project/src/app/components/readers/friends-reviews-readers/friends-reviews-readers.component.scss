@@ -111,16 +111,12 @@
             }
         }
     }
-    .description {
-    margin: 10px 0;
-    font-size: 14px;
+    .description, .rating {
+        margin: 10px 0;
+        font-size: 14px;
     }
     .likes {
         display: flex;
         align-items: center;
-        .like-button {
-            display: flex;
-            color: red;
-        }
     }
 }}  
