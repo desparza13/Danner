@@ -21,6 +21,7 @@ import { ConfirmationDialogComponent } from './components/readers/confirmation-d
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
 import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
+import { NavAuthorsComponent } from './layouts/authors/nav-authors/nav-authors.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddBookAuthorsComponent } from './components/authors/add-book-authors/a
     ConfirmationDialogComponent,
     AddFriendsReadersComponent,
     HomeAuthorsComponent,
-    AddBookAuthorsComponent
+    AddBookAuthorsComponent,
+    NavAuthorsComponent
   ],
   imports: [
     
