@@ -14,7 +14,8 @@ import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/c
   styleUrls: ['./add-book-authors.component.scss']
 })
 export class AddBookAuthorsComponent {
-  authorId="643b5cee991bff556bbdb0f3";
+  authorId="";
+  author:any;
   book: Book = {
     title: '',
     date: new Date(),
@@ -54,6 +55,9 @@ export class AddBookAuthorsComponent {
   }
 
   ngOnInit(): void {
+    this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.author);
+    this.authorId = this.author.userId;
     this.getAuthor();
   }
 

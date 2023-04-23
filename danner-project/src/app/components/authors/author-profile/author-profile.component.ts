@@ -12,7 +12,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./author-profile.component.scss']
 })
 export class AuthorProfileComponent {
-  authorId="643b5cee991bff556bbdb0f3";
+  authorId="";
+  author:any;
   isLoading = true;
   isError = false;
   isEditModeEnabled = false;
@@ -42,6 +43,9 @@ export class AuthorProfileComponent {
   }
 
   ngOnInit(): void {
+    this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.author);
+    this.authorId = this.author.userId;
     this.getCurrentReader();
   }
   getCurrentReader(){

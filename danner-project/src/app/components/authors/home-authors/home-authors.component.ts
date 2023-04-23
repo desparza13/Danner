@@ -13,7 +13,8 @@ import { AuthorService } from 'src/app/shared/services/author.service';
 export class HomeAuthorsComponent {
   //Variables
   //Id proof of concept until login and register is implemented
-  authorId="643b5cee991bff556bbdb0f3";
+  authorId="";
+  author:any;
   //Storing books
     //Originals
   allBooks: Array<Book>=[];
@@ -37,6 +38,9 @@ export class HomeAuthorsComponent {
   };
 
   ngOnInit(){
+    this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.author);
+    this.authorId = this.author.userId;
     //Get initial data from the database
     this.getCurrentAuthor();
     //Initialize filtered books as original books
