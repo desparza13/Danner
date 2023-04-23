@@ -23,6 +23,9 @@ import { HomeAuthorsComponent } from './components/authors/home-authors/home-aut
 import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
 import { AuthorProfileComponent } from './components/authors/author-profile/author-profile.component';
 import { NavAuthorsComponent } from './layouts/authors/nav-authors/nav-authors.component';
+import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
+import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
+import { RegisterAuthorsComponent } from './components/authors/register-authors/register-authors.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { NavAuthorsComponent } from './layouts/authors/nav-authors/nav-authors.c
     HomeAuthorsComponent,
     AddBookAuthorsComponent,
     AuthorProfileComponent,
-    NavAuthorsComponent
+    NavAuthorsComponent,
+    LoginAuthorsComponent,
+    NotificationDialogComponent,
+    RegisterAuthorsComponent
   ],
   imports: [
     
