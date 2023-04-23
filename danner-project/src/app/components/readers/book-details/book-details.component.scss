@@ -1,0 +1,77 @@
+.page{
+    height: calc(100vh - 60px);
+    .book-details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 20px;
+        
+        .book-info {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          
+          .book-image {
+            flex: 0 0 200px;
+            max-width: 200px;            
+            img {
+              display: block;
+              width: 80%;
+              height: auto;
+              padding: 10%;
+            }
+          }
+          
+          .book-details-info {
+            flex: 1 1 calc(100% - 200px);
+            max-width: calc(100% - 200px);
+            
+            h2 {
+              margin-top: 0;
+            }
+            
+            p {
+              margin: 0 0 10px 0;
+            }
+            
+            .book-rating {
+              display: flex;
+              align-items: center;
+              margin-bottom: 10px;
+              
+              .book-rating-text {
+                margin-right: 10px;
+              }
+              
+              .book-rating-stars {
+                display: flex;
+                
+                .star-icon {
+                  font-size: 1.5rem;
+                  color: gray;
+                  margin-right: 5px;
+                  &.star-icon-filled {
+                    color: #fdd835;
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+        .book-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: flex-end;
+          
+          button {
+            margin-left: 10px;
+          }
+        }
+      }
+    
+}

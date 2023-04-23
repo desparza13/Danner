@@ -1,2 +1,36 @@
-<p>book-details works!</p>
-{{book.title}}
+<app-nav-readers></app-nav-readers>
+<div class="page">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <h2>{{book.title}}</h2>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    <div class="book-details">
+        <div class="book-info">
+          <div class="book-image">
+            <img [src]="book.image" alt="Book Cover Image">
+          </div>
+          <div class="book-details-info">
+            <h2>{{book.title}}</h2>
+            <p><strong>Author:</strong> {{book.author}}</p>
+            <p><strong>Genre:</strong> {{book.genre}}</p>
+            <p><strong>Date:</strong> {{book.date | date}}</p>
+            <div class="book-rating">
+              <span class="book-rating-text">Rating:</span>
+              <div class="book-rating-stars">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                  <mat-icon class="star-icon" [ngClass]="{'star-icon-filled': star <= book.averageRating}">star</mat-icon>
+                </ng-container>
+              </div>
+            </div>
+            <p>{{book.description}}</p>
+          </div>
+        </div>
+        <div class="book-actions">
+          <button mat-raised-button color="primary">Mark as finished</button>
+          <button mat-raised-button color="primary">Mark as currently reading</button>
+          <button mat-raised-button color="primary">Add to to be read</button>
+        </div>
+      </div>
+      
+</div>
