@@ -114,7 +114,7 @@
                                     <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)"
                                         class="fa fa-star checked"></span>
                                 </div>
-                                <div class="book-progress">Finished on {{book.finishedDate}}</div>
+                                <div class="book-progress">Finished on {{book.finishedDate | date}}</div>
                             </div>
                         </div>
                     </div>

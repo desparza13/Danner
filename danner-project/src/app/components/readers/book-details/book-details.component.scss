@@ -8,70 +8,207 @@
         margin: 20px;
         
         .book-info {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 20px;
-          
-          .book-image {
-            flex: 0 0 200px;
-            max-width: 200px;            
-            img {
-              display: block;
-              width: 80%;
-              height: auto;
-              padding: 10%;
-            }
-          }
-          
-          .book-details-info {
-            flex: 1 1 calc(100% - 200px);
-            max-width: calc(100% - 200px);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
             
-            h2 {
-              margin-top: 0;
-            }
-            
-            p {
-              margin: 0 0 10px 0;
-            }
-            
-            .book-rating {
-              display: flex;
-              align-items: center;
-              margin-bottom: 10px;
-              
-              .book-rating-text {
-                margin-right: 10px;
-              }
-              
-              .book-rating-stars {
-                display: flex;
-                
-                .star-icon {
-                  font-size: 1.5rem;
-                  color: gray;
-                  margin-right: 5px;
-                  &.star-icon-filled {
-                    color: #fdd835;
-                  }
+            .book-image {
+                flex: 0 0 200px;
+                max-width: 200px;            
+                img {
+                    display: block;
+                    width: 80%;
+                    height: auto;
+                    padding: 10%;
                 }
-              }
+            }  
+            .book-details-info {
+                flex: 1 1 calc(100% - 200px);
+                max-width: calc(100% - 200px);
+                h2 {
+                    margin-top: 0;
+                }
+                p {
+                    margin: 0 0 10px 0;
+                }
+                .book-rating {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    
+                    .book-rating-text {
+                        margin-right: 10px;
+                    }
+                    .book-rating-stars {
+                        display: flex;
+                        .star-icon {
+                            font-size: 1.5rem;
+                            color: gray;
+                            margin-right: 5px;
+                            &.star-icon-filled {
+                                color: #fdd835;
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-        
+        }         
         .book-actions {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: flex-end;
-          
-          button {
-            margin-left: 10px;
-          }
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+            button {
+                margin-left: 10px;
+            }
         }
-      }
+    }
+    .write-review {
+        margin-top: 30px;
+        h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            .mat-form-field {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            button {
+                margin-top: 20px;
+                width: 10%
+            }
+        }
+    }
+
+
+    .friendReviews{
+        height: 100%;
+        .review{
+            width: 100%;
+            padding-top: 10px;
+            
+            mat-card{
+                width: 800px;
+                .reader{
+                    font-weight: 800;
+                    
+                }
+                img {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    border: 1px solid #f1f2f4;
     
+                }
+                a{
+                    display:flex;
+                align-items: center;
+                }
+            }
+    
+            
+        }
+    
+    }
+    .reviews{
+        display:flex;
+        justify-content: center;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        mat-spinner {
+            color: white;
+        }
+    }
+    mat-divider{
+        margin: 30px;
+    }
+    
+    .feed {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 20px;
+        margin: 0 auto;
+      
+        .review {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fae5df;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+      
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    
+        .user-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+    
+        .user {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+        .name {
+            margin: 0;
+            font-size: 12px;
+            color: #888;
+        }
+    
+        .review-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            .star-icon {
+                display: inline-flex;
+                align-items: center;
+                margin-left: 5px;
+                margin-right: 2px;  
+                mat-icon {
+                    font-size: 16px;
+                    color: gold;
+                }
+            }
+        }
+        .description, .rating {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .likes {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
 }

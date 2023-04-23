@@ -4,33 +4,76 @@
         <mat-toolbar-row>
             <h2>{{book.title}}</h2>
         </mat-toolbar-row>
-      </mat-toolbar>
+    </mat-toolbar>
     <div class="book-details">
         <div class="book-info">
-          <div class="book-image">
+        <div class="book-image">
             <img [src]="book.image" alt="Book Cover Image">
-          </div>
-          <div class="book-details-info">
+        </div>
+        <div class="book-details-info">
             <h2>{{book.title}}</h2>
             <p><strong>Author:</strong> {{book.author}}</p>
             <p><strong>Genre:</strong> {{book.genre}}</p>
             <p><strong>Date:</strong> {{book.date | date}}</p>
             <div class="book-rating">
-              <span class="book-rating-text">Rating:</span>
-              <div class="book-rating-stars">
+                <span class="book-rating-text">Rating:</span>
+            <div class="book-rating-stars">
                 <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                  <mat-icon class="star-icon" [ngClass]="{'star-icon-filled': star <= book.averageRating}">star</mat-icon>
+                    <mat-icon class="star-icon" [ngClass]="{'star-icon-filled': star <= book.averageRating}">star</mat-icon>
                 </ng-container>
-              </div>
             </div>
-            <p>{{book.description}}</p>
-          </div>
+            </div>
+                <p>{{book.description}}</p>
+            </div>
         </div>
         <div class="book-actions">
-          <button mat-raised-button color="primary">Mark as finished</button>
-          <button mat-raised-button color="primary">Mark as currently reading</button>
-          <button mat-raised-button color="primary">Add to to be read</button>
+            <button mat-raised-button color="primary">Mark as finished</button>
+            <button mat-raised-button color="primary">Mark as currently reading</button>
+            <button mat-raised-button color="primary">Add to to be read</button>
         </div>
-      </div>
-      
+    </div>
+    <mat-divider></mat-divider>
+    <div class="write-review">
+        <h3>Write a Review</h3>
+        <form>
+            <mat-form-field>
+                <mat-label>Your Rating</mat-label>
+                <mat-select [(value)]="rating" name="rating">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                    <mat-option value="5">5</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Your Review</mat-label>
+                <textarea matInput formControlName="review"></textarea>
+            </mat-form-field>
+            <button mat-raised-button color="primary" >Submit Review</button>
+        </form>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="feed">
+        <h3>What others thought about {{book.title}}</h3>
+        <div class="review" *ngFor="let review of filterReviews">
+            <div class="user-info">
+                <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
+                <div>
+                    <p class="user">{{ review.userId.user }}</p>
+                    <p class="name">{{ review.userId.name }}</p>
+                </div>
+            </div>
+            <div class="review-info">
+                <p class="rating">Rated {{ review.bookId.title }} with {{ review.rating }}<span class="star-icon"><mat-icon>star</mat-icon></span></p>
+                <p class="description">{{ review.description }}</p>
+                <div class="likes">
+                    <button mat-icon-button class="like-button"color="warn" aria-label="Example icon button with a heart icon" (click)="likeReview(review)">
+                        <mat-icon>{{likeIcon(review)}}</mat-icon>
+                    </button>
+                    <p class="like-count">{{ review.likes.length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
