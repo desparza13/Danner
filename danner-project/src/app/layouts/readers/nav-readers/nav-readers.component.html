@@ -50,7 +50,7 @@
                                     </div>
                                 </li>
                                 <div *ngFor="let notification of filterReviews">
-                                    <li mat-menu-item *ngFor="let like of notification.likes">
+                                    <li mat-menu-item *ngFor="let like of notification.likes.reverse()">
                                         <div class="noti">
                                             <div class="notify_icon">
                                                 <img src={{like.image}} class="icon">
