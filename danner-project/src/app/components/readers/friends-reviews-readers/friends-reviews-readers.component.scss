@@ -1,0 +1,51 @@
+.friendReviews{
+    height: 100%;
+    .review{
+        width: 100%;
+        padding-top: 10px;
+        
+        mat-card{
+            width: 800px;
+            .reader{
+                font-weight: 800;
+                
+            }
+            img {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                border: 1px solid #f1f2f4;
+
+            }
+            a{
+                display:flex;
+            align-items: center;
+            }
+        }
+
+        
+    }
+
+}
+.reviews{
+    display:flex;
+    justify-content: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    mat-spinner {
+        color: white;
+    }
+}
+
+

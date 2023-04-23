@@ -30,6 +30,11 @@
                 <span class="spacer"></span>
 
                 <div class="navbar_right">
+                    <div class="reviews">
+                        <button matTooltip="Reviews" mat-icon-button class="reviews-icon" routerLink="/readers/reviews">
+                        <mat-icon>library_books</mat-icon>
+                    </button>
+                    </div>
                     <div class="notifications">
                         <div class="icon_wrap">
                             <button matTooltip="Notifications" mat-icon-button class="notification-icon"
@@ -56,7 +61,7 @@
                                             allowFullScreen>
                                     </div>
                                 </li>
-                                <div mat-menu-item *ngFor="let notification of filterReviews">
+                                <div *ngFor="let notification of filterReviews">
                                     <li mat-menu-item *ngFor="let like of notification.likes">
                                         <div class="noti">
                                         <div class="notify_icon">
