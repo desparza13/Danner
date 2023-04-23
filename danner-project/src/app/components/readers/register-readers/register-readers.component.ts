@@ -13,12 +13,12 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 export class RegisterReadersComponent {
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]);
+  password = new FormControl('', [Validators.required,  Validators.minLength(6), Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]);
   name = new FormControl('', [Validators.required]);
   user = new FormControl('', [Validators.required]);
   city = new FormControl('', [Validators.required]);
   readingChallenge = new FormControl('', [Validators.required]);
-  confirmPassword = new FormControl('', [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]);
+  confirmPassword = new FormControl('', [Validators.required, Validators.minLength(6),  Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]);
   reader: Reader = {
     _id: '',
     name: '',
@@ -41,40 +41,49 @@ export class RegisterReadersComponent {
   }
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {
-      return 'You must enter a value';
+      return 'Email is required';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.email.hasError('email') ? 'Email is invalid' : '';
   }
 
   getPasswordErrorMessage(){
-    if(this.password.hasError('pattern')){
-      return 'Not a valid Password'
+    if(this.password.hasError('minlength')){
+      return 'Password must have at least 6 characters'
+    }else{
+      if(this.password.hasError('pattern')){
+        return 'Must contain at least 1 capital letter and 1 number.'
+
+      }
     }
-    return this.password.hasError('required') ? 'You must enter your password': '';
+    
+    
+    
+    return this.password.hasError('required') ? 'Password is required': '';
   }
 
   getConPasswordErrorMessage(){
     if(this.confirmPassword.hasError('pattern')){
       return 'Not a valid Password'
     }
+
     return this.confirmPassword.hasError('required') ? 'You must enter your password': '';
   }
   
   getNameErrorMessage(){
-    return this.name.hasError('required') ? ' You must enter a name': '';
+    return this.name.hasError('required') ? 'Name is required': '';
   }
 
   getCityErrorMessage(){
-    return this.city.hasError('required') ? ' You must enter a city': '';
+    return this.city.hasError('required') ? 'City is required': '';
   }
 
   getUserErrorMessage(){
-    return this.name.hasError('required') ? ' You must enter a user': '';
+    return this.user.hasError('required') ? 'User is required': '';
   }
 
   getReadingChallengeErrorMessage(){
-    return this.name.hasError('required') ? 'You must enter a number': '';
+    return this.name.hasError('required') ? 'Reading Challenge is required': '';
   }
   login(){
     var loginUser = {

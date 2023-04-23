@@ -7,6 +7,8 @@
 
 }
 
+
+
 .searchForm {
   margin-top: 20px;
   min-width: 150px;
@@ -35,6 +37,11 @@
 
 ::ng-deep .search-btn:hover{
   background-color: #172374;
+}
+
+::ng-deep .profile-icon:hover{
+  background-color: #172374;
+
 }
 
 .search-btn{
