@@ -115,7 +115,10 @@ export class HomeReadersComponent {
         showDescription : this.currentBooks[i].bookId.showDescription,
         title : this.currentBooks[i].bookId.title
       }
-      allBooksWithPossibleDuplicates.push(book);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
+      }
     }
     for (let i=0; i<this.finishedBooks.length; i++){
       let book = {
@@ -130,7 +133,10 @@ export class HomeReadersComponent {
         showDescription : this.finishedBooks[i].bookId.showDescription,
         title : this.finishedBooks[i].bookId.title
       }
-      allBooksWithPossibleDuplicates.push(book);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
+      }
     }
     for (let i=0; i<this.tbrBooks.length; i++){
       let book = {
@@ -145,13 +151,14 @@ export class HomeReadersComponent {
         showDescription : this.tbrBooks[i].showDescription,
         title : this.tbrBooks[i].title
       }
-      allBooksWithPossibleDuplicates.push(book);
-    }
-    allBooksWithPossibleDuplicates.forEach((item) => {
-      if (!this.allBooks.includes(item)) {
-        this.allBooks.push(item);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
       }
-  })  
+    }
+    this.allBooks = allBooksWithPossibleDuplicates;
+    this.filteredAllBooks = this.allBooks
+    console.log("ALL",this.allBooks)
 }
   //Filtering
   //Get selected rating values

@@ -149,7 +149,7 @@ export class BookDetailsComponent implements OnInit{
     }else{
       let finishedBook = {
         "bookId": this.book._id,
-        "progress": 0
+        "finishedDate": Date.now
       }
       this.profile.read.push(finishedBook);
     }
