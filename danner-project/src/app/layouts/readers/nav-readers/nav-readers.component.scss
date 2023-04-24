@@ -7,8 +7,6 @@
 
 }
 
-
-
 .searchForm {
   margin-top: 20px;
   min-width: 150px;
@@ -32,6 +30,9 @@
 }
 
 ::ng-deep .request-icon:hover {
+  background-color: #172374;
+}
+::ng-deep .reviews-icon:hover {
   background-color: #172374;
 }
 

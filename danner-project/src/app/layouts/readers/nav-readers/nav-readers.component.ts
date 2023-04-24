@@ -115,6 +115,7 @@ export class NavReadersComponent implements OnInit{
       return review.userId._id === this.reader._id;
     });
     this.filterReviews = filter;
+    console.log(this.filterReviews);
     this.filterReviews.forEach((review)=>{
       this.lengthNotifications+= review.likes.length;
 

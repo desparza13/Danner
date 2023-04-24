@@ -24,7 +24,7 @@
                     <mat-tab label="Login">
                         <mat-card-content>
                             <div class="loginForm">
-                                <form submit="/readers">
+                                <form>
                                     <div>
                                         <mat-form-field appearance="fill">
                                             <mat-label>Email</mat-label>
@@ -49,7 +49,7 @@
                                         </mat-form-field>
                                     </div>
                                     <div class="login-btn">
-                                        <button (click)="login()"  color="accent" mat-raised-button 
+                                        <button (click)="login()" [routerLink]="route" color="accent" mat-raised-button 
                                         [disabled]="email.invalid || password.invalid">Login</button>
                                     
                                     </div>
