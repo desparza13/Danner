@@ -1,1 +1,85 @@
-<p>login-readers works!</p>
+<div class="login">
+    <mat-card color="primary">
+
+        <div class="cardContent">
+            <div class="information">
+                <div class="title">
+                    <div *ngIf="title">
+                        <h1>Login to Danner</h1>
+                    </div>
+                    <div *ngIf="!title">
+                        <h1>Register to Danner</h1>
+                    </div>
+
+                </div>
+                <div class="imagen">
+                    <img
+                        src="https://st3.depositphotos.com/5797102/36062/v/600/depositphotos_360629680-stock-illustration-young-woman-is-standing-near.jpg">
+                </div>
+
+            </div>
+            <div class="forms">
+                <mat-tab-group (selectedTabChange)="title=!title">
+
+                    <mat-tab label="Login">
+                        <mat-card-content>
+                            <div class="loginForm">
+                                <form>
+                                    <div>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="jennifer.hernandez@example.com"
+                                                [formControl]="email" required>
+                                            <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Enter your password</mat-label>
+                                            <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password"
+                                                required>
+                                            <button mat-icon-button matSuffix (click)="hide = !hide"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button>
+                                            <mat-error
+                                                *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <button color="accent" mat-raised-button
+                                            [disabled]="email.invalid || password.invalid">
+                                            <div class="login-btn">
+                                                <a (click)="login()" [routerLink]="route">
+                                                    Login
+                                                </a>
+                                            </div>
+                                        </button>
+
+                                    </div>
+
+                                    <div class="linkAuthor">
+                                        <a [routerLink]="['/authors/login']">¿Are you an author?
+                                            Click Here</a>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </mat-card-content>
+                    </mat-tab>
+
+                    <mat-tab label="Register" (click)="changeTitle()">
+                        <app-register-readers></app-register-readers>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </div>
+
+
+        </div>
+
+
+    </mat-card>
+</div>

@@ -70,4 +70,3 @@ export class LoginAuthorsComponent {
       this.router.navigate([this.route]);
     }
   }
-}

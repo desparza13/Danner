@@ -1,3 +1,5 @@
+<app-nav-readers></app-nav-readers>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="page">
     <mat-toolbar color="primary">
@@ -30,7 +32,7 @@
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="all-container">
-                <div class="book-card" *ngFor="let book of filteredAllBooks">
+                <div class="book-card" *ngFor="let book of filteredAllBooks" (click)="selectBook(book)" [routerLink]="book._id">
                         <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
                         <img [src]="book.image" alt="Book cover">
                         <div *ngIf="book.showDescription" class="book-description">

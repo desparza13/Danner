@@ -9,7 +9,8 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
   styleUrls: ['./reading-challenge-widget.component.scss']
 })
 export class ReadingChallengeWidgetComponent {
-  readerId="643d9026c9e38d96582f4528";
+  readerId="";
+  reader:any;
   currentReader: Reader = {
     _id: "",
     name: "",
@@ -27,6 +28,9 @@ export class ReadingChallengeWidgetComponent {
   finishedBooks: any;
   readingChallengeProgress: string = '0';
   ngOnInit(){
+    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    console.log(this.reader);
+    this.readerId = this.reader.userId;
     this.getCurrentReader();
   }
   constructor(private readerService:ReaderService){

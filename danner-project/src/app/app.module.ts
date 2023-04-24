@@ -16,8 +16,10 @@ import { HomeReadersComponent } from './components/readers/home-readers/home-rea
 import { RatingsFilterComponent } from './components/readers/home-readers/ratings-filter/ratings-filter.component';
 import { GenreFilterComponent } from './components/readers/home-readers/genre-filter/genre-filter.component';
 import { ReadingChallengeWidgetComponent } from './components/readers/home-readers/reading-challenge-widget/reading-challenge-widget.component';
-import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
 import { ConfirmationDialogComponent } from './components/readers/confirmation-dialog/confirmation-dialog.component';
+import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
+import { RegisterReadersComponent } from './components/readers/register-readers/register-readers.component';
+import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 import { AddFriendsReadersComponent } from './components/readers/add-friends-readers/add-friends-readers.component';
 import { HomeAuthorsComponent } from './components/authors/home-authors/home-authors.component';
 import { AddBookAuthorsComponent } from './components/authors/add-book-authors/add-book-authors.component';
@@ -26,6 +28,9 @@ import { NavAuthorsComponent } from './layouts/authors/nav-authors/nav-authors.c
 import { LoginAuthorsComponent } from './components/authors/login-authors/login-authors.component';
 import { NotificationDialogComponent } from './components/readers/notification-dialog/notification-dialog.component';
 import { RegisterAuthorsComponent } from './components/authors/register-authors/register-authors.component';
+import { ReaderProfileComponent } from './components/readers/reader-profile/reader-profile.component';
+import { FriendsReviewsReadersComponent } from './components/readers/friends-reviews-readers/friends-reviews-readers.component';
+import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,6 @@ import { RegisterAuthorsComponent } from './components/authors/register-authors/
     GenreFilterComponent,
     ReadingChallengeWidgetComponent,
     HomeReadersComponent,
-    ReaderProfileComponent,
     ConfirmationDialogComponent,
     AddFriendsReadersComponent,
     HomeAuthorsComponent,
@@ -49,7 +53,11 @@ import { RegisterAuthorsComponent } from './components/authors/register-authors/
     NavAuthorsComponent,
     LoginAuthorsComponent,
     NotificationDialogComponent,
-    RegisterAuthorsComponent
+    RegisterAuthorsComponent,
+    RegisterReadersComponent,
+    ReaderProfileComponent,
+    FriendsReviewsReadersComponent,
+    BookDetailsComponent
   ],
   imports: [
     
@@ -61,7 +69,9 @@ import { RegisterAuthorsComponent } from './components/authors/register-authors/
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

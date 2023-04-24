@@ -11,119 +11,135 @@
                             <input matInput placeholder="Search books" name="search" [(ngModel)]="search">
                         </mat-form-field>
                         <div>
-                            <a class="searchButton"(click)="sendSearch()" [routerLink]="['/readers/books']">
-
-                            <button mat-icon-button class="search-btn">
-
-                                <mat-icon class="searchIcon">search</mat-icon>
-
-                            </button>
-                        </a>
-
-                            
+                            <a class="searchButton" (click)="sendSearch()" [routerLink]="['/readers/books']">
+                                <button matTooltip="Search" mat-icon-button class="search-btn">
+                                    <mat-icon class="searchIcon">search</mat-icon>
+                                </button>
+                            </a>
                         </div>
                     </form>
-
-
                 </div>
-
                 <span class="spacer"></span>
-
                 <div class="navbar_right">
+                    <div class="reviews">
+                        <button matTooltip="Reviews" mat-icon-button class="reviews-icon" routerLink="/readers/reviews">
+                        <mat-icon>library_books</mat-icon>
+                    </button>
+                    </div>
                     <div class="notifications">
                         <div class="icon_wrap">
-                            <button mat-icon-button class="notification-icon" (click)="iconWrapNotifications()">
+                            <button matTooltip="Notifications" mat-icon-button class="notification-icon"
+                                [matMenuTriggerFor]="notifications" (click)="iconWrapNotifications()">
                                 <mat-icon>notifications</mat-icon>
                             </button>
                         </div>
-
-                        <div *ngIf="hiddenNotifications==false" class="notification_dd">
-                            <ul class="notification_ul">
+                        <mat-menu xPosition="before" #notifications="matMenu" class="menuNot">
+                            <ul class="menuNotifications">
                                 <li class="notifications-li">
                                     <a>Notifications</a>
+                                    <span class="spacer"></span>
+                                    <div>
+                                        <mat-icon color="primary">favorite</mat-icon>
+                                    </div>
                                 </li>
-                                <div *ngFor="let notification of filterReviews" class="notification">
-                                    <li *ngFor="let like of notification.likes">
-                                        <div class="notify_icon">
-                                            <img src={{like.image}} class="icon">
-                                        </div>
-                                        <div class="notify_data">
-                                            <div class="title">
-                                                {{like.name}}
+                                <li *ngIf="lengthNotifications==0">
+                                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
+                                        <img src="https://i.giphy.com/media/TjGWPdo73thjg7el5A/giphy.webp" width="100%"
+                                            height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"
+                                            allowFullScreen>
+                                    </div>
+                                </li>
+                                <div *ngFor="let notification of filterReviews">
+                                    <li mat-menu-item *ngFor="let like of notification.likes.reverse()">
+                                        <div class="noti">
+                                            <div class="notify_icon">
+                                                <img src={{like.image}} class="icon">
                                             </div>
-                                            <div class="sub_title">
-                                                liked your review of
-                                            </div>
-                                            <div class="sub_title">
-                                                "{{notification.bookId.title}}"
+                                            <div class="notify_data">
+                                                <div class="title">
+                                                    {{like.name}}
+                                                </div>
+                                                <div class="sub_title">
+                                                    liked your review of
+                                                </div>
+                                                <div class="sub_title">
+                                                    "{{notification.bookId.title}}"
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <mat-icon color="primary">favorite</mat-icon>
-                                        </div>
-                                    </li>
-                                </div>
+                                    </li>                   
+                                </div>                               
                             </ul>
-                        </div>
-
+                        </mat-menu>
                     </div>
                     <div class="requests">
                         <div class="icon_wrap">
-                            <button mat-icon-button class="request-icon" (click)="iconWrapRequests()">
+                            <button matTooltip="Friends Requests" mat-icon-button class="request-icon"
+                                [matMenuTriggerFor]="requests" (click)="iconWrapRequests()">
                                 <mat-icon>group_add</mat-icon>
                             </button>
                         </div>
-
-                        <div *ngIf="hiddenRequests==false" class="request_dd">
-                            <ul class="notification_ul">
+                        <mat-menu xPosition="before" #requests="matMenu">
+                            <ul class="menuRequests">
                                 <li class="friend-li">
-                                    <a>Friend requests</a>
+                                    <a>Friends Requests</a>
+                                    <span class="spacer"></span>
+                                    <mat-icon color="primary">person_add</mat-icon>
                                 </li>
-                                <li *ngFor="let request of filterRequests" class="request">
-                                    <div class="notify_icon">
-                                        <img src={{request.idSender.image}} class="icon">
+                                <li *ngIf="lengthRequests==0">
+                                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
+                                        <img
+                                            src="https://i.giphy.com/media/mPIZAWkLSFpqcJpf18/giphy.webp" width="100%" height="100%"
+                                            style="position:absolute" frameBorder="0" class="giphy-embed"
+                                            allowFullScreen>
                                     </div>
-                                    <div class="notify_data">
-                                        <div class="title">
-                                            {{request.idSender.name}}
+                                </li>
+                                <li mat-menu-item *ngFor="let request of filterRequests">
+                                    <div class="request">
+                                        <div class="request_icon">
+                                            <img src={{request.idSender.image}} class="icon">
                                         </div>
-                                        <div class="buttons">
-                                            <button mat-flat-button color="accent"
-                                                (click)="confirmFriendRequest(request._id,request.idSender._id,request.idSender.name)"
-                                                class="confirm-btn">Confirm</button>
-                                            <button (click)="deleteFriendRequest(request._id,request.idSender.name)" mat-flat-button color="primary" class="delete-btn">Delete</button>
+                                        <div class="request_data">
+                                            <div class="title">
+                                                {{request.idSender.name}}
+                                            </div>
+                                            <div class="buttons">
+                                                <button mat-flat-button color="accent"
+                                                    (click)="confirmFriendRequest(request._id,request.idSender._id,request.idSender.name)"
+                                                    class="confirm-btn">Confirm</button>
+                                                <button (click)="deleteFriendRequest(request._id,request.idSender.name)"
+                                                    mat-flat-button color="primary" class="delete-btn">Delete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-
+                        </mat-menu>
                     </div>
                     <div class="profile">
                         <div>
                             <div>
-                                <button class="profile-icon" mat-icon-button [matMenuTriggerFor]="menu"
-                                    (click)="iconWrapProfile()">
+                                <button matTooltip="Menu" class="profile-icon" mat-icon-button
+                                    [matMenuTriggerFor]="menu">
                                     <img src={{reader.image}} alt="profile_pic">
                                 </button>
                             </div>
-
                             <mat-menu #menu="matMenu" class="customize">
                                 <button routerLink="/readers/profile" mat-menu-item class="profile-option">
                                     <mat-icon>person</mat-icon>
-                                    <a class="ruta" >Profile</a>
+                                    <a class="ruta">Profile</a>
                                 </button>
                                 <button routerLink="/readers/friends" mat-menu-item class="profile-option">
                                     <mat-icon>people</mat-icon>
-                                    <a class="ruta" >Friends</a>
+                                    <a class="ruta">Friends</a>
                                 </button>
                                 <button routerLink="/readers/readingChallenge" mat-menu-item class="profile-option">
                                     <mat-icon>book</mat-icon>
-                                    <a class="ruta" >Reading Challenge</a>
+                                    <a class="ruta">Reading Challenge</a>
                                 </button>
-                                <button routerLink="/readers/login" mat-menu-item class="profile-option">
+                                <button routerLink="" mat-menu-item class="profile-option">
                                     <mat-icon>exit_to_app</mat-icon>
-                                    <a class="ruta" >Sign out</a>
+                                    <a class="ruta">Sign out</a>
                                 </button>
                             </mat-menu>
                         </div>
