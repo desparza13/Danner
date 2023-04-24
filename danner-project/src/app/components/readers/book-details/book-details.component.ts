@@ -6,7 +6,6 @@ import { ReviewService } from 'src/app/shared/services/review.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
@@ -15,7 +14,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.scss']
 })
-export class BookDetailsComponent implements OnInit{
+export class BookDetailsComponent {
   book: Book = {
     _id: '',
     title: '',
@@ -66,9 +65,7 @@ export class BookDetailsComponent implements OnInit{
   }
   ngOnInit(){
     this.book = this.bookService.getBook()
-    console.log(this.book);
     this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
     this.readerId = this.reader.userId;
     this.getData();
   }
@@ -93,7 +90,6 @@ export class BookDetailsComponent implements OnInit{
       return review.bookId._id == this.book._id
     })
     this.isLoading=false;
-    console.log(this.filterReviews);
   }
   likeIcon(review:Review){
     let likes = review.likes.map((reader:Reader) => reader._id);

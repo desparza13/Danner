@@ -17,6 +17,7 @@ export class AddBookAuthorsComponent {
   authorId="";
   author:any;
   book: Book = {
+    _id: '',
     title: '',
     date: new Date(),
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMBe97jZk0iaa61yMK-ZOFiHiTAGTHTMSNSg&usqp=CAU',

@@ -55,7 +55,7 @@ export class LoginAuthorsComponent {
     this.loginAuthor = this.loginAuthor = this.authors.filter((loginAuthor: Author) => {
       return loginAuthor.email === this.email.value && loginAuthor.password === this.password.value;
     })
-
+    console.log(this.loginAuthor)
     if (this.loginAuthor.length === 0) {
       const dialogRef = this.dialog.open(NotificationDialogComponent, {
         width: '400px',
@@ -70,3 +70,4 @@ export class LoginAuthorsComponent {
       this.router.navigate([this.route]);
     }
   }
+}

@@ -39,7 +39,6 @@ export class HomeAuthorsComponent {
 
   ngOnInit(){
     this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.author);
     this.authorId = this.author.userId;
     //Get initial data from the database
     this.getCurrentAuthor();
@@ -125,7 +124,8 @@ export class HomeAuthorsComponent {
         book.title.toLowerCase().includes(search)
       );
     }else{
-      this.filteredAuthorBooks = this.allBooks;
+      this.authorBooks = this.allBooks.filter((book:any) => book.author == this.currentAuthor.name);
+      this.filteredAuthorBooks = this.authorBooks;
     }
   }
   filterByRating(ratings: any[] | undefined){
@@ -156,5 +156,10 @@ export class HomeAuthorsComponent {
       genreToUse=this.genresFilters
     }
     this.filterByGenres(genreToUse);
+  }
+  selectBook(book: Book){
+    console.log(book);
+    this.bookService.setBook(book);
+    console.log("book.",book._id)
   }
 }

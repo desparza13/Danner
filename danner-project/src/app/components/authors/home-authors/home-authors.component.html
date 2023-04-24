@@ -31,7 +31,7 @@
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="all-container">
-                <div class="book-card" *ngFor="let book of filteredAuthorBooks">
+                <div class="book-card" *ngFor="let book of filteredAuthorBooks" (click)="selectBook(book)" [routerLink]="book._id">
                         <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
                         <img [src]="book.image" alt="Book cover">
                         <div *ngIf="book.showDescription" class="book-description">

@@ -1,0 +1,63 @@
+<app-nav-authors></app-nav-authors>
+<div class="page">
+    <div class="title">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <h2>{{book.title}}</h2>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+        <div class="book-details">
+            <div class="book-info">
+                <div class="book-image">
+                    <img [src]="book.image" alt="Book Cover Image">
+                </div>
+                <div class="book-details-info">
+                    <h2>{{book.title}}</h2>
+                    <p><strong>Author:</strong> {{book.author}}</p>
+                    <p><strong>Genre:</strong> {{book.genre}}</p>
+                    <p><strong>Date:</strong> {{book.date | date}}</p>
+                    <div class="book-rating">
+                        <span class="book-rating-text">Rating:</span>
+                        <div class="book-rating-stars">
+                            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                                <mat-icon class="star-icon"
+                                    [ngClass]="{'star-icon-filled': star <= book.averageRating}">star</mat-icon>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <p>{{book.description}}</p>
+                </div>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="feed">
+            <h3>What others thought about your book {{book.title}}</h3>
+            <div class="review" *ngFor="let review of filterReviews">
+                <div class="user-info">
+                    <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
+                    <div>
+                        <p class="user">{{ review.userId.user }}</p>
+                        <p class="name">{{ review.userId.name }}</p>
+                    </div>
+                </div>
+                <div class="review-info">
+                    <p class="rating">Rated {{ review.bookId.title }} with {{ review.rating }}<span
+                            class="star-icon"><mat-icon>star</mat-icon></span></p>
+                    <p class="description">{{ review.description }}</p>
+                    <div class="likes">
+                        <button mat-icon-button class="like-button" color="warn"
+                            aria-label="Example icon button with a heart icon">
+                            <mat-icon>favorite</mat-icon>
+                        </button>
+                        <p class="like-count">{{ review.likes.length }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<div *ngIf="isLoading" class="overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
