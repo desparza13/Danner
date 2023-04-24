@@ -37,6 +37,7 @@ export class BooksReadersComponent implements OnInit {
     private _searchValueService: SearchValueService) {
   }
   ngOnInit() {
+    
     this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue) => {
       this.copyOfSearch = this.search;
       this.search = searchValue;
@@ -170,5 +171,9 @@ export class BooksReadersComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  selectBook(book: Book){
+    console.log(book);
+    this.bookService.setBook(book);
   }
 }

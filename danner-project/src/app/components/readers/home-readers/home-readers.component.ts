@@ -13,7 +13,7 @@ export class HomeReadersComponent {
 
   //Variables
   //Id proof of concept until login and register is implemented
-  readerId:string='';
+  readerId:string='643d9026c9e38d96582f4528';
   reader: any;
   //Storing books
     //Originals
@@ -104,6 +104,7 @@ export class HomeReadersComponent {
     let allBooksWithPossibleDuplicates = []
     for (let i=0; i<this.currentBooks.length; i++){
       let book = {
+        _id: this.currentBooks[i].bookId._id,
         author : this.currentBooks[i].bookId.author,
         averageRating : this.currentBooks[i].bookId.averageRating,
         date : this.currentBooks[i].bookId.date,
@@ -114,10 +115,14 @@ export class HomeReadersComponent {
         showDescription : this.currentBooks[i].bookId.showDescription,
         title : this.currentBooks[i].bookId.title
       }
-      allBooksWithPossibleDuplicates.push(book);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
+      }
     }
     for (let i=0; i<this.finishedBooks.length; i++){
       let book = {
+        _id: this.finishedBooks[i].bookId._id,
         author : this.finishedBooks[i].bookId.author,
         averageRating : this.finishedBooks[i].bookId.averageRating,
         date : this.finishedBooks[i].bookId.date,
@@ -128,10 +133,14 @@ export class HomeReadersComponent {
         showDescription : this.finishedBooks[i].bookId.showDescription,
         title : this.finishedBooks[i].bookId.title
       }
-      allBooksWithPossibleDuplicates.push(book);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
+      }
     }
     for (let i=0; i<this.tbrBooks.length; i++){
       let book = {
+        _id: this.tbrBooks[i]._id,
         author : this.tbrBooks[i].author,
         averageRating : this.tbrBooks[i].averageRating,
         date : this.tbrBooks[i].date,
@@ -142,15 +151,15 @@ export class HomeReadersComponent {
         showDescription : this.tbrBooks[i].showDescription,
         title : this.tbrBooks[i].title
       }
-      allBooksWithPossibleDuplicates.push(book);
-    }
-    allBooksWithPossibleDuplicates.forEach((item) => {
-      if (!this.allBooks.includes(item)) {
-        this.allBooks.push(item);
+      let ids = allBooksWithPossibleDuplicates.map((book:any) => book._id);
+      if (!(ids.includes(book._id))){
+        allBooksWithPossibleDuplicates.push(book);
       }
-  })  
+    }
+    this.allBooks = allBooksWithPossibleDuplicates;
+    this.filteredAllBooks = this.allBooks
+    console.log("ALL",this.allBooks)
 }
-
   //Filtering
   //Get selected rating values
   getRatingFilters(ratings: any[] | undefined){
@@ -258,7 +267,11 @@ export class HomeReadersComponent {
       genreToUse=this.genresFilters
     }
     this.filterByGenres(genreToUse);
+  }
 
+  selectBook(book: Book){
+    console.log(book);
+    this.bookService.setBook(book);
   }
 
 }

@@ -1,4 +1,5 @@
 export interface Book {
+    _id:string,
     title: string,
     date: Date,
     image: string,
