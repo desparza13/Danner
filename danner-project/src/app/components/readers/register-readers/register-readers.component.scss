@@ -54,3 +54,9 @@ mat-form-field{
 mat-error{
     font-size: small;
 }
+.login-btn{
+    >a{
+        color: white;
+        text-decoration: none;
+    }
+}

@@ -48,14 +48,20 @@
 
                                         </mat-form-field>
                                     </div>
-                                    <div class="login-btn">
-                                        <button (click)="login()" [routerLink]="route" color="accent" mat-raised-button 
-                                        [disabled]="email.invalid || password.invalid">Login</button>
-                                    
+                                    <div>
+                                        <button color="accent" mat-raised-button
+                                            [disabled]="email.invalid || password.invalid">
+                                            <div class="login-btn">
+                                                <a (click)="login()" [routerLink]="route">
+                                                    Login
+                                                </a>
+                                            </div>
+                                        </button>
+
                                     </div>
-                                    
+
                                     <div class="linkAuthor">
-                                        <a  [routerLink]="['/authors/login']">¿Are you an author?
+                                        <a [routerLink]="['/authors/login']">¿Are you an author?
                                             Click Here</a>
                                     </div>
                                 </form>

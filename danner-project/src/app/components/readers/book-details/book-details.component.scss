@@ -1,5 +1,8 @@
 .page{
     height: calc(100vh - 60px);
+   .book{
+    padding: 10px;
+   }
     .book-details {
         display: flex;
         flex-wrap: wrap;
@@ -66,7 +69,7 @@
         }
     }
     .write-review {
-        margin-top: 30px;
+        padding: 10px;
         h3 {
             font-size: 24px;
             margin-bottom: 15px;
@@ -121,21 +124,6 @@
         justify-content: center;
     }
     
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background-color: rgba(0,0,0,0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-        mat-spinner {
-            color: white;
-        }
-    }
     
     
     .feed {
@@ -209,4 +197,20 @@
         }
     }
 }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    mat-spinner {
+        color: white;
+    }
 }

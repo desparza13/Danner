@@ -8,6 +8,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-book-details',
@@ -51,6 +52,8 @@ export class BookDetailsComponent implements OnInit{
   reviews: Array<Review> = [];
   filterReviews: Array<Review> = [];
   rating: any;
+  review = new FormControl('');
+
 
   constructor(
     private bookService: BookService,
@@ -208,5 +211,28 @@ export class BookDetailsComponent implements OnInit{
         });
       }
     )
+  }
+
+  submitReview(){
+    const review ={
+      bookId: this.book._id,
+      userId: this.profile._id,
+      rating: this.rating,
+      description: this.review.value || '',
+      likes: []
+    }
+
+    this.reviewService.postReview(review).subscribe((response:any)=>{
+      console.log('REVIEW');
+      console.log(response);
+      this.isLoading=true;
+      this.getData();
+    },
+    (error)=>{
+      console.log(error);
+      this.snackBar.open('There was an error. Please try again later.', 'Close', {
+        duration: 3000
+      });
+    })
   }
 }
