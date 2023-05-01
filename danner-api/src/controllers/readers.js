@@ -1,4 +1,6 @@
 const model = require('../models/reader');
+require('dotenv').config();
+const authorKey = process.env.AUTHOR_KEY;
 const ReadersController={
     list:(req, res)=>{
         model.find({})
@@ -78,6 +80,30 @@ const ReadersController={
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
             })
+    },
+    login:(req,res)=>{
+        model.findOne({
+            email: req.body.email,
+            password: req.body.password
+        }).then(response=> {
+            if(response) {
+                // Si encontro al usuario, generamos el token\
+                const token = jwt.sign({
+                    id: response._id,
+                    name: response.name,
+                    email: response.email,
+                    user: response.user
+                }, authorKey);
+                res.send({token});
+            } else {
+                //si no se encuentra
+                res.send(400).send('Something went wrong'+ error);
+            }
+        })
+        .catch(response => {
+            res.send(400).send('Something went wrong'+ error);
+
+        });
     }
 }
 module.exports = ReadersController;
