@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { Credentials } from 'src/app/shared/interfaces/credentials';
 @Component({
   selector: 'app-login-readers',
   templateUrl: './login-readers.component.html',
@@ -19,7 +22,8 @@ export class LoginReadersComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   reader: Array<Reader> = [];
-  
+  credentials:  Credentials = { email: '', password: '' };
+
   ngOnInit() {
     console.log(this.title);
     this._readerServide.getReaders().subscribe((response: any) => {
@@ -27,7 +31,9 @@ export class LoginReadersComponent {
     }
     )
   }
-  constructor(private dialog: MatDialog, private _readerServide: ReaderService, private router: Router) {
+  constructor(private dialog: MatDialog, private _readerServide: ReaderService, private router: Router,
+    private loginService: LoginService,
+    private authService: AuthService) {
 
   }
 
@@ -51,23 +57,25 @@ export class LoginReadersComponent {
     var loginUser = {
       userId: ''
     }
-    console.log(this.readers);
-    this.reader = this.reader = this.readers.filter((reader: Reader) => {
-      return reader.email === this.email.value && reader.password === this.password.value;
-    })
+    this.credentials.email=this.email.value || '';
+    this.credentials.password=this.password.value ||'';
 
-    if (this.reader.length === 0) {
+    this.loginService.loginReaders(this.credentials).subscribe((data: any) => {
+      // Recibimos el token
+      this.authService.setToken(data.token);
+      loginUser.userId = data.id;
+      localStorage.setItem('loginUser', JSON.stringify(loginUser));
+      // Send to readers Home
+      this.router.navigate(['/readers']);
+    },(error)=>{
       const dialogRef = this.dialog.open(NotificationDialogComponent, {
         width: '400px',
         data: {
           message: 'Something went wrong when connecting, please log in again.'
         }
       });
-    } else {
-      this.route = 'readers'
-      loginUser.userId = this.reader[0]._id;
-      localStorage.setItem('loginUser', JSON.stringify(loginUser));
-      this.router.navigate([this.route]);
-    }
+    });
+
+
   }
 }

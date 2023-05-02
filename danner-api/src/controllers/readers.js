@@ -71,17 +71,8 @@ const ReadersController={
                 res.status(400).send('Something went wrong '+error);
             })
     },
-    delete:(req,res)=>{
-        const id = req.params.id;
-        model.findByIdAndDelete(id)
-            .then(reader=>{
-                res.status(200).send(reader);
-            })
-            .catch(error=>{
-                res.status(400).send('Something went wrong '+error);
-            })
-    },
     login:(req,res)=>{
+        console.log(req.body);
         model.findOne({
             email: req.body.email,
             password: req.body.password
@@ -94,7 +85,7 @@ const ReadersController={
                     email: response.email,
                     user: response.user
                 }, authorKey);
-                res.send({token});
+                res.send({token:token,id:response._id});
             } else {
                 //si no se encuentra
                 res.send(400).send('Something went wrong'+ error);
@@ -104,6 +95,16 @@ const ReadersController={
             res.send(400).send('Something went wrong'+ error);
 
         });
+    },
+    delete:(req,res)=>{
+        const id = req.params.id;
+        model.findByIdAndDelete(id)
+            .then(reader=>{
+                res.status(200).send(reader);
+            })
+            .catch(error=>{
+                res.status(400).send('Something went wrong '+error);
+            })
     }
 }
 module.exports = ReadersController;
