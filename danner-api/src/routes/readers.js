@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/readers')
 
 
-router.post('/login',controller.login);
+router.post('/login',express.json(), controller.login);
 /**
  * @swagger
  * /readers:

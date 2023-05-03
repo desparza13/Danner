@@ -1,6 +1,8 @@
 const model = require('../models/reader');
 require('dotenv').config();
 const authorKey = process.env.AUTHOR_KEY;
+const jwt = require('jsonwebtoken');
+
 const ReadersController={
     list:(req, res)=>{
         model.find({})
@@ -77,22 +79,26 @@ const ReadersController={
             email: req.body.email,
             password: req.body.password
         }).then(response=> {
+            console.log(response)
             if(response) {
-                // Si encontro al usuario, generamos el token\
-                const token = jwt.sign({
+                console.log('A');
+                const payload = {
                     id: response._id,
                     name: response.name,
                     email: response.email,
                     user: response.user
-                }, authorKey);
-                res.send({token:token,id:response._id});
+                }
+                // Si encontro al usuario, generamos el token\
+                const token = jwt.sign(payload, authorKey);
+                
+                res.status(200).send({token:token,id:response._id});
             } else {
                 //si no se encuentra
-                res.send(400).send('Something went wrong'+ error);
+                res.status(400).send('Something went wrong');
             }
         })
-        .catch(response => {
-            res.send(400).send('Something went wrong'+ error);
+        .catch(error => {
+            res.status(400).send('Something went wrong'+ error);
 
         });
     },

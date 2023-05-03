@@ -54,17 +54,14 @@ export class LoginReadersComponent {
   }
 
   login() {
-    var loginUser = {
-      userId: ''
-    }
+    
     this.credentials.email=this.email.value || '';
     this.credentials.password=this.password.value ||'';
 
     this.loginService.loginReaders(this.credentials).subscribe((data: any) => {
       // Recibimos el token
       this.authService.setToken(data.token);
-      loginUser.userId = data.id;
-      localStorage.setItem('loginUser', JSON.stringify(loginUser));
+      this.authService.setLoginUser(data.id);
       // Send to readers Home
       this.router.navigate(['/readers']);
     },(error)=>{

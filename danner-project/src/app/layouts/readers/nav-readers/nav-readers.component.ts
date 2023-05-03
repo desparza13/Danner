@@ -10,6 +10,8 @@ import { ReviewService } from 'src/app/shared/services/review.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { SearchValueService } from 'src/app/shared/services/search-value.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 interface Notification {
   likes: [],
@@ -73,7 +75,8 @@ export class NavReadersComponent implements OnInit{
   }
   constructor(private friendshipRequestService: FriendshipRequestService,
     private reviewService: ReviewService,
-    private readerService: ReaderService, private _snackBar: MatSnackBar, private _searchValueService: SearchValueService) {
+    private readerService: ReaderService, private _snackBar: MatSnackBar, private _searchValueService: SearchValueService,
+    private router: Router, private authService: AuthService) {
   }
 
   //Get the current reader
@@ -189,6 +192,12 @@ export class NavReadersComponent implements OnInit{
         this.openConfirmSnackBar(name,'Aceptar');
     })
     
+  }
+
+  signOut() {
+    this.authService.deleteToken();
+    this.authService.deleteLoginUser();
+    this.router.navigate(['']);
   }
 
   deleteFriendRequest(idRequest: string, name: string) {

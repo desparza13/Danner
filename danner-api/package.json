@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "start": "node .",
-      "dev": "nodemon ."
-    },
+    "start": "node .",
+    "dev": "nodemon ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/desparza13/Danner.git"
@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
     "nodemon": "^2.0.21",
     "swagger-jsdoc": "^6.2.8",
