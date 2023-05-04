@@ -54,7 +54,6 @@ export class LoginReadersComponent {
   }
 
   login() {
-    
     this.credentials.email=this.email.value || '';
     this.credentials.password=this.password.value ||'';
 

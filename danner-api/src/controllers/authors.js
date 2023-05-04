@@ -1,5 +1,8 @@
-
 const model = require('./../models/author');
+require('dotenv').config();
+const authorKey = process.env.AUTHOR_KEY;
+const jwt = require('jsonwebtoken');
+
 const AuthorsController={
     list:(req, res)=>{
         model.find({})
@@ -54,6 +57,36 @@ const AuthorsController={
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
             })
+    },
+    login:(req,res)=>{
+        console.log(req.body);
+        model.findOne({
+            email: req.body.email,
+            password: req.body.password
+        }).then(response=> {
+            console.log(response)
+            if(response) {
+                console.log('A');
+                const payload = {
+                    id: response._id,
+                    name: response.name,
+                    email: response.email,
+                    user: response.user,
+                    role: "author"
+                }
+                // Si encontro al usuario, generamos el token\
+                const token = jwt.sign(payload, authorKey);
+                
+                res.status(200).send({token:token,id:response._id});
+            } else {
+                //si no se encuentra
+                res.status(400).send('Something went wrong');
+            }
+        })
+        .catch(error => {
+            res.status(400).send('Something went wrong'+ error);
+
+        });
     },
     delete:(req,res)=>{
         const id = req.params.id;

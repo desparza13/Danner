@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/authors')
 
+router.post('/login',express.json(), controller.login);
+
 /**
  * @swagger
  * /authors:

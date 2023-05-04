@@ -5,6 +5,9 @@ import { Author } from 'src/app/shared/interfaces/author';
 import { AuthorService } from 'src/app/shared/services/author.service';
 import { NotificationDialogComponent } from '../../readers/notification-dialog/notification-dialog.component';
 import { Router } from '@angular/router';
+import { Credentials } from 'src/app/shared/interfaces/credentials';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login-authors',
@@ -14,11 +17,11 @@ import { Router } from '@angular/router';
 export class LoginAuthorsComponent {
   hide = true;
   title = true;
-  route: string = 'authors/login';
   authors: Array<Author> = [];
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
   loginAuthor: Array<Author> = [];
+  credentials:  Credentials = { email: '', password: '' };
   
   ngOnInit() {
     console.log(this.title);
@@ -27,7 +30,8 @@ export class LoginAuthorsComponent {
     }
     )
   }
-  constructor(private dialog: MatDialog, private _authorService: AuthorService, private router: Router) {
+  constructor(private dialog: MatDialog, private _authorService: AuthorService, private router: Router,
+    private loginService: LoginService, private authService: AuthService) {
 
   }
 
@@ -48,26 +52,23 @@ export class LoginAuthorsComponent {
   }
 
   login() {
-    var loginUser = {
-      userId: ''
-    }
-    console.log(this.authors);
-    this.loginAuthor = this.loginAuthor = this.authors.filter((loginAuthor: Author) => {
-      return loginAuthor.email === this.email.value && loginAuthor.password === this.password.value;
-    })
-    console.log(this.loginAuthor)
-    if (this.loginAuthor.length === 0) {
+    this.credentials.email=this.email.value || '';
+    this.credentials.password=this.password.value ||'';
+
+    this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
+      // Recibimos el token
+      this.authService.setToken(data.token);
+      this.authService.setLoginUser(data.id);
+      // Send to readers Home
+      this.router.navigate(['/authors']);
+    },(error)=>{
       const dialogRef = this.dialog.open(NotificationDialogComponent, {
         width: '400px',
         data: {
           message: 'Something went wrong when connecting, please log in again.'
         }
       });
-    } else {
-      this.route = 'authors'
-      loginUser.userId = this.loginAuthor[0]._id;
-      localStorage.setItem('loginUser', JSON.stringify(loginUser));
-      this.router.navigate([this.route]);
-    }
+    });
+
   }
 }

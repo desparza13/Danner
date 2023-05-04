@@ -20,4 +20,14 @@ export class LoginService {
     }; 
     return this.httpClient.post(url, credentials,options);
   }
+
+  loginAuthors(credentials: Credentials): Observable<any> {
+    const url:string = environment.apiUrl + 'authors/login'; //Definir url para el update 
+
+    const httpHeaders= new HttpHeaders({'Content-Type' : 'application/json'}); //Asignar los headers
+    let options = {
+      headers: httpHeaders
+    }; 
+    return this.httpClient.post(url, credentials,options);
+  }
 }

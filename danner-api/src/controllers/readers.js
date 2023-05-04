@@ -1,6 +1,6 @@
 const model = require('../models/reader');
 require('dotenv').config();
-const authorKey = process.env.AUTHOR_KEY;
+const readerKey = process.env.READER_KEY;
 const jwt = require('jsonwebtoken');
 
 const ReadersController={
@@ -86,10 +86,11 @@ const ReadersController={
                     id: response._id,
                     name: response.name,
                     email: response.email,
-                    user: response.user
+                    user: response.user,
+                    role: "reader"
                 }
                 // Si encontro al usuario, generamos el token\
-                const token = jwt.sign(payload, authorKey);
+                const token = jwt.sign(payload, readerKey);
                 
                 res.status(200).send({token:token,id:response._id});
             } else {
