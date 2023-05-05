@@ -3,6 +3,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-reading-challenge',
@@ -41,12 +42,11 @@ export class ReadingChallengeComponent {
   track: any;
 
   ngOnInit() {
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     this.getCurrentReader();
   }
-  constructor(private readerService: ReaderService) {
+  constructor(private readerService: ReaderService, private authService: AuthService) {
     this.startCarousel();
   }
   getCurrentReader() {

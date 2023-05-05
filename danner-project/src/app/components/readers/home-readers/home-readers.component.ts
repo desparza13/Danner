@@ -4,6 +4,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Book } from 'src/app/shared/interfaces/book';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-home-readers',
   templateUrl: './home-readers.component.html',
@@ -13,7 +14,7 @@ export class HomeReadersComponent {
 
   //Variables
   //Id proof of concept until login and register is implemented
-  readerId:string='643d9026c9e38d96582f4528';
+  readerId:string='';
   reader: any;
   //Storing books
     //Originals
@@ -48,9 +49,8 @@ export class HomeReadersComponent {
   };
 
   ngOnInit(){
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     //Get initial data from the database
     this.getCurrentReader();
     //Initialize filtered books as original books
@@ -63,7 +63,7 @@ export class HomeReadersComponent {
       this.filterBooks();
     });
   }
-  constructor(private bookService:BookService, private readerService:ReaderService) {
+  constructor(private bookService:BookService, private readerService:ReaderService, private authService: AuthService) {
   }
 
   //Functions

@@ -55,8 +55,8 @@ export class NavReadersComponent implements OnInit{
   subscription: Subscription = new Subscription;
   searchValue = '';
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    this.userId = this.currentUser.userId;
+    this.userId = this.authService.getLoginUser();
+
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();

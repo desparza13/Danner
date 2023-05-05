@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
+import { Credentials } from 'src/app/shared/interfaces/credentials';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 @Component({
   selector: 'app-register-readers',
   templateUrl: './register-readers.component.html',
@@ -34,9 +38,12 @@ export class RegisterReadersComponent {
     readingChallenge: 0
   }
 
-  route: string = '';
+  credentials:  Credentials = { email: '', password: '' };
+
+
   
-  constructor(private dialog: MatDialog, private _readerService:ReaderService, private router: Router){
+  constructor(private dialog: MatDialog, private _readerService:ReaderService, private router: Router,
+    private loginService: LoginService, private authService: AuthService){
 
   }
   getEmailErrorMessage() {
@@ -101,10 +108,25 @@ export class RegisterReadersComponent {
     console.log(this.reader);
     this._readerService.postReader(this.reader).subscribe((response: any)=>{
       console.log(response);
-      this.route='readers'
-      loginUser.userId = response._id;
-      localStorage.setItem('loginUser', JSON.stringify(loginUser));
-      this.router.navigate([this.route]);
+      
+      this.credentials.email = response.email;
+      this.credentials.password = response.password;
+      console.log(this.credentials);
+      this.loginService.loginReaders(this.credentials).subscribe((data: any) => {
+        console.log(data)
+        // Recibimos el token
+        this.authService.setToken(data.token);
+        this.authService.setLoginUser(data.id);
+        // Send to readers Home
+        this.router.navigate(['readers']);
+      });
+    }, (error) => {
+      const dialogRef = this.dialog.open(NotificationDialogComponent, {
+        width: '400px',
+        data: {
+          message: 'Something went wrong when connecting, please log in again.'
+        }
+      });
     })
     
 

@@ -8,6 +8,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-book-details',
@@ -59,14 +60,14 @@ export class BookDetailsComponent {
     private reviewService: ReviewService,
     private readerService: ReaderService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
     ){
 
   }
   ngOnInit(){
-    this.book = this.bookService.getBook()
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     this.getData();
   }
   getData() {

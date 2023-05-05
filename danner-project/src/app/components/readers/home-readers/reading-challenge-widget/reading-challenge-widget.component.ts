@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { Book } from 'src/app/shared/interfaces/book';
 import { ReaderService } from 'src/app/shared/services/reader.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-reading-challenge-widget',
@@ -27,13 +28,13 @@ export class ReadingChallengeWidgetComponent {
   };
   finishedBooks: any;
   readingChallengeProgress: string = '0';
+
   ngOnInit(){
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     this.getCurrentReader();
   }
-  constructor(private readerService:ReaderService){
+  constructor(private readerService:ReaderService, private authService: AuthService){
     window.onload = function() {
       const book1 = document.getElementById('book1') as HTMLElement;
       const book2 = document.querySelector('#book2') as HTMLDivElement;

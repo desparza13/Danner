@@ -5,6 +5,7 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { response } from 'express';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-friends-reviews-readers',
@@ -36,13 +37,13 @@ export class FriendsReviewsReadersComponent {
     private reviewService: ReviewService,
     private readerService: ReaderService,
     private snackBar: MatSnackBar,
+    private authService: AuthService
     ) {
 
   }
   ngOnInit() {
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     this.getData();
   }
   getData(){

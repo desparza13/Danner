@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
 import { response } from 'express';
+import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-add-friends-readers',
   templateUrl: './add-friends-readers.component.html',
@@ -42,15 +43,14 @@ export class AddFriendsReadersComponent {
     private readerService: ReaderService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private requestService:FriendshipRequestService
+    private requestService:FriendshipRequestService,
+    private authService: AuthService
     ) { 
 
     }
 
   ngOnInit(){
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
     this.getCurrentReader();
     this.getReaders();
     this.getRequests();

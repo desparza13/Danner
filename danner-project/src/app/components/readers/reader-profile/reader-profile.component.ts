@@ -5,6 +5,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-reader-profile',
@@ -37,7 +38,8 @@ export class ReaderProfileComponent {
     private readerService: ReaderService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) { 
     this.profileForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -49,9 +51,8 @@ export class ReaderProfileComponent {
   }
 
   ngOnInit(): void {
-    this.reader = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.reader);
-    this.readerId = this.reader.userId;
+    this.readerId = this.authService.getLoginUser();
+
     this.getCurrentReader();
   }
   getCurrentReader(){

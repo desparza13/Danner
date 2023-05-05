@@ -1,6 +1,6 @@
     <mat-card-content>
         <div class="registerForm">
-            <form submit="/authors">
+            <form (submit)="login()">
                 <div class="columns">
                     <div class="field2">
                         <mat-form-field class="name" appearance="fill">
@@ -59,7 +59,7 @@
                         <mat-error *ngIf="city.invalid">{{getCityErrorMessage()}}</mat-error>
                     </mat-form-field>
                 </div>
-                    <button (click)="login()"  color="accent" mat-raised-button
+                    <button  color="accent" mat-raised-button
                     [disabled]="email.invalid || password.invalid || name.invalid || user.invalid || city.invalid">Save</button>
                 <div class="linkAuthor">
                     <a  [routerLink]="['']">¿Are you a reader?

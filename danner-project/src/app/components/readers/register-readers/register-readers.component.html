@@ -1,7 +1,7 @@
 <mat-card-content>
 
     <div class="registerForm">
-        <form submit="/readers">
+        <form (submit)="login()">
             <div class="columns">
                 <div class="field2">
                     <mat-form-field class="name" appearance="fill">
@@ -70,11 +70,7 @@
             </div>
             <button color="accent" mat-raised-button 
             [disabled]="email.invalid || password.invalid || name.invalid || user.invalid || city.invalid || readingChallenge.invalid">
-                <div class="login-btn">
-                    <a (click)="login()" [routerLink]="route">
-                        Save
-                    </a>
-                </div>
+                Save
             </button>
             
             <div class="linkAuthor">

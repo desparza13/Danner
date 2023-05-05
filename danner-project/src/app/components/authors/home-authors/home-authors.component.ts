@@ -39,6 +39,8 @@ export class HomeAuthorsComponent {
   };
 
   ngOnInit(){
+    this.authorId = this.authService.getLoginUser();
+
     //Get initial data from the database
     this.getCurrentAuthor();
     //Initialize filtered books as original books
@@ -64,8 +66,6 @@ export class HomeAuthorsComponent {
   }
   //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentAuthor(){
-    this.authorId = this.authService.getLoginUser();
-
     console.log(this.authorId);
     this.authorService.getOneAuthor(this.authorId).subscribe((response:any)=>{
       this.currentAuthor=response;
