@@ -8,6 +8,7 @@ import { AuthorService } from 'src/app/shared/services/author.service';
 import { Author } from 'src/app/shared/interfaces/author';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-book-authors',
@@ -45,6 +46,7 @@ export class AddBookAuthorsComponent {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
+    private router: Router,
     private authService : AuthService
   ){
     this.bookForm = this.formBuilder.group({
@@ -94,6 +96,7 @@ export class AddBookAuthorsComponent {
               duration: 3000
             });
             this.book = response;
+            this.router.navigate(['/authors']);
           },
           (error) =>{
             console.log(error);

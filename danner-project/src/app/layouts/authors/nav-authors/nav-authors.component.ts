@@ -13,7 +13,7 @@ import { Credentials } from 'src/app/shared/interfaces/credentials';
   styleUrls: ['./nav-authors.component.scss']
 })
 export class NavAuthorsComponent {
-  userId = '643b5cee991bff556bbdb0f3'
+  userId = ''
   author: Author = {
     _id: "",
     name: "",
@@ -41,6 +41,7 @@ export class NavAuthorsComponent {
 
   //Get the current author
   getCurrentAuthor() {
+    this.userId = this.authService.getLoginUser();
     this.authorService.getOneAuthor(this.userId).subscribe((response: any) => {
       this.author = response;
     });
@@ -51,7 +52,6 @@ export class NavAuthorsComponent {
     this.authService.deleteLoginUser();
     this.socialAuthService.signOut();
     this.router.navigate(['authors/login']);
-
   }
 
 }
