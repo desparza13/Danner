@@ -136,7 +136,7 @@ const ReadersController={
                         role: "reader"
                     }
                     // Si encontro al usuario, generamos el token\
-                    const token = jwt.sign(payload, authorKey);
+                    const token = jwt.sign(payload, readerKey);
                     res.status(200).send({token:token,id:response._id});
                 } else {
                     console.log("No encuentra")

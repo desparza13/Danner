@@ -50,7 +50,7 @@ export class HomeReadersComponent {
 
   ngOnInit(){
     this.readerId = this.authService.getLoginUser();
-
+    console.log("Reader id", this.readerId);
     //Get initial data from the database
     this.getCurrentReader();
     //Initialize filtered books as original books
@@ -78,6 +78,7 @@ export class HomeReadersComponent {
   }
   //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentReader(){
+    console.log(this.readerId)
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
       this.getCurrentlyReadingBooks();

@@ -9,6 +9,8 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Credentials } from 'src/app/shared/interfaces/credentials';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+
 @Component({
   selector: 'app-login-readers',
   templateUrl: './login-readers.component.html',
@@ -33,8 +35,30 @@ export class LoginReadersComponent {
   }
   constructor(private dialog: MatDialog, private _readerServide: ReaderService, private router: Router,
     private loginService: LoginService,
-    private authService: AuthService) {
-
+    private authService: AuthService,
+    private socialAuthService: SocialAuthService
+    ) 
+    {
+    this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      console.log("reader")
+        if (user) {
+          this.loginService.googleLoginReaders(user.idToken).subscribe((response:any)=> {
+            if(response.token){
+              this.authService.setToken(response.token);
+              this.authService.setLoginUser(response.id);
+              router.navigate(['/readers']);
+            }else{
+              this.credentials.email = response.email;
+              this.credentials.password = response.password;
+              this.loginService.loginAuthors(this.credentials).subscribe((response:any)=>{
+                this.authService.setToken(response.token);
+                this.authService.setLoginUser(response.id);
+                this.router.navigate(['/readers']);
+              })
+            }
+          })
+        }
+      })
   }
 
   changeTitle() {

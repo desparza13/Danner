@@ -40,4 +40,14 @@ export class LoginService {
     console.log("googleLoginAuthors en service")
     return this.httpClient.post(url, { googleToken: idToken}, options)
   }
+
+  googleLoginReaders(idToken: string): Observable<any> {
+    const url:string = environment.apiUrl + 'readers/login/google';
+    const httpHeaders= new HttpHeaders({'Content-Type' : 'application/json'}); //Asignar los headers
+    let options = {
+      headers: httpHeaders
+    }; 
+    console.log("googleLoginReaders en service")
+    return this.httpClient.post(url, { googleToken: idToken}, options)
+  }
 }
