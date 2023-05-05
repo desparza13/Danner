@@ -31,6 +31,13 @@ import { FriendsReviewsReadersComponent } from './components/readers/friends-rev
 import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 import { AuthorsBookDetailsComponent } from './components/authors/authors-book-details/authors-book-details.component';
 
+import { 
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+  GoogleSigninButtonModule 
+} from '@abacritt/angularx-social-login';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,10 +74,28 @@ import { AuthorsBookDetailsComponent } from './components/authors/authors-book-d
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule
   ],
   providers: [
-
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '264879683267-spjp2jpn7vqorbodu9n6s7mjgf24rn7l.apps.googleusercontent.com'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

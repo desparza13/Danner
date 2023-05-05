@@ -90,4 +90,18 @@ img{
 mat-error{
     font-size: small;
 }
+.login-btn{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.google-btn{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
 

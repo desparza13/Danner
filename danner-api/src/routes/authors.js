@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/authors')
 
 router.post('/login',express.json(), controller.login);
+router.post('/login/google', express.json(), controller.googleLogin);
 
 /**
  * @swagger

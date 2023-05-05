@@ -69,7 +69,6 @@ export class LoginAuthorsComponent {
         }
       });
     });
-    //prueba
-
   }
+  
 }

@@ -1,3 +1,4 @@
+<app-nav-authors></app-nav-authors>
 <div class="login">
     <mat-card color="primary">
 
@@ -51,10 +52,14 @@
                                     <div class="login-btn">
                                         <button color="accent" mat-raised-button 
                                         [disabled]="email.invalid || password.invalid">Login</button>
+                                        <div class="google-btn">
+                                            O inicia sesion con Google
+                                            <asl-google-signin-button type='standard' size='large' text="continue_with" theme="outline"></asl-google-signin-button>
+                                        </div>
                                     </div>
                                     
                                     <div class="linkAuthor">
-                                        <a  [routerLink]="['']">¿Are you a reader?
+                                        <a  [routerLink]="['']">Are you a reader?
                                             Click Here</a>
                                     </div>
                                 </form>
