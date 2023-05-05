@@ -19,17 +19,17 @@ export class AuthService {
     this.authStatus.next(true);
   }
   setLoginUser(id: string):void{
-    var loginUser = {
-      userId: id
-    }
-    localStorage.setItem('loginUser', JSON.stringify(loginUser));
+    
+    localStorage.setItem('loginUser', (id));
   }
 
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
 
-
+  getLoginUser(): string{
+    return localStorage.getItem('loginUser') || '';
+  }
   deleteToken(): void {
     localStorage.removeItem('token');
     // Cambiar el valor del observable a false

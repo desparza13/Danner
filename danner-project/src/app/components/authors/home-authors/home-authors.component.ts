@@ -4,6 +4,7 @@ import { Book } from 'src/app/shared/interfaces/book';
 import { FormControl } from '@angular/forms';
 import { Author } from 'src/app/shared/interfaces/author';
 import { AuthorService } from 'src/app/shared/services/author.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-home-authors',
@@ -13,7 +14,7 @@ import { AuthorService } from 'src/app/shared/services/author.service';
 export class HomeAuthorsComponent {
   //Variables
   //Id proof of concept until login and register is implemented
-  authorId="";
+  authorId:string="";
   author:any;
   //Storing books
     //Originals
@@ -38,8 +39,6 @@ export class HomeAuthorsComponent {
   };
 
   ngOnInit(){
-    this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    this.authorId = this.author.userId;
     //Get initial data from the database
     this.getCurrentAuthor();
     //Initialize filtered books as original books
@@ -49,7 +48,8 @@ export class HomeAuthorsComponent {
       this.filterBooks();
     });
   }
-  constructor(private bookService:BookService, private authorService:AuthorService) {
+  constructor(private bookService:BookService, private authorService:AuthorService, private authService:AuthService) {
+
   }
 
   //Functions
@@ -64,6 +64,9 @@ export class HomeAuthorsComponent {
   }
   //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentAuthor(){
+    this.authorId = this.authService.getLoginUser();
+
+    console.log(this.authorId);
     this.authorService.getOneAuthor(this.authorId).subscribe((response:any)=>{
       this.currentAuthor=response;
       this.getAllBooks();

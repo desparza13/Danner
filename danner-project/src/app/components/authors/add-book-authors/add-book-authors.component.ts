@@ -7,6 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthorService } from 'src/app/shared/services/author.service';
 import { Author } from 'src/app/shared/interfaces/author';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-add-book-authors',
@@ -43,7 +44,8 @@ export class AddBookAuthorsComponent {
     private bookService: BookService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService : AuthService
   ){
     this.bookForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -56,9 +58,7 @@ export class AddBookAuthorsComponent {
   }
 
   ngOnInit(): void {
-    this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    console.log(this.author);
-    this.authorId = this.author.userId;
+    this.authorId = this.authService.getLoginUser();
     this.getAuthor();
   }
 

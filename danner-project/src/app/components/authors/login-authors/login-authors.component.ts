@@ -51,8 +51,13 @@ export class LoginAuthorsComponent {
             }else{
               this.credentials.email = response.email;
               this.credentials.password = response.password;
-              loginService.loginAuthors(this.credentials);
-              this.router.navigate(['/authors']);
+              this.loginService.loginAuthors(this.credentials).subscribe((response:any)=>{
+                this.authService.setToken(response.token);
+                this.authService.setLoginUser(response.id);
+                this.router.navigate(['/authors']);
+              });
+
+              
             }
           });
         }

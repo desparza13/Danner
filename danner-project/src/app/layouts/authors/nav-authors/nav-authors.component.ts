@@ -49,7 +49,9 @@ export class NavAuthorsComponent {
   signOut() {
     this.authService.deleteToken();
     this.authService.deleteLoginUser();
+    this.socialAuthService.signOut();
     this.router.navigate(['authors/login']);
+
   }
 
 }
