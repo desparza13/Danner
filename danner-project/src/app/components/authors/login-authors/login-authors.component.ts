@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Credentials } from 'src/app/shared/interfaces/credentials';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login-authors',
@@ -30,9 +31,32 @@ export class LoginAuthorsComponent {
     }
     )
   }
-  constructor(private dialog: MatDialog, private _authorService: AuthorService, private router: Router,
-    private loginService: LoginService, private authService: AuthService) {
-
+  constructor(private dialog: MatDialog, 
+    private _authorService: AuthorService, 
+    private router: Router,
+    private loginService: LoginService, 
+    private authService: AuthService,
+    private socialAuthService: SocialAuthService
+    ) 
+    {
+      this.socialAuthService.authState.subscribe((user: SocialUser) => {
+        if(user) {
+          this.loginService.googleLoginAuthors(user.idToken).subscribe((response:any) => {
+            console.log(user)
+            console.log(response)
+            if(response.token){
+              this.authService.setToken(response.token);
+              this.authService.setLoginUser(response.id);
+              this.router.navigate(['/authors']);
+            }else{
+              this.credentials.email = response.email;
+              this.credentials.password = response.password;
+              loginService.loginAuthors(this.credentials);
+              this.router.navigate(['/authors']);
+            }
+          });
+        }
+      });
   }
 
   changeTitle() {

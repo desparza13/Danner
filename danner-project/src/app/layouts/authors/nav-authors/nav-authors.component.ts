@@ -36,23 +36,7 @@ export class NavAuthorsComponent {
               private router:Router,
               private socialAuthService: SocialAuthService,
               private loginService: LoginService) {
-    this.socialAuthService.authState.subscribe((user: SocialUser) => {
-      if(user) {
-        console.log('Usuario de Google', user);
-        this.loginService.googleLoginAuthors(user.idToken).subscribe((response:any) => {
-          if(response.token){
-            this.authService.setToken(response.token);
-            this.authService.setLoginUser(response.id);
-            this.router.navigate(['/authors']);
-          }else{
-            this.credentials.email = response.email;
-            this.credentials.password = response.password;
-            loginService.loginAuthors(this.credentials);
-            this.router.navigate(['/authors']);
-          }
-        });
-      }
-    });
+
   }
 
   //Get the current author

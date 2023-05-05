@@ -46,11 +46,13 @@ export class AuthorProfileComponent {
     this.author = JSON.parse(localStorage.getItem('loginUser') || '{}');
     console.log(this.author);
     this.authorId = this.author.userId;
+    console.log(this.authorId);
     this.getCurrentReader();
   }
   getCurrentReader(){
     this.authorService.getOneAuthor(this.authorId).subscribe((response:any)=>{
       this.profile=response;
+      console.log(this.profile)
       this.isLoading = false;
       this.profileForm.patchValue({
         name: this.profile.name,
