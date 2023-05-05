@@ -90,8 +90,16 @@ mat-error{
 }
 
 .login-btn{
-    >a{
-        color: white;
-        text-decoration: none;
-    }
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.google-btn{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
 }
