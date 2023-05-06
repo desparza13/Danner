@@ -50,7 +50,7 @@ export class LoginReadersComponent {
             }else{
               this.credentials.email = response.email;
               this.credentials.password = response.password;
-              this.loginService.loginAuthors(this.credentials).subscribe((response:any)=>{
+              this.loginService.loginReaders(this.credentials).subscribe((response:any)=>{
                 this.authService.setToken(response.token);
                 this.authService.setLoginUser(response.id);
                 this.router.navigate(['/readers']);

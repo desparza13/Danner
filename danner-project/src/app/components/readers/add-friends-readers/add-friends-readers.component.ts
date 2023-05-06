@@ -92,11 +92,11 @@ export class AddFriendsReadersComponent {
     return this.checkPending(reader, friendId);
   }
   checkPending(reader: Reader, friendId:string){
-    console.log("requests sent",this.requests)
+    // console.log("requests sent",this.requests)
     let requestsSent = this.requests.filter((request:any) => this.currentReader._id == request.idSender);
-    console.log("requests filter1",requestsSent)
+    // console.log("requests filter1",requestsSent)
     requestsSent = this.requests.filter((request:any) => friendId == request.idReceiver);
-    console.log("requests filter2",requestsSent)
+    // console.log("requests filter2",requestsSent)
     if(requestsSent.length>0){
       return "pending"
     }

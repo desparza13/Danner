@@ -80,6 +80,7 @@ export class HomeReadersComponent {
   getCurrentReader(){
     console.log(this.readerId)
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
+      console.log(response);
       this.currentReader=response;
       this.getCurrentlyReadingBooks();
       this.getTbrBooks();
@@ -89,6 +90,7 @@ export class HomeReadersComponent {
   }
   //Get books functions
   getCurrentlyReadingBooks(){
+    console.log(this.currentReader);
     this.currentBooks = this.currentReader.reading;
     this.filteredCurrentBooks = this.currentBooks;
   }

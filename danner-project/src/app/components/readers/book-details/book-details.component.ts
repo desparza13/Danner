@@ -66,15 +66,17 @@ export class BookDetailsComponent {
 
   }
   ngOnInit(){
+    this.book = this.bookService.getBook();
     this.readerId = this.authService.getLoginUser();
-
     this.getData();
   }
   getData() {
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
+      console.log(response);
       this.profile = response;
       this.friends = response.friends.map((friend:Reader) => friend._id);
       this.current = response.reading.map((book:any) => book.bookId._id);
+      
       this.finished = response.read.map((book:any) => book.bookId._id);
       this.tbr = response.toBeRead.map((book:any) => book._id);
       this.reviewService.getReviews().subscribe((response: any) => {

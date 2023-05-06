@@ -1,7 +1,7 @@
 <mat-card-content>
 
     <div class="registerForm">
-        <form (submit)="login()">
+        <form >
             <div class="columns">
                 <div class="field2">
                     <mat-form-field class="name" appearance="fill">
@@ -68,7 +68,7 @@
                     <mat-error *ngIf="readingChallenge.invalid">{{getReadingChallengeErrorMessage()}}</mat-error>
                 </mat-form-field>
             </div>
-            <button color="accent" mat-raised-button 
+            <button (click)="login()" color="accent" mat-raised-button 
             [disabled]="email.invalid || password.invalid || name.invalid || user.invalid || city.invalid || readingChallenge.invalid">
                 Save
             </button>

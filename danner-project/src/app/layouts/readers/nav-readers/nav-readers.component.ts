@@ -12,6 +12,7 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { SearchValueService } from 'src/app/shared/services/search-value.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 interface Notification {
   likes: [],
@@ -76,13 +77,14 @@ export class NavReadersComponent implements OnInit{
   constructor(private friendshipRequestService: FriendshipRequestService,
     private reviewService: ReviewService,
     private readerService: ReaderService, private _snackBar: MatSnackBar, private _searchValueService: SearchValueService,
-    private router: Router, private authService: AuthService) {
+    private router: Router, private authService: AuthService, private socialAuthService: SocialAuthService) {
   }
 
   //Get the current reader
   getCurrentReader() {
     this.readerService.getOneReader(this.userId).subscribe((response: any) => {
       this.reader = response;
+      console.log(response);
     }), (error: HttpErrorResponse) => {
       // Handle error
       
@@ -93,6 +95,7 @@ export class NavReadersComponent implements OnInit{
   getRequests() {
     this.friendshipRequestService.getRequests().subscribe((response: any) => {
       this.requests = response;
+      console.log(response);
     })
 
     //Filter the requests by active reader
@@ -103,6 +106,7 @@ export class NavReadersComponent implements OnInit{
   getReviews() {
     this.reviewService.getReviews().subscribe((response: any) => {
       this.reviews = response;
+      console.log(response);
       
     })
 
@@ -113,11 +117,13 @@ export class NavReadersComponent implements OnInit{
   //Filter the reviews by active reader
   getFilterReviews() {
     console.log('filtrar');
+    console.log(this.reviews);
     const filter = this.reviews.filter((review) => {
 
       return review.userId._id === this.reader._id;
     });
     this.filterReviews = filter;
+    console.log(this.filterReviews)
     console.log(this.filterReviews);
     this.filterReviews.forEach((review)=>{
       this.lengthNotifications+= review.likes.length;
@@ -197,6 +203,7 @@ export class NavReadersComponent implements OnInit{
   signOut() {
     this.authService.deleteToken();
     this.authService.deleteLoginUser();
+    this.socialAuthService.signOut();
     this.router.navigate(['']);
   }
 
