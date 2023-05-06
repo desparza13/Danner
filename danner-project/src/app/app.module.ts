@@ -37,6 +37,7 @@ import {
   GoogleLoginProvider,
   GoogleSigninButtonModule 
 } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '264879683267-spjp2jpn7vqorbodu9n6s7mjgf24rn7l.apps.googleusercontent.com'
+              environment.googleId
             )
           }
         ],

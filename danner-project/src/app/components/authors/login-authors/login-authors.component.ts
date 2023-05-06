@@ -56,8 +56,6 @@ export class LoginAuthorsComponent {
                 this.authService.setLoginUser(response.id);
                 this.router.navigate(['/authors']);
               });
-
-              
             }
           });
         }

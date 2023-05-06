@@ -7,6 +7,7 @@ import { Book } from 'src/app/shared/interfaces/book';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { FormControl } from '@angular/forms';
 import { SearchValueService } from 'src/app/shared/services/search-value.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-books-readers',

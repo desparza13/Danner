@@ -1,7 +1,10 @@
 const model = require('../models/reader');
 require('dotenv').config();
+
 const readerKey = process.env.READER_KEY;
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(process.env.GOOGLE_ID);
 
 const ReadersController={
     list:(req, res)=>{
@@ -112,6 +115,58 @@ const ReadersController={
             .catch(error=>{
                 res.status(400).send('Something went wrong '+error);
             })
+    },
+    googleLogin: (req, res)=>{
+        const idToken = req.body.googleToken;
+        googleClient.verifyIdToken({ idToken: idToken }).then(response => {
+            const user = response.getPayload();
+            console.log('Si se valido el token', user);
+            // Buscar el usuario, obtener el ID, generar el token con JWT y responder el token
+            model.findOne({
+                email: user.email
+            }).then(response=> {
+                console.log(response)
+                if(response) {
+                    console.log("Encuentra")
+                    const payload = {
+                        id: response._id,
+                        name: response.name,
+                        email: response.email,
+                        user: response.user,
+                        role: "reader"
+                    }
+                    // Si encontro al usuario, generamos el token\
+                    const token = jwt.sign(payload, readerKey);
+                    res.status(200).send({token:token,id:response._id});
+                } else {
+                    console.log("No encuentra")
+                    //si no se encuentra
+                    let newReader = {
+                        name: user.name,
+                        user: user.given_name,
+                        email: user.email,
+                        city: "Unknown",
+                        image: user.picture,
+                        password: user.jti,
+                        read: [],
+                        toBeRead: [],
+                        reading:[],
+                        friends:[],
+                        readingChallenge: 1
+                    };
+                    console.log("Nuevo lector", newReader)
+                    model(newReader).save()
+                        .then(reader=>{
+                            res.status(200).send(reader);
+                        })
+                        .catch(error=>{
+                            res.status(400).send('Something went wrong '+error);
+                    })
+                }
+            })
+        }).catch(err => {
+            res.status(401).send({ msg: 'token invalido' });
+        });
     }
 }
 module.exports = ReadersController;
