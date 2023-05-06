@@ -5,7 +5,7 @@ const controller = require('../controllers/readers')
 
 router.post('/login',express.json(), controller.login);
 router.post('/login/google', express.json(), controller.googleLogin);
-
+router.post('/decode',express.json(),controller.decode)
 /**
  * @swagger
  * /readers:

@@ -39,27 +39,7 @@ export class LoginAuthorsComponent {
     private socialAuthService: SocialAuthService
     ) 
     {
-      this.socialAuthService.authState.subscribe((user: SocialUser) => {
-        if(user) {
-          this.loginService.googleLoginAuthors(user.idToken).subscribe((response:any) => {
-            console.log(user)
-            console.log(response)
-            if(response.token){
-              this.authService.setToken(response.token);
-              this.authService.setLoginUser(response.id);
-              this.router.navigate(['/authors']);
-            }else{
-              this.credentials.email = response.email;
-              this.credentials.password = response.password;
-              this.loginService.loginAuthors(this.credentials).subscribe((response:any)=>{
-                this.authService.setToken(response.token);
-                this.authService.setLoginUser(response.id);
-                this.router.navigate(['/authors']);
-              });
-            }
-          });
-        }
-      });
+      
   }
 
   changeTitle() {
