@@ -26,6 +26,7 @@ const routes: Routes = [
   {path: 'readers/profile', component: ReaderProfileComponent},
   {path: 'readers/addFriends', component:AddFriendsReadersComponent},
   {path: 'readers/reviews',component: FriendsReviewsReadersComponent},
+  {path: 'readers/:id', component: BookDetailsComponent},
   {path: 'readers/books/:id', component: BookDetailsComponent},
   //Authors
   {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthAuthorGuard], data:{role:'author'}},

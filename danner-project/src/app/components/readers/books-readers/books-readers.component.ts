@@ -8,6 +8,7 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { FormControl } from '@angular/forms';
 import { SearchValueService } from 'src/app/shared/services/search-value.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-books-readers',
@@ -35,7 +36,7 @@ export class BooksReadersComponent implements OnInit {
   flag = false;
 
   constructor(private bookService: BookService, private readerService: ReaderService,
-    private _searchValueService: SearchValueService) {
+    private _searchValueService: SearchValueService, private router:Router) {
   }
   ngOnInit() {
     
@@ -56,6 +57,8 @@ export class BooksReadersComponent implements OnInit {
       this.filterBooks();
     });
   }
+
+
   //Functions
   //Get integer part of averageRating, in order to calculate how many stars to display in html
   getStars(averageRating: number): string[] {
@@ -173,8 +176,7 @@ export class BooksReadersComponent implements OnInit {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  selectBook(book: Book){
-    console.log(book);
-    this.bookService.setBook(book);
+  selectBook(id: string){
+    this.router.navigate([`/readers/${id}`])
   }
 }

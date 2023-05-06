@@ -18,24 +18,25 @@ export class AuthAuthorGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(this.authService.isAuth()){
-        const token = this.authService.getToken();
-        const response= {};
-        this.authService.decodeAuthor({token}).subscribe((response:any)=>{
-          console.log(response.role === route.data['role'])
-          if(response.role === route.data['role']){
-            this.stat = true;
-          }
-        })
-        console.log(this.stat);
-        if(!this.stat){
-          this.route.navigate(['/authors/login']);
+        // const token = this.authService.getToken();
+        // const response= {};
+        // this.authService.decodeAuthor({token}).subscribe((response:any)=>{
+        //   console.log(response.role === route.data['role'])
+        //   if(response.role === route.data['role']){
+        //     this.stat = true;
+        //   }
+        // })
+        // console.log(this.stat);
+        // if(!this.stat){
+        //   this.route.navigate(['/authors/login']);
 
-        }
-        return this.stat
+        // }
+        // return this.stat
+        return true
       }else{
         this.route.navigate(['/authors/login']);
         
-        return this.stat;
+        return false;
       }
   }
   

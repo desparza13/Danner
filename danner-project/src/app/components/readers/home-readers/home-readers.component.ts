@@ -272,9 +272,5 @@ export class HomeReadersComponent {
     this.filterByGenres(genreToUse);
   }
 
-  selectBook(book: Book){
-    console.log(book);
-    this.bookService.setBook(book);
-  }
 
 }

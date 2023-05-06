@@ -7,6 +7,7 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authors-book-details',
@@ -26,6 +27,7 @@ export class AuthorsBookDetailsComponent {
     pages: 0,
     showDescription: false
   }
+  bookId = ''
   isLoading = true;
   reviews: Array<Review> = [];
   filterReviews: Array<Review> = []
@@ -33,12 +35,20 @@ export class AuthorsBookDetailsComponent {
     private bookService: BookService,
     private reviewService: ReviewService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router:Router
     ){
   }
   ngOnInit(){
-    this.book = this.bookService.getBook();
+    const  url = this.router.url.split('/');
+    this.bookId = url[2];
+    this.getBook()
     this.getData();
+  }
+  getBook(){
+    this.bookService.getOneBook(this.bookId).subscribe((response:any)=>{
+      this.book = response;
+    })
   }
   getData(){
     this.reviewService.getReviews().subscribe((response: any) => {

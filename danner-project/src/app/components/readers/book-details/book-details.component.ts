@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-details',
@@ -53,7 +54,7 @@ export class BookDetailsComponent {
   filterReviews: Array<Review> = [];
   rating: any;
   review = new FormControl('');
-
+  bookId = '';
 
   constructor(
     private bookService: BookService,
@@ -61,14 +62,23 @@ export class BookDetailsComponent {
     private readerService: ReaderService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
     ){
 
   }
   ngOnInit(){
-    this.book = this.bookService.getBook();
+    const  url = this.router.url.split('/');
+    this.bookId = url[2];
+    this.getBook()
     this.readerId = this.authService.getLoginUser();
     this.getData();
+  }
+
+  getBook(){
+    this.bookService.getOneBook(this.bookId).subscribe((response:any)=>{
+      this.book = response;
+    })
   }
   getData() {
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{

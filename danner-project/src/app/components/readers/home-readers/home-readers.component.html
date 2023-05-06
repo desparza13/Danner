@@ -35,7 +35,7 @@
             <mat-tab-group>
                 <mat-tab label="All">
                     <div class="all-container">
-                        <div class="book-card" *ngFor="let book of filteredAllBooks" (click)="selectBook(book)" [routerLink]="book._id">
+                        <div class="book-card" *ngFor="let book of filteredAllBooks"  [routerLink]="book._id">
                             <div class="book-image" (mouseenter)="book.showDescription=true"
                                 (mouseleave)="book.showDescription=false">
                                 <img [src]="book.image" alt="Book cover">
@@ -56,7 +56,7 @@
                 </mat-tab>
                 <mat-tab label="Current">
                     <div class="current-container">
-                        <div class="book-card" *ngFor="let book of filteredCurrentBooks" (click)="selectBook(book.bookId)" [routerLink]="book.bookId._id">
+                        <div class="book-card" *ngFor="let book of filteredCurrentBooks" [routerLink]="book.bookId._id">
                             <div class="book-image" (mouseenter)="book.bookId.showDescription=true"
                                 (mouseleave)="book.bookId.showDescription=false">
                                 <img [src]="book.bookId.image" alt="Book cover">
@@ -78,7 +78,7 @@
                 </mat-tab>
                 <mat-tab label="To be read">
                     <div class="to-be-read-container">
-                        <div class="book-card" *ngFor="let book of filteredTbrBooks" (click)="selectBook(book)" [routerLink]="book._id">
+                        <div class="book-card" *ngFor="let book of filteredTbrBooks" [routerLink]="book._id">
                             <div class="book-image" (mouseenter)="book.showDescription=true"
                                 (mouseleave)="book.showDescription=false">
                                 <img [src]="book.image" alt="Book cover">
@@ -99,7 +99,7 @@
                 </mat-tab>
                 <mat-tab label="Finished">
                     <div class="finished-container">
-                        <div class="book-card" *ngFor="let book of filteredFinishedBooks" (click)="selectBook(book.bookId)" [routerLink]="book.bookId._id">
+                        <div class="book-card" *ngFor="let book of filteredFinishedBooks" [routerLink]="book.bookId._id">
                             <div class="book-image" (mouseenter)="book.bookId.showDescription=true"
                                 (mouseleave)="book.bookId.showDescription=false">
                                 <img [src]="book.bookId.image" alt="Book cover">

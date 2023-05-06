@@ -160,9 +160,5 @@ export class HomeAuthorsComponent {
     }
     this.filterByGenres(genreToUse);
   }
-  selectBook(book: Book){
-    console.log(book);
-    this.bookService.setBook(book);
-    console.log("book.",book._id)
-  }
+  
 }
