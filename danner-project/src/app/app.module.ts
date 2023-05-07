@@ -30,6 +30,8 @@ import { ReaderProfileComponent } from './components/readers/reader-profile/read
 import { FriendsReviewsReadersComponent } from './components/readers/friends-reviews-readers/friends-reviews-readers.component';
 import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 import { AuthorsBookDetailsComponent } from './components/authors/authors-book-details/authors-book-details.component';
+import { environment } from 'src/environments/environment';
+import { NavComponent } from './layouts/nav/nav.component';
 
 import { 
   SocialLoginModule,
@@ -37,7 +39,7 @@ import {
   GoogleLoginProvider,
   GoogleSigninButtonModule 
 } from '@abacritt/angularx-social-login';
-import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { environment } from 'src/environments/environment';
     ReaderProfileComponent,
     FriendsReviewsReadersComponent,
     BookDetailsComponent,
-    AuthorsBookDetailsComponent
+    AuthorsBookDetailsComponent,
+    NavComponent
   ],
   imports: [
     

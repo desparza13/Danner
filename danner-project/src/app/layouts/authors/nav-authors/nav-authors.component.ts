@@ -25,11 +25,10 @@ export class NavAuthorsComponent {
   };
   logueado: boolean = false;
   credentials:  Credentials = { email: '', password: '' };
-
   ngOnInit() {
+    this.userId = this.authService.getLoginUser();
     this.getCurrentAuthor();
   }
-
 
   constructor(private authorService: AuthorService,
               private authService: AuthService,
@@ -39,9 +38,9 @@ export class NavAuthorsComponent {
 
   }
 
+
   //Get the current author
   getCurrentAuthor() {
-    this.userId = this.authService.getLoginUser();
     this.authorService.getOneAuthor(this.userId).subscribe((response: any) => {
       this.author = response;
     });

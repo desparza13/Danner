@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Credentials } from '../interfaces/credentials';
 import { environment } from 'src/environments/environment';
 
@@ -49,5 +49,11 @@ export class LoginService {
     }; 
     console.log("googleLoginReaders en service")
     return this.httpClient.post(url, { googleToken: idToken}, options)
+  }
+
+  decode(token:string){
+    const url:string = environment.apiUrl + 'decode/'+token;//Definir url para el post
+    
+    return this.httpClient.get(url); //Regresar llamada tipo post
   }
 }

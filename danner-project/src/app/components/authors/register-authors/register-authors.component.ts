@@ -57,9 +57,6 @@ export class RegisterAuthorsComponent {
 
       }
     }
-
-
-
     return this.password.hasError('required') ? 'Password is required' : '';
   }
 
@@ -84,10 +81,6 @@ export class RegisterAuthorsComponent {
   }
 
   login() {
-    var loginUser = {
-      userId: ''
-    }
-
     this.author.city = this.city.value || '';
     this.author.email = this.email.value || '';
     this.author.name = this.name.value || '';
@@ -103,7 +96,7 @@ export class RegisterAuthorsComponent {
       this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
         // Recibimos el token
         this.authService.setToken(data.token);
-        this.authService.setLoginUser(data.id);
+        this.authService.setLoginUser(data.id,'author');
         // Send to readers Home
         this.router.navigate(['/authors']);
       }, (error) => {

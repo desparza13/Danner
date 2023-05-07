@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { Credentials } from 'src/app/shared/interfaces/credentials';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login-authors',
@@ -25,6 +24,8 @@ export class LoginAuthorsComponent {
   credentials:  Credentials = { email: '', password: '' };
   
   ngOnInit() {
+    this.authService.deleteToken();
+    this.authService.deleteLoginUser();
     console.log(this.title);
     this._authorService.getAuthors().subscribe((response: any) => {
       this.authors = response;
@@ -35,8 +36,7 @@ export class LoginAuthorsComponent {
     private _authorService: AuthorService, 
     private router: Router,
     private loginService: LoginService, 
-    private authService: AuthService,
-    private socialAuthService: SocialAuthService
+    private authService: AuthService
     ) 
     {
       
@@ -65,7 +65,7 @@ export class LoginAuthorsComponent {
     this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
       // Recibimos el token
       this.authService.setToken(data.token);
-      this.authService.setLoginUser(data.id);
+      this.authService.setLoginUser(data.id,'author');
       // Send to readers Home
       this.router.navigate(['/authors']);
     },(error)=>{

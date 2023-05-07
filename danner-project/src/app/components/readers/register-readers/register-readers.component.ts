@@ -116,7 +116,7 @@ export class RegisterReadersComponent {
         console.log(data)
         // Recibimos el token
         this.authService.setToken(data.token);
-        this.authService.setLoginUser(data.id);
+        this.authService.setLoginUser(data.id,'reader');
         // Send to readers Home
         this.router.navigate(['readers']);
       });

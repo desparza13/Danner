@@ -14,26 +14,26 @@ import { AuthorProfileComponent } from './components/authors/author-profile/auth
 import { FriendsReviewsReadersComponent } from './components/readers/friends-reviews-readers/friends-reviews-readers.component';
 import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 import { AuthorsBookDetailsComponent } from './components/authors/authors-book-details/authors-book-details.component';
-import { AuthAuthorGuard } from './shared/guards/auth-author.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   //Readers
-  {path: 'readers', component: HomeReadersComponent},
-  {path: 'readers/friends', component:FriendsReadersComponent},
-  {path: 'readers/readingChallenge', component: ReadingChallengeComponent},
+  {path: 'readers', component: HomeReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/friends', component:FriendsReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/readingChallenge', component: ReadingChallengeComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   {path: '', component: LoginReadersComponent},
-  {path: 'readers/books', component: BooksReadersComponent},
+  {path: 'readers/books', component: BooksReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   {path: 'authors/login',component: LoginAuthorsComponent},
-  {path: 'readers/profile', component: ReaderProfileComponent},
-  {path: 'readers/addFriends', component:AddFriendsReadersComponent},
-  {path: 'readers/reviews',component: FriendsReviewsReadersComponent},
-  {path: 'readers/:id', component: BookDetailsComponent},
-  {path: 'readers/books/:id', component: BookDetailsComponent},
+  {path: 'readers/profile', component: ReaderProfileComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/addFriends', component:AddFriendsReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/reviews',component: FriendsReviewsReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/:id', component: BookDetailsComponent, canActivate:[AuthGuard], data:{role:'reader'}},
+  {path: 'readers/books/:id', component: BookDetailsComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   //Authors
-  {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthAuthorGuard], data:{role:'author'}},
-  {path: 'authors/addBook', component:AddBookAuthorsComponent, canActivate:[AuthAuthorGuard], data:{role:'author'}},
-  {path: 'authors/profile', component:AuthorProfileComponent, canActivate:[AuthAuthorGuard], data:{role:'author'}},
+  {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
+  {path: 'authors/addBook', component:AddBookAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
+  {path: 'authors/profile', component:AuthorProfileComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/login',component: LoginAuthorsComponent},
-  {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthAuthorGuard], data:{role:'author'}}
+  {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthGuard], data:{role:'author'}}
 ];
 
 @NgModule({

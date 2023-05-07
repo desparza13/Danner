@@ -167,17 +167,6 @@ const ReadersController={
         }).catch(err => {
             res.status(401).send({ msg: 'token invalido' });
         });
-    },
-    decode:(req,res)=>{
-        console.log('Entre');
-        const tok = req.body.token
-        console.log(tok);
-        var decoded = jwt.verify(tok, readerKey);
-        if(decoded){
-    
-        console.log(decoded.role);
-        res.status(200).send(decoded);
-        }
     }
 }
 module.exports = ReadersController;

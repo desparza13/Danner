@@ -20,17 +20,21 @@ export class AuthService {
     // Cambiar el valor del observable a true
     this.authStatus.next(true);
   }
-  setLoginUser(id: string):void{
+  setLoginUser(id: string,role:string):void{
     
-    localStorage.setItem('loginUser', (id));
+    localStorage.setItem('loginUser', id);
+    localStorage.setItem('role', role);
   }
-
+  
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
 
   getLoginUser(): string{
     return localStorage.getItem('loginUser') || '';
+  }
+  getRole(): string{
+    return localStorage.getItem('role') || '';
   }
   deleteToken(): void {
     localStorage.removeItem('token');
@@ -40,6 +44,7 @@ export class AuthService {
 
   deleteLoginUser():void{
     localStorage.removeItem('loginUser');
+    localStorage.removeItem('role');
 
   }
 
@@ -48,21 +53,5 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  decodeAuthor(body:object){
-    const url:string = environment.apiUrl + 'authors/decode';//Definir url para el post
-    const httpHeaders= new HttpHeaders({'Content-Type' : 'application/json'}); //Asignar los headers
-    let options = {
-      headers: httpHeaders
-    }; 
-    return this.httpClient.post(url,body,options); //Regresar llamada tipo post
-  }
-
-  decodeReader(body:object){
-    const url:string = environment.apiUrl + 'readers/decode';//Definir url para el post
-    const httpHeaders= new HttpHeaders({'Content-Type' : 'application/json'}); //Asignar los headers
-    let options = {
-      headers: httpHeaders
-    }; 
-    return this.httpClient.post(url,body,options); //Regresar llamada tipo post
-  }
+  
 }

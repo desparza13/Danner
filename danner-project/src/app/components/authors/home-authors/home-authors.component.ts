@@ -37,6 +37,7 @@ export class HomeAuthorsComponent {
     image: '',
     password: ''
   };
+  isLoading = true;
 
   ngOnInit(){
     this.authorId = this.authService.getLoginUser();
@@ -79,6 +80,8 @@ export class HomeAuthorsComponent {
       this.authorBooks = this.allBooks.filter((book:any) => book.author == this.currentAuthor.name);
       this.filteredAuthorBooks = this.authorBooks;
       this.filterBooks();
+      this.isLoading = false;
+
     })
   }
   //Filtering

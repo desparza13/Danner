@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<app-nav-authors></app-nav-authors>
 <div class="page">
     <mat-toolbar color="primary">
         <mat-toolbar-row>
@@ -53,4 +52,8 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 
+</div>
+
+<div *ngIf="isLoading" class="overlay">
+    <mat-spinner diameter="50"></mat-spinner>
 </div>
