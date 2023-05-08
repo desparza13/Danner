@@ -32,7 +32,6 @@ const routes: Routes = [
   {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/addBook', component:AddBookAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/profile', component:AuthorProfileComponent, canActivate:[AuthGuard], data:{role:'author'}},
-  {path: 'authors/login',component: LoginAuthorsComponent},
   {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthGuard], data:{role:'author'}}
 ];
 

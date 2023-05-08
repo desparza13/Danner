@@ -32,7 +32,7 @@ export class NavComponent {
           this.router.navigate(['']);
         })
       }else{
-        this.router.navigate(['']);
+        //this.router.navigate(['']);
         this.role=''
       }
     })

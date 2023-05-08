@@ -51,29 +51,27 @@ export class AddFriendsReadersComponent {
 
   ngOnInit(){
     this.readerId = this.authService.getLoginUser();
-    this.getCurrentReader();
-    this.getReaders();
+    this.getData();
     this.getRequests();
   }
-  getCurrentReader(){
+  getData(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
-      console.log("Reader",this.currentReader)
       this.friends = this.currentReader.friends;
+      this.getReaders();
     });
   }
   getReaders(){
     this.readerService.getReaders().subscribe((response:any)=>{
       this.readers=response;
-      console.log("Readers",this.readers)
-      this.filteredReaders = this.readers;
+      console.log("All readers",this.readers);
+      this.filteredReaders = this.readers.filter((reader:Reader)=>reader._id != this.currentReader._id);
+      console.log("Filtered readers", this.filteredReaders);
       this.dataSource.data = this.filteredReaders;
     });  
   }
   getRequests(){
-    console.log("BUSCAR REQUESTS")
     this.requestService.getRequests().subscribe((response:any)=>{
-      console.log("RESPONSE",response)
       this.requests = response;
     })
   }
@@ -169,7 +167,7 @@ export class AddFriendsReadersComponent {
               duration: 3000
             });
             console.log("update response",response)
-            this.getCurrentReader()
+            this.getData()
           },
           (error) => {
             console.log(error);
