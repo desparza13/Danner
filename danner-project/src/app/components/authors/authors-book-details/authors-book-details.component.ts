@@ -8,6 +8,8 @@ import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-authors-book-details',
@@ -27,17 +29,28 @@ export class AuthorsBookDetailsComponent {
     pages: 0,
     showDescription: false
   }
+  bookForm: FormGroup;
   bookId = ''
-  isLoading = true;
+  isLoading: boolean = true;
+  isEditing: boolean = false;
   reviews: Array<Review> = [];
   filterReviews: Array<Review> = []
   constructor(
     private bookService: BookService,
     private reviewService: ReviewService,
+    private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private router:Router
     ){
+      this.bookForm = this.formBuilder.group({
+        title: ['', Validators.required],
+        genre: ['', Validators.required],
+        date: ['', Validators.required],
+        description: ['', Validators.required],
+        pages: [1, [Validators.required, Validators.min(1)]],
+        image: ['', Validators.required]
+      });
   }
   ngOnInit(){
     const  url = this.router.url.split('/');
@@ -59,6 +72,39 @@ export class AuthorsBookDetailsComponent {
       this.isLoading = false;
     });
   }
+  editBook() {
+    console.log("Edit", this.isEditing)
+    this.isEditing = true;
+  }
+  confirmEdit(){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        message: 'Are you sure you want to update your book?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.bookService.updateBook(this.book, this.book._id).subscribe((response:any)=>{
+          this.isEditing = false;
+          this.snackBar.open('Book updated successfully', 'Close', {
+            duration: 3000,
+          });
+          this.book = response;
+        },
+        (error) => {
+          console.log(error);
+          this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
+            duration: 3000
+          });
+        })
+      }
+    })
+  }
+  cancelEdit() {
+    this.isEditing = false;
+  }
+  
   getFilterReviews(){
     this.filterReviews = this.filterReviews.filter((review)=>{
       return review.bookId._id == this.book._id
