@@ -5,6 +5,8 @@ import { Book } from 'src/app/shared/interfaces/book';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home-readers',
   templateUrl: './home-readers.component.html',
@@ -63,9 +65,15 @@ export class HomeReadersComponent {
       this.filterBooks();
     });
   }
-  constructor(private bookService:BookService, private readerService:ReaderService, private authService: AuthService) {
+  constructor(private bookService:BookService,
+    private readerService:ReaderService,
+    private authService: AuthService,
+    private router: Router) {
   }
 
+  goExplore(){
+    this.router.navigate(['/readers/books']);
+  }
   //Functions
   //Get integer part of averageRating, in order to calculate how many stars to display in html
   getStars(averageRating: number): string[] {

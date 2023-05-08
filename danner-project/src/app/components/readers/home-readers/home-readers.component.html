@@ -33,7 +33,14 @@
         <mat-sidenav-content>
             <mat-tab-group>
                 <mat-tab label="All">
-                    <div class="all-container">
+                    <div class="all-container-empty" *ngIf="filteredAllBooks.length === 0">
+                        <div class="empty-container">
+                            <h1>You don't have any stored books, go ahead and find your next story</h1>
+                            <img src="https://media.giphy.com/media/5ixXJrxrf7BfbkxM0t/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
+                    <div class="all-container" *ngIf="filteredAllBooks?.length != 0">
                         <div class="book-card" *ngFor="let book of filteredAllBooks"  [routerLink]="book._id">
                             <div class="book-image" (mouseenter)="book.showDescription=true"
                                 (mouseleave)="book.showDescription=false">
@@ -54,6 +61,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Current">
+                    <div class="all-container-empty" *ngIf="filteredCurrentBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>You are not currently reading anything, find some new books to enjoy</h1>
+                            <img src="https://media.giphy.com/media/Zq0nOiPeCVCu3MzCrB/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
                     <div class="current-container">
                         <div class="book-card" *ngFor="let book of filteredCurrentBooks" [routerLink]="book.bookId._id">
                             <div class="book-image" (mouseenter)="book.bookId.showDescription=true"
@@ -76,6 +90,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="To be read">
+                    <div class="all-container-empty" *ngIf="filteredTbrBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>Add some books to your to be read list and never suffer a reading block again</h1>
+                            <img src="https://media.giphy.com/media/72QEFpGU0RNfwtCrd2/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
                     <div class="to-be-read-container">
                         <div class="book-card" *ngFor="let book of filteredTbrBooks" [routerLink]="book._id">
                             <div class="book-image" (mouseenter)="book.showDescription=true"
@@ -97,6 +118,13 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Finished">
+                    <div class="all-container-empty" *ngIf="filteredFinishedBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>You haven't finished any books, let's get started!</h1>
+                            <img src="https://media.giphy.com/media/Y2bM68y94nxSXYkCaI/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
                     <div class="finished-container">
                         <div class="book-card" *ngFor="let book of filteredFinishedBooks" [routerLink]="book.bookId._id">
                             <div class="book-image" (mouseenter)="book.bookId.showDescription=true"

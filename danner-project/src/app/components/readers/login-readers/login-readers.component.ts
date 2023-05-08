@@ -35,7 +35,9 @@ export class LoginReadersComponent {
     }
     )
   }
-  constructor(private dialog: MatDialog, private _readerServide: ReaderService, private router: Router,
+  constructor(private dialog: MatDialog,
+    private _readerServide: ReaderService,
+    private router: Router,
     private loginService: LoginService,
     private authService: AuthService,
     private socialAuthService: SocialAuthService

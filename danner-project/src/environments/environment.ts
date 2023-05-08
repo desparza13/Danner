@@ -1,4 +1,4 @@
 export const environment = {
     apiUrl :'http://localhost:3000/',
-    googleId: '264879683267-spjp2jpn7vqorbodu9n6s7mjgf24rn7l.apps.googleusercontent.com'
+    googleId: '652058147214-17o0fbndr4079i3a3qfs7qr43ucfb8p9.apps.googleusercontent.com'
 }

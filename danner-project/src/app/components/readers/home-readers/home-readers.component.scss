@@ -21,6 +21,7 @@
 }
 .mat-sidenav {
     width: 20%;
+    height: 100%;
 }
 ::ng-deep .mat-sidenav{
     background-color: #fae5df;
@@ -101,6 +102,28 @@
 
 .book-rating {
     margin-top: 5px;
+}
+mat-tab-group, mat-tab{
+    width: 100%;
+    height: calc(100vh - 80px);;
+}
+.all-container-empty{
+    width: 100%;
+    height: 100vh;
+    .empty-container{
+        display: flex;
+        height: calc(100vh - 80px);;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 250px;
+            height: 250px;
+        }
+        .explore-btn{
+            margin: 50px;
+        }
+    }
 }
 
 /*Responsivo*/
