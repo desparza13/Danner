@@ -31,33 +31,33 @@
             <button mat-raised-button color="primary" (click)="editBook()">Edit book</button>
         </div>
         <mat-divider></mat-divider>
-        <div *ngIf="isEditing">
+        <div *ngIf="isEditing" class="edit-book-container">
             <h3>Editar libro</h3>
             <form [formGroup]="bookForm">
                 <mat-form-field>
                     <mat-label>Enter the title</mat-label>
-                        <input matInput placeholder="Title" formControlName="title" [(ngModel)]="book.title"/>
+                        <input matInput placeholder="Title" formControlName="title"/>
                     <mat-error *ngIf="bookForm.get('title')?.hasError('required')">
                         Title is required
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Enter the genre</mat-label>
-                        <input matInput placeholder="Genre" formControlName="genre" [(ngModel)]="book.genre"/>
+                        <input matInput placeholder="Genre" formControlName="genre"/>
                     <mat-error *ngIf="bookForm.get('genre')?.hasError('required')">
                         Genre is required
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Enter the release date</mat-label>
-                        <input type="date" matInput placeholder="Date" formControlName="date" [(ngModel)]="book.date"/>
+                        <input type="date" matInput placeholder="Date" formControlName="date"/>
                     <mat-error *ngIf="bookForm.get('date')?.hasError('required')">
                         Date is required
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Describe your book</mat-label>
-                    <textarea matInput placeholder="Description" formControlName="description" [(ngModel)]="book.description"></textarea>
+                    <textarea matInput placeholder="Description" formControlName="description"></textarea>
                     <mat-error *ngIf="bookForm.get('description')?.hasError('required')">
                         Description is required
                     </mat-error>
@@ -80,8 +80,10 @@
                     </mat-error>
                 </mat-form-field>
             </form>
-            <button mat-raised-button color="primary" (click)="confirmEdit()">Save</button>
-            <button mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>
+            <div class="edit-btns">
+                <button class="edit-btn" mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>    
+                <button class="edit-btn" mat-raised-button color="primary" (click)="confirmEdit()">Save</button>
+            </div>
         </div>          
         <div class="feed">
             <h3>What others thought about your book {{book.title}}</h3>

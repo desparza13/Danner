@@ -61,6 +61,14 @@ export class AuthorsBookDetailsComponent {
   getBook(){
     this.bookService.getOneBook(this.bookId).subscribe((response:any)=>{
       this.book = response;
+      this.bookForm.patchValue({
+        title: this.book.title,
+        genre: this.book.genre,
+        date: this.book.date,
+        description: this.book.description,
+        pages: this.book.pages,
+        image: this.book.image
+      })
     })
   }
   getData(){
@@ -77,6 +85,7 @@ export class AuthorsBookDetailsComponent {
     this.isEditing = true;
   }
   confirmEdit(){
+    this.isEditing = false;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -85,7 +94,16 @@ export class AuthorsBookDetailsComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.bookService.updateBook(this.book, this.book._id).subscribe((response:any)=>{
+        const updatedBook: Book = {
+          ...this.book,
+          ...this.bookForm.value
+        }
+        updatedBook._id = this.book._id;
+        updatedBook.author = this.book.author;
+        updatedBook.averageRating = this.book.averageRating;
+        updatedBook.showDescription = this.book.showDescription;
+
+        this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
           this.isEditing = false;
           this.snackBar.open('Book updated successfully', 'Close', {
             duration: 3000,
@@ -103,6 +121,14 @@ export class AuthorsBookDetailsComponent {
   }
   cancelEdit() {
     this.isEditing = false;
+    this.bookForm.reset({
+      title: this.book.title,
+      genre: this.book.genre,
+      date: this.book.date,
+      description: this.book.description,
+      pages: this.book.pages,
+      image: this.book.image
+    });
   }
   
   getFilterReviews(){
