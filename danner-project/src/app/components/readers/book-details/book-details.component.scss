@@ -214,3 +214,15 @@
         color: white;
     }
 }
+
+.review-empty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img{
+        width: 200px;
+        height: 200px;
+        margin: -50px;
+    }
+}

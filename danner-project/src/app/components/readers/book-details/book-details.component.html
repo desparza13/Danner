@@ -58,6 +58,10 @@
         <mat-divider></mat-divider>
         <div class="feed">
             <h3>What others thought about {{book.title}}</h3>
+            <div class="review-empty" *ngIf="filterReviews?.length === 0">
+                <h4>There are no reviews for {{book.title}}. Be the first to leave your thoughts</h4>
+                <img src="https://media.giphy.com/media/MWZ7zVZavegPUiHEsu/giphy.gif">
+            </div>
             <div class="review" *ngFor="let review of filterReviews">
                 <div class="user-info">
                     <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
