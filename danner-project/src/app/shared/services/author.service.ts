@@ -28,7 +28,7 @@ export class AuthorService {
     return this.httpClient.post(url,body,options); //Regresar llamada tipo post
   }
 
-  updateAuthor(body:object, id:string){
+  updateAuthor(body:object, id:any){
     const url:string = environment.apiUrl + 'authors/'+id; //Definir url para el update 
     const httpHeaders= new HttpHeaders({'Content-Type' : 'application/json'}); //Asignar los headers
     let options = {
@@ -40,5 +40,9 @@ export class AuthorService {
   deleteAuthor(id:string){
     const url:string = environment.apiUrl + 'authors/' + id; //Definir url para el delete
     return this.httpClient.delete(url); //Regresar llamada tipo delete para eliminar
+  }
+  uploadPhoto(formData:FormData, id:any){
+    const url:string = environment.apiUrl + 'authors/uploadPhoto/' + id;
+    return this.httpClient.post(url, formData);
   }
 }

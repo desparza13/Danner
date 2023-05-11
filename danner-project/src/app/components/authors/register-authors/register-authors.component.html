@@ -51,7 +51,19 @@
                         <mat-error *ngIf="confirmPassword.invalid">{{getConPasswordErrorMessage()}}</mat-error>
                     </mat-form-field>
                 </div> -->
-
+                <div class="field">
+                    <input type="file" class="file-input"
+                    (change)="onFileSelected($event)" #fileUpload>
+                    <div class="file-upload">
+                    
+                        {{fileName || "No file uploaded yet."}}
+                    
+                        <button mat-mini-fab color="primary" class="upload-btn"
+                        (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                    </div>
+                </div>
                 <div class="field">
                     <mat-form-field  appearance="fill">
                         <mat-label>City</mat-label>
