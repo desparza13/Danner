@@ -18,6 +18,9 @@ import { Router } from '@angular/router';
 export class AddBookAuthorsComponent {
   authorId="";
   author:any;
+  fileName='';
+  file:any;
+  id='';
   book: Book = {
     _id: '',
     title: '',
@@ -54,8 +57,7 @@ export class AddBookAuthorsComponent {
       genre: ['', Validators.required],
       date: ['', Validators.required],
       description: ['', Validators.required],
-      pages: [1, [Validators.required, Validators.min(1)]],
-      image: ['', Validators.required]
+      pages: [1, [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -91,12 +93,34 @@ export class AddBookAuthorsComponent {
       if (result) {
         this.getData();
         this.bookService.postBook(this.book).subscribe(
-          (response:any) => {
-            this.snackBar.open('Book uploaded successfully', 'Close', {
-              duration: 3000
-            });
-            this.book = response;
-            this.router.navigate(['/authors']);
+          (response1:any) => {
+            this.id = response1._id;
+            if (this.file){
+              this.fileName = this.file.name;
+              const ext = this.fileName.split('.').pop();
+              const formData = new FormData();
+              formData.append("file", this.file);
+              this.bookService.uploadPhoto(formData, this.id).subscribe((response:any)=>{
+                let updatedBook = {
+                  title: response1.title,
+                  date: response1.date,
+                  image: "../../../../assets/uploads/"+this.id +"."+ext,
+                  author: response1.author,
+                  averageRating: response1.averageRating,
+                  description: response1.description,
+                  pages: response1.pages,
+                  genre: response1.genre,
+                  showDescription: response1.showDescription
+                }
+                this.bookService.updateBook(updatedBook, this.id).subscribe((response:any)=>{
+                  this.snackBar.open('Book uploaded successfully', 'Close', {
+                    duration: 3000
+                  });
+                  this.book = response;
+                  this.router.navigate(['/authors']);
+                })
+              })
+            }
           },
           (error) =>{
             console.log(error);
@@ -108,5 +132,10 @@ export class AddBookAuthorsComponent {
       }
     });
   }
-  
+  onFileSelected(event:any) {
+    const file:File = event.target.files[0];
+    this.fileName = file.name;
+    console.log(file);
+    this.file = file;
+  }
 }

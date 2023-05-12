@@ -46,8 +46,11 @@ export class RegisterReadersComponent {
 
 
   
-  constructor(private dialog: MatDialog, private _readerService:ReaderService, private router: Router,
-    private loginService: LoginService, private authService: AuthService){
+  constructor(private dialog: MatDialog,
+    private _readerService:ReaderService,
+    private router: Router,
+    private loginService: LoginService,
+    private authService: AuthService){
 
   }
   getEmailErrorMessage() {
@@ -107,7 +110,6 @@ export class RegisterReadersComponent {
     readingChall = this.readingChallenge.value
     this.reader.readingChallenge = readingChall;
     this.reader.user = this.user.value || '';
-    console.log(this.reader);
     this._readerService.postReader(this.reader).subscribe((response1: any)=>{      
       this.id = response1._id;
       if (this.file){
