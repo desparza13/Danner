@@ -7,9 +7,11 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-book-details',
@@ -52,9 +54,12 @@ export class BookDetailsComponent {
   finished: Array<String> = [];
   reviews: Array<Review> = [];
   filterReviews: Array<Review> = [];
-  rating: any;
+  rating = new FormControl('', [Validators.required]);
   review = new FormControl('');
   bookId = '';
+  messages: any = [];
+  socket: any;
+  texto: string = '';
 
   constructor(
     private bookService: BookService,
@@ -64,75 +69,101 @@ export class BookDetailsComponent {
     private dialog: MatDialog,
     private authService: AuthService,
     private router: Router
-    ){
+  ) {
 
   }
-  ngOnInit(){
-    const  url = this.router.url.split('/');
+  ngOnInit() {
+    const url = this.router.url.split('/');
     this.bookId = url[2];
+    this.socket = io(environment.apiUrl)
+
+    //Detectar nuevas reviews
+    this.socket.on('newReview', (data: any) => {
+      console.log('alguien envio un mensaje');
+      console.log(data);
+      this.reviewService.getOneReview(data._id).subscribe((response: any) => {
+        this.filterReviews.push(response);
+        console.log(this.filterReviews);
+        this.isLoading = false;
+      }, (error) => {
+        console.log(error);
+        this.snackBar.open('There was an error. Please try again later.', 'Close', {
+          duration: 3000
+        });
+      })
+    })
+
+    //Unir al lector al grupo del libro indicado
+    this.socket.emit('joinBookDetails',{idBook:this.bookId});
+
+    
     this.getBook()
     this.readerId = this.authService.getLoginUser();
     this.getData();
   }
 
-  getBook(){
-    this.bookService.getOneBook(this.bookId).subscribe((response:any)=>{
+  ngOnDestroy(){
+    //Desconectar el socket y sacar al lector del grupo del libro
+    this.socket.emit('leaveBookDetails',{idBook:this.bookId});
+  }
+  getBook() {
+    this.bookService.getOneBook(this.bookId).subscribe((response: any) => {
       this.book = response;
     })
   }
   getData() {
-    this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
+    this.readerService.getOneReader(this.readerId).subscribe((response: any) => {
       console.log(response);
       this.profile = response;
-      this.friends = response.friends.map((friend:Reader) => friend._id);
-      this.current = response.reading.map((book:any) => book.bookId._id);
-      
-      this.finished = response.read.map((book:any) => book.bookId._id);
-      this.tbr = response.toBeRead.map((book:any) => book._id);
+      this.friends = response.friends.map((friend: Reader) => friend._id);
+      this.current = response.reading.map((book: any) => book.bookId._id);
+
+      this.finished = response.read.map((book: any) => book.bookId._id);
+      this.tbr = response.toBeRead.map((book: any) => book._id);
       this.reviewService.getReviews().subscribe((response: any) => {
-        this.filterReviews=response;
+        this.filterReviews = response;
         this.getFilterReviews();
       });
     },
-    (error)=>{
-      this.isLoading = false;
-    })
+      (error) => {
+        this.isLoading = false;
+      })
   }
-  getFilterReviews(){
-    this.filterReviews = this.filterReviews.filter((review)=>{
+  getFilterReviews() {
+    this.filterReviews = this.filterReviews.filter((review) => {
       return review.bookId._id == this.book._id
     })
-    this.isLoading=false;
+    this.isLoading = false;
   }
-  likeIcon(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
-    if(likes.includes(this.readerId)){
+  likeIcon(review: Review) {
+    let likes = review.likes.map((reader: Reader) => reader._id);
+    if (likes.includes(this.readerId)) {
       return "favorite"
     }
     return "favorite_border"
   }
-  currentBtn(){
-    if(this.current.includes(this.book._id)){
+  currentBtn() {
+    if (this.current.includes(this.book._id)) {
       return "Delete from currently reading"
     }
     return "Mark as currently reading"
   }
-  finishedBtn(){
-    if(this.finished.includes(this.book._id)){
+  finishedBtn() {
+    if (this.finished.includes(this.book._id)) {
       return "Delete from finished list"
     }
     return "Mark as finished"
   }
-  tbrBtn(){
-    if(this.tbr.includes(this.book._id)){
+  tbrBtn() {
+    if (this.tbr.includes(this.book._id)) {
       return "Delete from to be read list"
     }
     return "Add to to be read list"
   }
-  modifyCurrentList(){
-    if(this.current.includes(this.book._id)){
-      this.profile.reading = this.profile.reading.filter((book:any) => book.bookId._id !== this.book._id);
-    }else{
+  modifyCurrentList() {
+    if (this.current.includes(this.book._id)) {
+      this.profile.reading = this.profile.reading.filter((book: any) => book.bookId._id !== this.book._id);
+    } else {
       let readingBook = {
         "bookId": this.book._id,
         "progress": 0
@@ -144,7 +175,7 @@ export class BookDetailsComponent {
         this.snackBar.open('Currently reading list edited successfully', 'Close', {
           duration: 3000
         });
-        console.log("update response",response)
+        console.log("update response", response)
         this.getData()
       },
       (error) => {
@@ -155,10 +186,10 @@ export class BookDetailsComponent {
       }
     );
   }
-  modifyFinishedList(){
-    if(this.finished.includes(this.book._id)){
-      this.profile.read = this.profile.read.filter((book:any) => book.bookId._id !== this.book._id);
-    }else{
+  modifyFinishedList() {
+    if (this.finished.includes(this.book._id)) {
+      this.profile.read = this.profile.read.filter((book: any) => book.bookId._id !== this.book._id);
+    } else {
       let finishedBook = {
         "bookId": this.book._id,
         "finishedDate": Date.now
@@ -180,11 +211,11 @@ export class BookDetailsComponent {
       }
     );
   }
-  modifyTbrList(){
-    console.log("Tbr",this.tbr)
-    if(this.tbr.includes(this.book._id)){
-      this.profile.toBeRead = this.profile.toBeRead.filter((book:any) => book._id !== this.book._id);
-    }else{
+  modifyTbrList() {
+    console.log("Tbr", this.tbr)
+    if (this.tbr.includes(this.book._id)) {
+      this.profile.toBeRead = this.profile.toBeRead.filter((book: any) => book._id !== this.book._id);
+    } else {
       this.profile.toBeRead.push(this.book._id);
     }
     this.readerService.updateReader(this.profile, this.readerId).subscribe(
@@ -202,18 +233,18 @@ export class BookDetailsComponent {
       }
     );
   }
-  likeReview(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
-    if(likes.includes(this.readerId)){
-      review.likes = review.likes.filter((reader:any) => reader._id !== this.readerId);
-    }else{
+  likeReview(review: Review) {
+    let likes = review.likes.map((reader: Reader) => reader._id);
+    if (likes.includes(this.readerId)) {
+      review.likes = review.likes.filter((reader: any) => reader._id !== this.readerId);
+    } else {
       review.likes.push(this.profile);
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {
         review = response;
       },
-      (error)=>{
+      (error) => {
         console.log(error);
         this.snackBar.open('There was an error. Please try again later.', 'Close', {
           duration: 3000
@@ -222,26 +253,37 @@ export class BookDetailsComponent {
     )
   }
 
-  submitReview(){
-    const review ={
+  submitReview() {
+    const review = {
       bookId: this.book._id,
       userId: this.profile._id,
-      rating: this.rating,
+      rating: this.rating.value,
       description: this.review.value || '',
       likes: []
     }
 
-    this.reviewService.postReview(review).subscribe((response:any)=>{
+    this.reviewService.postReview(review).subscribe((response: any) => {
+      this.socket.emit('sendReview', response); //Mandar la review
       console.log('REVIEW');
       console.log(response);
-      this.isLoading=true;
-      this.getData();
+      this.isLoading = true;
+      this.reviewService.getOneReview(response._id).subscribe((response: any) => {
+        this.filterReviews.push(response);
+        console.log(this.filterReviews);
+        this.isLoading = false;
+      }, (error) => {
+        console.log(error);
+        this.snackBar.open('There was an error. Please try again later.', 'Close', {
+          duration: 3000
+        });
+      })
+
     },
-    (error)=>{
-      console.log(error);
-      this.snackBar.open('There was an error. Please try again later.', 'Close', {
-        duration: 3000
-      });
-    })
+      (error) => {
+        console.log(error);
+        this.snackBar.open('There was an error. Please try again later.', 'Close', {
+          duration: 3000
+        });
+      })
   }
 }
