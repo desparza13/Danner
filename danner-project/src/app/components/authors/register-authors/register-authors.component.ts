@@ -92,13 +92,11 @@ export class RegisterAuthorsComponent {
     this.author.name = this.name.value || '';
     this.author.password = this.password.value || '';
     this.author.user = this.user.value || '';
-    console.log(this.author);
     this._authorService.postAuthor(this.author).subscribe((response1: any) => {
-      console.log("ID", response1._id);
       this.id = response1._id;
       if (this.file) {
         this.fileName = this.file.name;
-        //const extension 
+        const ext = this.fileName.split('.').pop();
         const formData = new FormData();
         formData.append("file", this.file);
         this._authorService.uploadPhoto(formData, this.id).subscribe((response:any)=>{
@@ -108,11 +106,13 @@ export class RegisterAuthorsComponent {
             user: response1.user,
             email: response1.email,
             city: response1.city,
-            image: "../../../../assets/uploads/"+this.id +".jpg",
+            image: "../../../../assets/uploads/"+this.id +"."+ext,
             password: response1.password
           }
           this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response:any)=>{
             console.log(response);
+            this.credentials.email = response1.email;
+            this.credentials.password = response1.password;      
             this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
               // Recibimos el token
               this.authService.setToken(data.token);
@@ -130,9 +130,6 @@ export class RegisterAuthorsComponent {
           })
         });
       }
-      this.credentials.email = response1.email;
-      this.credentials.password = response1.password;
-
     })
   }
   onFileSelected(event:any) {

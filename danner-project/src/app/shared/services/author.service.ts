@@ -41,6 +41,7 @@ export class AuthorService {
     const url:string = environment.apiUrl + 'authors/' + id; //Definir url para el delete
     return this.httpClient.delete(url); //Regresar llamada tipo delete para eliminar
   }
+  
   uploadPhoto(formData:FormData, id:any){
     const url:string = environment.apiUrl + 'authors/uploadPhoto/' + id;
     return this.httpClient.post(url, formData);
