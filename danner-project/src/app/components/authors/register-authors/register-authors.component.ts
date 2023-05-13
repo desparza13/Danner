@@ -9,6 +9,7 @@ import { AuthorService } from 'src/app/shared/services/author.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { NotificationDialogComponent } from '../../readers/notification-dialog/notification-dialog.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register-authors',
@@ -106,9 +107,10 @@ export class RegisterAuthorsComponent {
             user: response1.user,
             email: response1.email,
             city: response1.city,
-            image: "../../../../assets/uploads/"+this.id +"."+ext,
+            image: environment.apiUrl+"image/"+this.id +"."+ext,
             password: response1.password
           }
+          console.log(updatedAuthor.image);
           this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response:any)=>{
             console.log(response);
             this.credentials.email = response1.email;

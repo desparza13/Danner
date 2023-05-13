@@ -10,12 +10,16 @@ const readersRoute = require('./readers')
 const booksRoute = require('./books')
 const reviewsRoute = require('./reviews')
 const requestsRoute = require('./friendshipRequests')
+const path = require('path');
 
 router.use('/authors',authorsRoute);
 router.use('/readers',readersRoute);
 router.use('/books',booksRoute);
 router.use('/reviews',reviewsRoute);
 router.use('/requests',requestsRoute);
+router.get('/image/:filename', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../uploads', req.params.filename));
+});
 router.get('/decode/:token',function(req,res){ //Ruta para decodificar el token
     console.log('Entre');
     const tok = req.params.token
