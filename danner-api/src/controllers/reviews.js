@@ -15,8 +15,11 @@ const ReviewsController={
     },
     see:(req,res)=>{
         const id = req.params.id;
-        model.findById(id)
-            .then(review=>{
+        model.findById(id).populate([
+            {path: 'bookId',model:'book'},
+            {path: 'userId', model:'reader'},
+            {path: 'likes',model:'reader'}
+        ]).then(review=>{
                 res.status(200).send(review);
             })
             .catch(error=>{
@@ -31,8 +34,7 @@ const ReviewsController={
             description:req.body.description,
             likes: req.body.likes
         };
-        model(newReview).save()
-            .then(review=>{
+        model(newReview).save().then(review=>{
                 res.status(201).send(review);
             })
             .catch(error=>{
