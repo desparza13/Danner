@@ -9,6 +9,7 @@ import { Author } from 'src/app/shared/interfaces/author';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-book-authors',
@@ -104,7 +105,7 @@ export class AddBookAuthorsComponent {
                 let updatedBook = {
                   title: response1.title,
                   date: response1.date,
-                  image: "../../../../assets/uploads/"+this.id +"."+ext,
+                  image: environment.apiUrl+"image/"+this.id +"."+ext,
                   author: response1.author,
                   averageRating: response1.averageRating,
                   description: response1.description,

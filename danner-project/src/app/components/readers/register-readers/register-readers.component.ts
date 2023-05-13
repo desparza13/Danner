@@ -9,6 +9,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 import { response } from 'express';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register-readers',
@@ -123,7 +124,7 @@ export class RegisterReadersComponent {
             user: response1.user,
             email: response1.email,
             city: response1.city,
-            image: "../../../../assets/uploads/"+this.id +"."+ext,
+            image: environment.apiUrl+"image/"+this.id +"."+ext,
             password: response1.password,
             read: response1.read,
             toBeRead: response1.toBeRead,
