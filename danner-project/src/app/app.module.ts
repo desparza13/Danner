@@ -39,6 +39,7 @@ import {
   GoogleLoginProvider,
   GoogleSigninButtonModule 
 } from '@abacritt/angularx-social-login';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import {
     FriendsReviewsReadersComponent,
     BookDetailsComponent,
     AuthorsBookDetailsComponent,
-    NavComponent
+    NavComponent,
+    NotFoundComponent
   ],
   imports: [
     

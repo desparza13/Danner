@@ -1,7 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/authors')
+const multer = require('multer');
+const path = require('path');
 
+const multerStorage = multer.diskStorage({
+destination: (req, file, cb) => {
+    cb(null, path.join(__dirname,'..', '..', 'uploads'));
+},
+filename: (req, file, cb) => {
+    const nombre = req.params.id;
+    const ext = file.originalname.split('.').pop();
+    cb(null, `${nombre}.${ext}`);
+    }
+});
+const fileFilter = (req, file, cb)=>{
+    const flag = file.mimetype.startsWith('image');
+    cb(null, flag);
+} 
+const upload = multer({storage:multerStorage, fileFilter: fileFilter});
+router.post('/uploadPhoto/:id', upload.single('file'),(req,res)=>{
+        console.log('Body: ', req.body, req.file.data);
+        res.send();
+})
 router.post('/login',express.json(), controller.login);
 router.post('/login/google', express.json(), controller.googleLogin);
 

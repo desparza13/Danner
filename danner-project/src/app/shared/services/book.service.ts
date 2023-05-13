@@ -44,4 +44,9 @@ export class BookService {
     const url:string = environment.apiUrl + 'books/' + id; //Definir url para el delete
     return this.httpClient.delete(url); //Regresar llamada tipo delete para eliminar
   }
+
+  uploadPhoto(formData:FormData, id:string){
+    const url:string = environment.apiUrl + 'books/uploadPhoto/' + id;
+    return this.httpClient.post(url, formData);
+  }
 }

@@ -34,7 +34,9 @@
     justify-content: center;
     width: 80%;
   }
-  
+  .file-input {
+    display: none;
+  }
   mat-form-field {
     width: 100%;
     margin-bottom: 15px;

@@ -42,4 +42,9 @@ export class ReaderService {
     const url:string = environment.apiUrl + 'readers/' + id; //Definir url para el delete
     return this.httpClient.delete(url); //Regresar llamada tipo delete para eliminar
   }
+
+  uploadPhoto(formData:FormData, id:string){
+    const url:string = environment.apiUrl + 'readers/uploadPhoto/' + id;
+    return this.httpClient.post(url, formData);
+  }
 }

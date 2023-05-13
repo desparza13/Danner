@@ -146,6 +146,5 @@ const AuthorsController={
             res.status(401).send({ msg: 'token invalido' });
         });
     }
-    
 }
 module.exports = AuthorsController;

@@ -14,6 +14,7 @@ import { AuthorProfileComponent } from './components/authors/author-profile/auth
 import { FriendsReviewsReadersComponent } from './components/readers/friends-reviews-readers/friends-reviews-readers.component';
 import { BookDetailsComponent } from './components/readers/book-details/book-details.component';
 import { AuthorsBookDetailsComponent } from './components/authors/authors-book-details/authors-book-details.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   //Readers
@@ -32,7 +33,9 @@ const routes: Routes = [
   {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/addBook', component:AddBookAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/profile', component:AuthorProfileComponent, canActivate:[AuthGuard], data:{role:'author'}},
-  {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthGuard], data:{role:'author'}}
+  {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthGuard], data:{role:'author'}},
+  //Not found
+  {path: 'notFound', component: NotFoundComponent}
 ];
 
 @NgModule({

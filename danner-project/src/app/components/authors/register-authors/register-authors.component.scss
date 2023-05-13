@@ -9,7 +9,9 @@
 mat-card-content{
     height: 100%; 
 }
-
+.file-input {
+    display: none;
+}
 .field{
    >mat-form-field{
     width: 345px;
