@@ -13,21 +13,7 @@
         height: 92%;
     }
 }
-.all-container-empty{
-    width: 100%;
-    height: 100vh;
-    .empty-container{
-        display: flex;
-        height: calc(100vh - 80px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        img{
-            width: 250px;
-            height: 250px;
-        }
-    }
-}
+
 /*Sidenav*/
 .mat-expansion-panel{
     background-color: transparent;
@@ -119,7 +105,21 @@
     background-color: #ed7966;
     color: white;
 }
-  
+.authorBooks-empty{
+    width: 100%;
+    height: 100vh;
+    .empty-container{
+        display: flex;
+        height: calc(100vh - 80px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 250px;
+            height: 250px;
+        }
+    }
+}
 /*Responsivo*/
 @media (max-width: 509px){
     .mat-sidenav {
