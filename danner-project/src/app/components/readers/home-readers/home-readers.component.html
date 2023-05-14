@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="page">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <mat-icon class="toggleMenu" (click)="opened=!opened" [ngClass]="{'active': opened}">
+                <ng-container *ngIf="!opened">menu</ng-container>
+                <ng-container *ngIf="opened">close</ng-container>
+            </mat-icon>
+            <h2>My books</h2>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container>
+        <mat-sidenav [(opened)]="opened" mode="side">
+            <br>
+            <div class="searchMyBooks">
+                <mat-form-field appearance="fill" class="searchBar">
+                    <input type="text" matInput placeholder="Search in my books by title" [formControl]="searchControl"
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let book of filteredAllBooks" [value]="book.title">
+                            {{ book.title }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <app-ratings-filter (ratingsChanged)="filterBooks($event,undefined)"></app-ratings-filter>
+            <mat-divider></mat-divider>
+            <app-genre-filter (genresChanged)="filterBooks(undefined,$event)"></app-genre-filter>
+            <mat-divider></mat-divider>
+            <app-reading-challenge-widget></app-reading-challenge-widget>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-tab-group>
+                <mat-tab label="All">
+                    <div class="all-container-empty" *ngIf="filteredAllBooks.length === 0">
+                        <div class="empty-container">
+                            <h1>You don't have any stored books, go ahead and find your next story</h1>
+                            <img src="https://media.giphy.com/media/5ixXJrxrf7BfbkxM0t/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
+                    <div class="all-container" *ngIf="filteredAllBooks?.length != 0">
+                        <div class="book-card" *ngFor="let book of filteredAllBooks"  [routerLink]="book._id">
+                            <div class="book-image" (mouseenter)="book.showDescription=true"
+                                (mouseleave)="book.showDescription=false">
+                                <img [src]="book.image" alt="Book cover">
+                                <div *ngIf="book.showDescription" class="book-description">
+                                    {{book.description}}
+                                </div>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.title}}</h3>
+                                <p class="book-author">{{book.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.averageRating)"
+                                        class="fa fa-star checked"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Current">
+                    <div class="all-container-empty" *ngIf="filteredCurrentBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>You are not currently reading anything, find some new books to enjoy</h1>
+                            <img src="https://media.giphy.com/media/Zq0nOiPeCVCu3MzCrB/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
+                    <div class="current-container">
+                        <div class="book-card" *ngFor="let book of filteredCurrentBooks" [routerLink]="book.bookId._id">
+                            <div class="book-image" (mouseenter)="book.bookId.showDescription=true"
+                                (mouseleave)="book.bookId.showDescription=false">
+                                <img [src]="book.bookId.image" alt="Book cover">
+                                <div *ngIf="book.bookId.showDescription" class="book-description">
+                                    {{book.bookId.description}}
+                                </div>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.bookId.title}}</h3>
+                                <p class="book-author">{{book.bookId.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)"
+                                        class="fa fa-star checked"></span>
+                                </div>
+                                <div class="book-progress">{{book.progress}}% read</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="To be read">
+                    <div class="all-container-empty" *ngIf="filteredTbrBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>Add some books to your to be read list and never suffer a reading block again</h1>
+                            <img src="https://media.giphy.com/media/72QEFpGU0RNfwtCrd2/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
+                    <div class="to-be-read-container">
+                        <div class="book-card" *ngFor="let book of filteredTbrBooks" [routerLink]="book._id">
+                            <div class="book-image" (mouseenter)="book.showDescription=true"
+                                (mouseleave)="book.showDescription=false">
+                                <img [src]="book.image" alt="Book cover">
+                                <div *ngIf="book.showDescription" class="book-description">
+                                    {{book.description}}
+                                </div>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.title}}</h3>
+                                <p class="book-author">{{book.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.averageRating)"
+                                        class="fa fa-star checked"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Finished">
+                    <div class="all-container-empty" *ngIf="filteredFinishedBooks?.length === 0">
+                        <div class="empty-container">
+                            <h1>You haven't finished any books, let's get started!</h1>
+                            <img src="https://media.giphy.com/media/Y2bM68y94nxSXYkCaI/giphy.gif">
+                            <button class="explore-btn" mat-raised-button color="accent" (click)="goExplore()">Explore books</button>
+                        </div>
+                    </div>
+                    <div class="finished-container">
+                        <div class="book-card" *ngFor="let book of filteredFinishedBooks" [routerLink]="book.bookId._id">
+                            <div class="book-image" (mouseenter)="book.bookId.showDescription=true"
+                                (mouseleave)="book.bookId.showDescription=false">
+                                <img [src]="book.bookId.image" alt="Book cover">
+                                <div *ngIf="book.bookId.showDescription" class="book-description">
+                                    {{book.bookId.description}}
+                                </div>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-title">{{book.bookId.title}}</h3>
+                                <p class="book-author">{{book.bookId.author}}</p>
+                                <div class="book-rating">
+                                    <span class="stars" *ngFor="let star of getStars(book.bookId.averageRating)"
+                                        class="fa fa-star checked"></span>
+                                </div>
+                                <div class="book-progress">Finished on {{book.finishedDate | date}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

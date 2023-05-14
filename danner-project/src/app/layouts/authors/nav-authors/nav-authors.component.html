@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <div class="navbar">
+        <mat-toolbar color="accent">
+            <mat-toolbar-row>
+                <div class="logo">
+                    <a routerLink="/authors">Danner</a>
+                </div>
+
+                <span class="spacer"></span>
+                <div class="navbar_right ">
+                    <div class="profile">
+                        <div>
+                            <div>
+                                <button class="profile-icon" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <img src={{author.image}} alt="profile_pic">
+                                </button>
+                            </div>
+
+                            <mat-menu #menu="matMenu" class="customize">
+                                <button routerLink="/authors/profile" mat-menu-item class="profile-option">
+                                    <mat-icon>person</mat-icon>
+                                    <a class="ruta">Profile</a>
+                                </button>
+                                
+                                <button (click)="signOut()" mat-menu-item class="profile-option">
+                                    <mat-icon>exit_to_app</mat-icon>
+                                    <a class="ruta">Sign out</a>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+</div>

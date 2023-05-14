@@ -1,0 +1,9 @@
+.mat-accordion{
+    box-shadow: none;
+}
+.mat-expansion-panel-header{
+    background: #fae5df;
+}
+.mat-expansion-panel-header.mat-expanded:hover, .mat-expansion-panel-header.mat-expanded:focus{
+    background: #f5cac2;
+}

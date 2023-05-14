@@ -1,0 +1,117 @@
+<div class="page">
+    <div class="title">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <h2>{{book.title}}</h2>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+        <div class="book-details">
+            <div class="book-info">
+                <div class="book-image">
+                    <img [src]="book.image" alt="Book Cover Image">
+                </div>
+                <div class="book-details-info">
+                    <h2>{{book.title}}</h2>
+                    <p><strong>Author:</strong> {{book.author}}</p>
+                    <p><strong>Genre:</strong> {{book.genre}}</p>
+                    <p><strong>Date:</strong> {{book.date | date}}</p>
+                    <div class="book-rating">
+                        <span class="book-rating-text">Rating:</span>
+                        <div class="book-rating-stars">
+                            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                                <mat-icon class="star-icon"
+                                    [ngClass]="{'star-icon-filled': star <= book.averageRating}">star</mat-icon>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <p>{{book.description}}</p>
+                </div>
+            </div>
+            <button mat-raised-button color="primary" (click)="editBook()">Edit book</button>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="isEditing" class="edit-book-container">
+            <h3>Editar libro</h3>
+            <form [formGroup]="bookForm">
+                <mat-form-field>
+                    <mat-label>Enter the title</mat-label>
+                        <input matInput placeholder="Title" formControlName="title"/>
+                    <mat-error *ngIf="bookForm.get('title')?.hasError('required')">
+                        Title is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter the genre</mat-label>
+                        <input matInput placeholder="Genre" formControlName="genre"/>
+                    <mat-error *ngIf="bookForm.get('genre')?.hasError('required')">
+                        Genre is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter the release date</mat-label>
+                        <input type="date" matInput placeholder="Date" formControlName="date"/>
+                    <mat-error *ngIf="bookForm.get('date')?.hasError('required')">
+                        Date is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Describe your book</mat-label>
+                    <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                    <mat-error *ngIf="bookForm.get('description')?.hasError('required')">
+                        Description is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter the number of pages</mat-label>
+                    <input matInput type="number" placeholder="Pages" formControlName="pages"/>
+                    <mat-error *ngIf="bookForm.get('pages')?.hasError('required')">
+                        Pages is required
+                    </mat-error>
+                    <mat-error *ngIf="bookForm.get('pages')?.hasError('min')">
+                        The minimum value is 1
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter the image</mat-label>
+                    <input matInput placeholder="Image" formControlName="image"/>
+                    <mat-error *ngIf="bookForm.get('image')?.hasError('required')">
+                        Image is required
+                    </mat-error>
+                </mat-form-field>
+            </form>
+            <div class="edit-btns">
+                <button class="edit-btn" mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>    
+                <button class="edit-btn" mat-raised-button color="primary" (click)="confirmEdit()">Save</button>
+            </div>
+        </div>          
+        <div class="feed">
+            <h3>What others thought about your book {{book.title}}</h3>
+            <div class="review" *ngFor="let review of filterReviews">
+                <div class="user-info">
+                    <img class="user-image" [src]="review.userId.image" alt="User Profile Pic">
+                    <div>
+                        <p class="user">{{ review.userId.user }}</p>
+                        <p class="name">{{ review.userId.name }}</p>
+                    </div>
+                </div>
+                <div class="review-info">
+                    <p class="rating">Rated {{ review.bookId.title }} with {{ review.rating }}<span
+                            class="star-icon"><mat-icon>star</mat-icon></span></p>
+                    <p class="description">{{ review.description }}</p>
+                    <div class="likes">
+                        <button mat-icon-button class="like-button" color="warn"
+                            aria-label="Example icon button with a heart icon">
+                            <mat-icon>favorite</mat-icon>
+                        </button>
+                        <p class="like-count">{{ review.likes.length }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<div *ngIf="isLoading" class="overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>

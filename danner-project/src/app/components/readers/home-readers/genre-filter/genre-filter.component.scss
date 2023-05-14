@@ -1,0 +1,13 @@
+.genre-chip-list {
+    width: 100%;
+}
+::ng-deep .genre {
+    .mat-focused .mat-form-field-ripple {
+      /*change color of underline when focused*/
+      background-color: "#f5cac2" !important;
+    }
+    .mat-focused .mat-form-field-label {
+      /*change color of label when focused*/
+      color: "#f5cac2" !important;
+     }
+  }

@@ -1,0 +1,178 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+::ng-deep .customize {
+  background-color: #fae5df;
+
+}
+
+.searchForm {
+  margin-top: 20px;
+  min-width: 150px;
+  width: 80%;
+  display: flex;
+}
+
+.search{
+  margin-right: 5px;
+  width: 900px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchInput{
+  width: 100%;
+}
+::ng-deep .notification-icon:hover {
+  background-color: #172374;
+}
+
+::ng-deep .request-icon:hover {
+  background-color: #172374;
+}
+::ng-deep .reviews-icon:hover {
+  background-color: #172374;
+}
+
+::ng-deep .search-btn:hover{
+  background-color: #172374;
+}
+
+::ng-deep .profile-icon:hover{
+  background-color: #172374;
+
+}
+
+.search-btn{
+  top:5px
+}
+.searchIcon{
+  color: white;
+}
+
+.buttons {
+  margin-top: 5px
+}
+
+.confirm-btn {
+  margin-right: 5px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 15%;
+  a {
+  color: white;
+}}
+
+.friend-li a,
+.notifications-li a {
+  color: black;
+  font-weight: 800;
+  width: 195px;
+  display: block;
+  justify-content: center;
+}
+
+
+.navbar {
+  background: #fff;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  .navbar_right {
+    display: flex;
+
+    img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+    }
+
+    .icon_wrap {
+      cursor: pointer;
+    }
+
+    .notifications,
+    .requests {
+      position: relative;
+    }
+
+    
+  }
+}
+
+.notify_data,.request_data {
+  margin: 0 15px;
+  width: 195px;
+
+  >.title {
+    color: #000;
+    font-weight: 600;
+
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  >.sub_title {
+    color: #000;
+    font-size: 14px;
+    margin-top: 5px;
+    max-width: 185px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+li {
+  border-bottom: 1px solid #f1f2f4;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+
+  .notify_icon, .request_icon {
+    display: flex;
+    align-items: center;
+
+
+    >.icon {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+    }
+  }
+}
+
+
+.noti, .request{
+  display: flex;
+}
+
+.menuNotifications,.menuRequests{
+  width: 100%;
+  height: 300px;
+
+}
+

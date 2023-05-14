@@ -1,0 +1,87 @@
+    <mat-card-content>
+        <div class="registerForm">
+            <form >
+                <div class="columns">
+                    <div class="field2">
+                        <mat-form-field class="name" appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Jennifer Hernández" [formControl]="name" required>
+                            <mat-error *ngIf="name.invalid">{{getNameErrorMessage()}}</mat-error>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="field2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>User</mat-label>
+                            <input matInput placeholder="Hdzmtzjenn" [formControl]="user" required>
+                            <mat-error *ngIf="user.invalid">{{getUserErrorMessage()}}</mat-error>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <mat-form-field  appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="jennifer.hernandez@example.com" [formControl]="email" required>
+                        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+
+                    </mat-form-field>
+                </div>
+                <div class="field">
+                    <mat-form-field  appearance="fill">
+                        <mat-label>Enter your password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required >
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput [type]="hide ? 'confirmPassword' : 'text'" [formControl]="confirmPassword"  required>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="confirmPassword.invalid">{{getConPasswordErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div> -->
+                <div class="field">
+                    Choose a profile picture
+                    <input type="file" class="file-input"
+                    (change)="onFileSelected($event)" #fileUpload>
+                    <div class="file-upload">
+                    
+                        {{fileName || "No file uploaded yet."}}
+                    
+                        <button mat-mini-fab color="primary" class="upload-btn"
+                        (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                    </div>
+                    <br>
+                </div>
+                <div class="field">
+                    <mat-form-field  appearance="fill">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="Guadalajara" [formControl]="city" required>
+                        <mat-error *ngIf="city.invalid">{{getCityErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div>
+                    <button (click)="login()" color="accent" mat-raised-button
+                    [disabled]="email.invalid || password.invalid || name.invalid || user.invalid || city.invalid">Save</button>
+                <div class="linkAuthor">
+                    <br>
+                    <a  [routerLink]="['']">Are you a reader?
+                        Click Here</a>
+                </div>
+                
+            </form>
+        </div>
+
+    </mat-card-content>

@@ -1,0 +1,24 @@
+<div class="genre">
+    <form>
+        <mat-form-field class="genre-chip-list" appearance="fill">
+            <mat-label>Genres</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Genre selection">
+                <mat-chip-option *ngFor="let genre of genres" (removed)="remove(genre)" selected color="primary" >
+                    {{genre}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + genre">
+                    <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-option>
+            </mat-chip-grid>
+            <input placeholder="Add genres..." #genreInput [formControl]="genreCtrl"
+            [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"/>                          
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let genre of filteredGenres | async" [value]="genre">
+                    {{genre}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>                      
+</div>
