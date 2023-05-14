@@ -5,7 +5,7 @@ module.exports={
             "title":"API Danner",
             "description": "",
             "version": "1.0.0",
-            "servers": ["http://localhost:3000/"]
+            "servers": ["https://danner-api.onrender.com/"]
         }
     },
     apis: ['index.js', 'src/routes/*.js', 'rutas.js']

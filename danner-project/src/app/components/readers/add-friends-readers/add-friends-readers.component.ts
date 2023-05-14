@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -39,6 +40,9 @@ export class AddFriendsReadersComponent {
   searchValue = '';
   displayedColumns: string[] = ['image','name', 'user', 'email', 'city', 'actions'];
   dataSource = new MatTableDataSource<Reader>([]);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageSizeOptions = [5, 10, 25, 50];
+  pageSize = 5;
   socket: any;
 
   constructor(
@@ -72,6 +76,7 @@ export class AddFriendsReadersComponent {
       this.filteredReaders = this.readers.filter((reader:Reader)=>reader._id != this.currentReader._id);
       console.log("Filtered readers", this.filteredReaders);
       this.dataSource.data = this.filteredReaders;
+      this.dataSource.paginator = this.paginator;
     });  
   }
   getRequests(){
@@ -79,8 +84,15 @@ export class AddFriendsReadersComponent {
       this.requests = response;
     })
   }
-  applyFilter(): void {
+  applyFilter() {
     this.dataSource.filter = this.searchValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+  onPageChanged(event: any) {
+    this.pageSize = event.pageSize;
+    this.paginator.pageIndex = event.pageIndex;
   }
   clearSearch(): void {
     this.searchValue = '';

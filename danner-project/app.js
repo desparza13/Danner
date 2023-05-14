@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'dist', 'danner-project')));
 
-app.get('', (req, res) => {
+app.get('*', (req, res) => {
     const url = path.join(__dirname, 'dist', 'danner-project', 'index.html');
     res.sendFile(url);
 });
