@@ -75,6 +75,11 @@ mongoose.connect(mongoUrl).then(()=>{
             let idReader = data.idReceiver;
             socket.to(idReader).emit('newRequest',data)
         })
+        socket.on('sendNotification',(data)=>{
+            console.log('SE ENVIO' + JSON.stringify(data));
+            let idReader = data.userId;
+            socket.to(idReader).emit('newNotification',data)
+        })
         socket.on('leaveReader',(data)=>{
             let idReader = data.idReader;
             socket.leave(idReader);

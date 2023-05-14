@@ -5,7 +5,8 @@ const reviewSchema = new Schema({
     userId: {type:String, required:true},
     rating:{type:Number, required:true},
     description:{type:String},
-    likes: [{type:String}]
+    likes: [{userId:{type:String},
+            date:{type:Date, default:new Date()}}]
 })
 
 module.exports = model('review', reviewSchema)

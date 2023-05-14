@@ -32,7 +32,7 @@
 ::ng-deep .request-icon:hover {
   background-color: #172374;
 }
-::ng-deep .reviews-icon:hover {
+::ng-deep .reviews_icon:hover {
   background-color: #172374;
 }
 
@@ -40,7 +40,7 @@
   background-color: #172374;
 }
 
-::ng-deep .profile-icon:hover{
+::ng-deep .profile_icon:hover{
   background-color: #172374;
 
 }
@@ -68,10 +68,11 @@
   box-sizing: border-box;
 }
 
-.profile-icon {
+.profile_icon {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 5px;
 }
 
 .logo {
@@ -110,6 +111,7 @@
 
     .icon_wrap {
       cursor: pointer;
+      margin-right: 5px;
     }
 
     .notifications,
@@ -152,19 +154,18 @@ li {
   display: flex;
   align-items: center;
 
-  .notify_icon, .request_icon {
-    display: flex;
-    align-items: center;
-
-
-    >.icon {
-      display: inline-block;
-      width: 45px;
-      height: 45px;
-    }
-  }
 }
 
+.notify_icon, .request_icon, .reviews_icon {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  >.icon {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+  }
+}
 
 .noti, .request{
   display: flex;
