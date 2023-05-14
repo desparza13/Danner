@@ -16,10 +16,6 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 
-interface Notification {
-  likes: [],
-  book: string
-}
 
 @Component({
   selector: 'app-nav-readers',
@@ -50,10 +46,9 @@ export class NavReadersComponent implements OnInit{
   friendName: string = '';
   requests: Array<FriendshipRequest> = [];
   reviews: Array<Review> = [];
-  notifications: Array<Notification> = [];
   filterReviews: Array<Review> = [];
+  filterLikes: any = [];
   filterRequests: Array<FriendshipRequest> = [];
-  lengthRequests:number =0;
   lengthNotifications: number = 0;
   subscription: Subscription = new Subscription;
   searchValue = '';
@@ -115,10 +110,11 @@ export class NavReadersComponent implements OnInit{
     this.friendshipRequestService.getRequests().subscribe((response: any) => {
       this.requests = response;
       console.log(response);
+      //Filter the requests by active reader
+      this.getFilterRequests();
     })
 
-    //Filter the requests by active reader
-    this.getFilterRequests();
+    
   }
 
   //Get active reader reviews
@@ -126,11 +122,11 @@ export class NavReadersComponent implements OnInit{
     this.reviewService.getReviews().subscribe((response: any) => {
       this.reviews = response;
       console.log(response);
-      
+      //Filter the reviews by active reader
+      this.getFilterReviews();
     })
 
-    //Filter the reviews by active reader
-    this.getFilterReviews();
+    
   }
 
   //Filter the reviews by active reader
@@ -139,15 +135,20 @@ export class NavReadersComponent implements OnInit{
     console.log(this.reviews);
     const filter = this.reviews.filter((review) => {
 
-      return review.userId._id === this.reader._id;
+      return review.userId._id === this.reader._id && review.likes.length>0;
     });
     this.filterReviews = filter;
     console.log(this.filterReviews)
     console.log(this.filterReviews);
+    this.filterLikes=[];
     this.filterReviews.forEach((review)=>{
+      review.likes.forEach((likes)=>{
+        this.filterLikes.push(likes);
+      })
       this.lengthNotifications+= review.likes.length;
 
     })
+    console.log(this.filterLikes);
     console.log(this.lengthNotifications);
     console.log(this.filterReviews)
   }
@@ -161,8 +162,6 @@ export class NavReadersComponent implements OnInit{
     });
     console.log(filter)
     this.filterRequests = filter;
-    this.lengthRequests= this.filterRequests.length;
-    console.log(this.lengthRequests);
   }
 
   //Function that is activated when the notification button is clicked.
@@ -173,6 +172,10 @@ export class NavReadersComponent implements OnInit{
   //Function that is activated when the FriendshipRequest button is clicked.
   iconWrapRequests() {
     this.getRequests();
+  }
+
+  getDate(like:Date){
+    console.log(typeof(like))
 
   }
 
@@ -232,12 +235,16 @@ export class NavReadersComponent implements OnInit{
   }
 
   openConfirmSnackBar(message: string, action: string) {
-    this._snackBar.open('Se acepto la solicitud de ' + message, action);
+    this._snackBar.open('Se acepto la solicitud de ' + message, action, {
+      duration: 3000
+    });
     
   }
 
   openDeleteSnackBar(message: string, action: string) {
-    this._snackBar.open('Se rechazo la solicitud de ' + message, action);
+    this._snackBar.open('Se rechazo la solicitud de ' + message, action, {
+      duration: 3000
+    });
   }
 
   ngOnDestroy() {

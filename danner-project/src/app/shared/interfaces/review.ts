@@ -7,6 +7,6 @@ export interface Review {
     userId: Reader,
     rating: number,
     description: string,
-    likes: Array<Reader>,
+    likes: Array<object>,
     __v?:number
 }

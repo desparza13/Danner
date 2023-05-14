@@ -132,8 +132,9 @@ export class BookDetailsComponent {
     })
     this.isLoading = false;
   }
+
   likeIcon(review: Review) {
-    let likes = review.likes.map((reader: Reader) => reader._id);
+    let likes = review.likes.map((element: any) => element.userId);
     if (likes.includes(this.readerId)) {
       return "favorite"
     }
@@ -231,11 +232,13 @@ export class BookDetailsComponent {
     );
   }
   likeReview(review: Review) {
-    let likes = review.likes.map((reader: Reader) => reader._id);
+    console.log(review);
+    let likes = review.likes.map((element: any) => element.userId);
+    console.log(likes);
     if (likes.includes(this.readerId)) {
-      review.likes = review.likes.filter((reader: any) => reader._id !== this.readerId);
+      review.likes = review.likes.filter((element: any) => element.userId !== this.readerId);
     } else {
-      review.likes.push(this.profile);
+      review.likes.push({userId:this.readerId, date: Date.now()});
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {

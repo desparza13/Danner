@@ -74,18 +74,18 @@ export class FriendsReviewsReadersComponent {
     console.log(this.filterReviews);
   }
   likeIcon(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
+    let likes = review.likes.map((element:any) => element.userId._id);
     if(likes.includes(this.readerId)){
       return "favorite"
     }
     return "favorite_border"
   }
   likeReview(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
+    let likes = review.likes.map((element:any) => element.userId);
     if(likes.includes(this.readerId)){
-      review.likes = review.likes.filter((reader:any) => reader._id !== this.readerId);
+      review.likes = review.likes.filter((element:any) => element.userId !== this.readerId);
     }else{
-      review.likes.push(this.profile);
+      review.likes.push({userId:this.readerId, date: Date.now()});
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {

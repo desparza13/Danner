@@ -22,7 +22,7 @@
                 <span class="spacer"></span>
                 <div class="navbar_right">
                     <div class="reviews">
-                        <button matTooltip="Reviews" mat-icon-button class="reviews-icon" routerLink="/readers/reviews">
+                        <button matTooltip="Reviews" mat-icon-button class="reviews_icon" routerLink="/readers/reviews">
                         <mat-icon>library_books</mat-icon>
                     </button>
                     </div>
@@ -49,22 +49,24 @@
                                             allowFullScreen>
                                     </div>
                                 </li>
-                                <div *ngFor="let notification of filterReviews">
-                                    <li mat-menu-item *ngFor="let like of notification.likes.reverse()">
+                                <div *ngFor="let review of filterReviews">
+                                    <li mat-menu-item *ngFor="let like of filterLikes">
                                         <div class="noti">
                                             <div class="notify_icon">
-                                                <img src={{like.image}} class="icon">
+                                                <img src={{like.userId.image}} class="icon">
                                             </div>
                                             <div class="notify_data">
+                                                {{getDate(like.date)}}
                                                 <div class="title">
-                                                    {{like.name}}
+                                                    {{like.userId.name}}
                                                 </div>
                                                 <div class="sub_title">
                                                     liked your review of
                                                 </div>
                                                 <div class="sub_title">
-                                                    "{{notification.bookId.title}}"
+                                                    "{{review.bookId.title}}"
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </li>                   
@@ -74,9 +76,9 @@
                     </div>
                     <div class="requests">
                         <div class="icon_wrap">
-                            <button matTooltip="Friends Requests" mat-icon-button class="request-icon"
+                            <button matTooltip="Friends Requests" mat-icon-button  class="request-icon"
                                 [matMenuTriggerFor]="requests" (click)="iconWrapRequests()">
-                                <mat-icon>group_add</mat-icon>
+                                <mat-icon matBadgeOverlap="false" matBadgeSize="medium" matBadge="0">group_add</mat-icon>
                             </button>
                         </div>
                         <mat-menu xPosition="before" #requests="matMenu">
@@ -86,7 +88,7 @@
                                     <span class="spacer"></span>
                                     <mat-icon color="primary">person_add</mat-icon>
                                 </li>
-                                <li *ngIf="lengthRequests==0">
+                                <li *ngIf="filterRequests.length==0">
                                     <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
                                         <img
                                             src="https://i.giphy.com/media/mPIZAWkLSFpqcJpf18/giphy.webp" width="100%" height="100%"
@@ -119,7 +121,7 @@
                     <div class="profile">
                         <div>
                             <div>
-                                <button matTooltip="Menu" class="profile-icon" mat-icon-button
+                                <button matTooltip="Menu" class="profile_icon" mat-icon-button
                                     [matMenuTriggerFor]="menu">
                                     <img src={{reader.image}} alt="profile_pic">
                                 </button>
