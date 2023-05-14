@@ -29,14 +29,14 @@
                 <mat-divider></mat-divider>
         </mat-sidenav>
         <mat-sidenav-content>
-            <div class="all-container">
-                <div class="authorBooks-empty" *ngIf="filteredAuthorBooks.length === 0">
-                    <div class="empty-container">
-                        <h1>You haven't published any books yet</h1>
-                        <h1>Add your first book now</h1>
-                        <img src="https://media.giphy.com/media/eo680Jx31i5tujMndH/giphy.gif">
-                    </div>
+            <div class="authorBooks-empty" *ngIf="filteredAuthorBooks.length === 0">
+                <div class="empty-container">
+                    <h1>You haven't published any books yet</h1>
+                    <h1>Add your first book now</h1>
+                    <img src="https://media.giphy.com/media/eo680Jx31i5tujMndH/giphy.gif">
                 </div>
+            </div>
+            <div class="all-container">
                 <div class="book-card" *ngFor="let book of filteredAuthorBooks"  [routerLink]="book._id">
                         <div class="book-image" (mouseenter)="book.showDescription=true" (mouseleave)="book.showDescription=false">
                         <img [src]="book.image" alt="Book cover">
