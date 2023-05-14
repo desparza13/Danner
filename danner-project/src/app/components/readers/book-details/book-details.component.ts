@@ -57,9 +57,7 @@ export class BookDetailsComponent {
   rating = new FormControl('', [Validators.required]);
   review = new FormControl('');
   bookId = '';
-  messages: any = [];
   socket: any;
-  texto: string = '';
 
   constructor(
     private bookService: BookService,
@@ -96,7 +94,6 @@ export class BookDetailsComponent {
     //Unir al lector al grupo del libro indicado
     this.socket.emit('joinBookDetails',{idBook:this.bookId});
 
-    
     this.getBook()
     this.readerId = this.authService.getLoginUser();
     this.getData();

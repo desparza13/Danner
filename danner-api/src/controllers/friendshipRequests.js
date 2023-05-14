@@ -4,8 +4,7 @@ const RequestsController={
     list:(req, res)=>{
         model.find({}).populate([
             {path:'idSender', model: 'reader'},
-            {path:'idReceiver', model: 'reader'},
-            
+            {path:'idReceiver', model: 'reader'}
         ]).then(requests=>{
                 res.status(200).send(requests);
             })
@@ -15,8 +14,10 @@ const RequestsController={
     },
     see:(req,res)=>{
         const id = req.params.id;
-        model.findById(id)
-            .then(request=>{
+        model.findById(id).populate([
+            {path:'idSender', model: 'reader'},
+            {path:'idReceiver', model: 'reader'}
+        ]).then(request=>{
                 res.status(200).send(request);
             })
             .catch(error=>{
