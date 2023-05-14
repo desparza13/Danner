@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,8 +6,10 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FriendshipRequestService } from 'src/app/shared/services/friendship-request.service';
-import { response } from 'express';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-add-friends-readers',
   templateUrl: './add-friends-readers.component.html',
@@ -37,7 +39,7 @@ export class AddFriendsReadersComponent {
   searchValue = '';
   displayedColumns: string[] = ['image','name', 'user', 'email', 'city', 'actions'];
   dataSource = new MatTableDataSource<Reader>([]);
-  function = "add";
+  socket: any;
 
   constructor(
     private readerService: ReaderService,
@@ -51,6 +53,8 @@ export class AddFriendsReadersComponent {
 
   ngOnInit(){
     this.readerId = this.authService.getLoginUser();
+    this.socket = io(environment.apiUrl)
+
     this.getData();
     this.getRequests();
   }
@@ -118,6 +122,7 @@ export class AddFriendsReadersComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
+        this.socket.emit('joinReader',{idReader:friendId}); //Añadir al lector al grupo del amigo
         let request = {
           idSender: this.currentReader._id,
           idReceiver: friendId,
@@ -125,10 +130,15 @@ export class AddFriendsReadersComponent {
         }
         this.requestService.postRequest(request).subscribe((response:any)=>{
           console.log(response)
+          this.socket.emit('sendRequest', response); //Mandar la solcitud de amistad
+
           this.snackBar.open('Friend request sent', 'Close', {
             duration: 3000
           });
-        })
+        });
+
+        this.socket.emit('leaveReader',{idReader:friendId});
+
       }
     });
     

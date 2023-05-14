@@ -13,6 +13,8 @@ import { SearchValueService } from 'src/app/shared/services/search-value.service
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 interface Notification {
   likes: [],
@@ -55,8 +57,24 @@ export class NavReadersComponent implements OnInit{
   lengthNotifications: number = 0;
   subscription: Subscription = new Subscription;
   searchValue = '';
+  socket: any;
+
   ngOnInit() {
     this.userId = this.authService.getLoginUser();
+    this.socket = io(environment.apiUrl);
+
+    this.socket.on('newRequest',(data: any)=>{
+      console.log('RECIBISTE');
+      console.log(data);
+      this.friendshipRequestService.getOneRequest(data._id).subscribe((response:any)=>{
+        console.log(response);
+
+        this.filterRequests.push(response);
+      })
+    })
+
+    //Unir al lector a su grupo 
+    this.socket.emit('joinReader',{idReader:this.userId});
 
     this.getReviews();
     this.getRequests();
@@ -64,7 +82,8 @@ export class NavReadersComponent implements OnInit{
     this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue)=>{
       this.searchValue = searchValue;
     })
-    console.log('nav '+ this.searchValue);
+
+    
   }
 
   sendSearch(){
@@ -223,5 +242,7 @@ export class NavReadersComponent implements OnInit{
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+        //Desconectar el socket y sacar al lector su grupo
+        this.socket.emit('leaveReader',{idReader:this.userId});
   }
 }

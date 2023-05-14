@@ -64,6 +64,21 @@ mongoose.connect(mongoUrl).then(()=>{
             let idBook = data.bookId
             socket.to(idBook).emit('newReview', data)
         })
+
+        socket.on('joinReader',(data)=>{
+            console.log('SE UNIO')
+            let idReader = data.idReader;
+            socket.join(idReader);
+        })
+        socket.on('sendRequest',(data)=>{
+            console.log('SE ENVIO' + JSON.stringify(data));
+            let idReader = data.idReceiver;
+            socket.to(idReader).emit('newRequest',data)
+        })
+        socket.on('leaveReader',(data)=>{
+            let idReader = data.idReader;
+            socket.leave(idReader);
+        })
     })
 }).catch(err=>{
     console.log(mongoUrl);
