@@ -21,7 +21,7 @@
         <p><strong>Friends:</strong> {{profile.friends.length}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" (click)="enableEditMode()">
+        <button *ngIf="typeUser=='DB'" mat-button color="primary" (click)="enableEditMode()">
           <mat-icon>edit</mat-icon> Edit Profile
         </button>
       </mat-card-actions>

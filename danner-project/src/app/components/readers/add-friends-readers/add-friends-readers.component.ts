@@ -154,7 +154,7 @@ export class AddFriendsReadersComponent {
 
           console.log(response)
           this.getRequests();
-          this.snackBar.open('Friend request undo', 'Close', {
+          this.snackBar.open('Friend request deleted', 'Close', {
             duration: 3000
           });
         });

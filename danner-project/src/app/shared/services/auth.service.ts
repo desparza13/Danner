@@ -20,10 +20,11 @@ export class AuthService {
     // Cambiar el valor del observable a true
     this.authStatus.next(true);
   }
-  setLoginUser(id: string,role:string):void{
+  setLoginUser(id: string,role:string,type:string):void{
     
     localStorage.setItem('loginUser', id);
     localStorage.setItem('role', role);
+    localStorage.setItem('typeUser', type);
   }
   
   getToken(): string {
@@ -36,16 +37,19 @@ export class AuthService {
   getRole(): string{
     return localStorage.getItem('role') || '';
   }
+  getTypeUser(): string{
+    return localStorage.getItem('typeUser') || '';
+  }
+
   deleteToken(): void {
     localStorage.removeItem('token');
     // Cambiar el valor del observable a false
     this.authStatus.next(false);
   }
-
   deleteLoginUser():void{
     localStorage.removeItem('loginUser');
     localStorage.removeItem('role');
-
+    localStorage.removeItem('typeUser');
   }
 
   isAuth(): boolean {

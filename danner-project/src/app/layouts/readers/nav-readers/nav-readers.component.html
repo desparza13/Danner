@@ -125,7 +125,9 @@
                             <div>
                                 <button matTooltip="Menu" class="profile_icon" mat-icon-button
                                     [matMenuTriggerFor]="menu">
-                                    <img src={{reader.image}} alt="profile_pic">
+                                    <div class="icon">
+                                        <img src={{reader.image}} alt="profile_pic">
+                                    </div>
                                 </button>
                             </div>
                             <mat-menu #menu="matMenu" class="customize">

@@ -118,7 +118,7 @@ export class RegisterAuthorsComponent {
             this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
               // Recibimos el token
               this.authService.setToken(data.token);
-              this.authService.setLoginUser(data.id, 'author');
+              this.authService.setLoginUser(data.id, 'author','DB');
               // Send to readers Home
               this.router.navigate(['/authors']);
             }, (error) => {
@@ -138,7 +138,7 @@ export class RegisterAuthorsComponent {
         this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
           // Recibimos el token
           this.authService.setToken(data.token);
-          this.authService.setLoginUser(data.id, 'author');
+          this.authService.setLoginUser(data.id, 'author','DB');
           // Send to readers Home
           this.router.navigate(['/authors']);
         }, (error) => {

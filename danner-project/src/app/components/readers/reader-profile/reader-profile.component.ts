@@ -37,6 +37,7 @@ export class ReaderProfileComponent {
     readingChallenge: 0
   };
   profileForm: any;
+  typeUser= '';
 
   constructor(
     private readerService: ReaderService,
@@ -56,6 +57,7 @@ export class ReaderProfileComponent {
 
   ngOnInit(): void {
     this.readerId = this.authService.getLoginUser();
+    this.typeUser = this.authService.getTypeUser();
     this.getCurrentReader();
   }
   getCurrentReader(){

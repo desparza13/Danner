@@ -139,7 +139,7 @@ export class RegisterReadersComponent {
             this.credentials.password = response1.password;
             this.loginService.loginReaders(this.credentials).subscribe((data:any) =>{
               this.authService.setToken(data.token);
-              this.authService.setLoginUser(data.id,'reader');
+              this.authService.setLoginUser(data.id,'reader','DB');
               this.router.navigate(['readers']);
             },(error)=>{
               const dialogRef = this.dialog.open(NotificationDialogComponent, {
@@ -157,7 +157,7 @@ export class RegisterReadersComponent {
         this.credentials.password = response1.password;
         this.loginService.loginReaders(this.credentials).subscribe((data:any) =>{
           this.authService.setToken(data.token);
-          this.authService.setLoginUser(data.id,'reader');
+          this.authService.setLoginUser(data.id,'reader','DB');
           this.router.navigate(['readers']);
         },(error)=>{
           const dialogRef = this.dialog.open(NotificationDialogComponent, {

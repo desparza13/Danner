@@ -49,14 +49,14 @@ export class LoginReadersComponent {
           this.loginService.googleLoginReaders(user.idToken).subscribe((response:any)=> { //Hacemos llamada de login con google a la api
             if(response.token){//Si ya existia en la BD una cuenta 
               this.authService.setToken(response.token); //actualizamos token
-              this.authService.setLoginUser(response.id,'reader');//actualizamos usuario y rol
+              this.authService.setLoginUser(response.id,'reader','google');//actualizamos usuario y rol
               router.navigate(['/readers']);
             }else{ //Si no existia en la BD regresa el nuevo usuario
               this.credentials.email = response.email;
               this.credentials.password = response.password;
               this.loginService.loginReaders(this.credentials).subscribe((response:any)=>{ //Generamos el token con el nuevo usuario generado
                 this.authService.setToken(response.token);//actualizamos token
-                this.authService.setLoginUser(response.id,'reader'); //actualizamos usuario y rol
+                this.authService.setLoginUser(response.id,'reader','google'); //actualizamos usuario y rol
                 this.router.navigate(['/readers']);
               })
             }
@@ -88,7 +88,7 @@ export class LoginReadersComponent {
     this.loginService.loginReaders(this.credentials).subscribe((data: any) => {
       // Recibimos el token
       this.authService.setToken(data.token);
-      this.authService.setLoginUser(data.id,'reader');
+      this.authService.setLoginUser(data.id,'reader','DB');
       // Send to readers Home
       this.router.navigate(['/readers']);
     },(error)=>{

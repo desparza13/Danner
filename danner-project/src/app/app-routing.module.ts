@@ -28,14 +28,13 @@ const routes: Routes = [
   {path: 'readers/addFriends', component:AddFriendsReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   {path: 'readers/reviews',component: FriendsReviewsReadersComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   {path: 'readers/:id', component: BookDetailsComponent, canActivate:[AuthGuard], data:{role:'reader'}},
-  {path: 'readers/books/:id', component: BookDetailsComponent, canActivate:[AuthGuard], data:{role:'reader'}},
   //Authors
   {path: 'authors', component:HomeAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/addBook', component:AddBookAuthorsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/profile', component:AuthorProfileComponent, canActivate:[AuthGuard], data:{role:'author'}},
   {path: 'authors/:id', component: AuthorsBookDetailsComponent, canActivate:[AuthGuard], data:{role:'author'}},
   //Not found
-  {path: 'notFound', component: NotFoundComponent}
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

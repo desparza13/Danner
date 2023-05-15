@@ -256,9 +256,13 @@ export class NavReadersComponent implements OnInit {
   }
 
   signOut() {
+    let typeUser = this.authService.getTypeUser();
+    if(typeUser=='google'){
+      this.socialAuthService.signOut();
+    }
     this.authService.deleteToken();
     this.authService.deleteLoginUser();
-    this.socialAuthService.signOut();
+    
     this.router.navigate(['']);
   }
 
@@ -280,6 +284,10 @@ export class NavReadersComponent implements OnInit {
     });
   }
 
+  selectBook(id: string){
+    this.router.navigate([`/readers/${id}`])
+  }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
     //Desconectar el socket y sacar al lector su grupo
