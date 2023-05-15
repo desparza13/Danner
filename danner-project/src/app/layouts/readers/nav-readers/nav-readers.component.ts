@@ -63,8 +63,19 @@ export class NavReadersComponent implements OnInit {
       console.log(data);
       this.friendshipRequestService.getOneRequest(data._id).subscribe((response: any) => {
         console.log(response);
+
         this.filterRequests.push(response);
       })
+    })
+
+    //Recibe una solicitud eliminada
+    this.socket.on('request', (data: any) => {
+      console.log('RECIBISTE');
+      console.log(data);
+      let requests =this.filterRequests.filter((request:any)=>{
+        return request._id!=data._id;
+      })
+      this.filterRequests=requests;
     })
 
     this.socket.on('newNotification', (data: any) => {
@@ -84,6 +95,7 @@ export class NavReadersComponent implements OnInit {
           }
         })
         console.log(reviews);
+        console.log(this.filterReviews);
         //Ajustar cantidad de notificaciones
         this.lengthNotifications = 0;
         reviews.forEach((review: any) => {

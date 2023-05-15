@@ -21,7 +21,7 @@ app.use('/assets',express.static(path.join(__dirname,'assets')));
 const swaggerDocs= swaggerJsDoc(swaggerConf);
 app.use((req,res,next)=>{
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://danner.onrender.com');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -74,6 +74,11 @@ mongoose.connect(mongoUrl).then(()=>{
             console.log('SE ENVIO' + JSON.stringify(data));
             let idReader = data.idReceiver;
             socket.to(idReader).emit('newRequest',data)
+        })
+        socket.on('deleteRequest',(data)=>{
+            console.log('SE ENVIO' + JSON.stringify(data));
+            let idReader = data.idReceiver;
+            socket.to(idReader).emit('request',data)
         })
         socket.on('sendNotification',(data)=>{
             console.log('SE ENVIO' + JSON.stringify(data));
