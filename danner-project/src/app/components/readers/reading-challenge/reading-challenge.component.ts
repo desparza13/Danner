@@ -52,7 +52,6 @@ export class ReadingChallengeComponent {
   getCurrentReader() {
     this.readerService.getOneReader(this.readerId).subscribe((response: any) => {
       this.currentReader = response;
-      console.log("Reader", this.currentReader)
       this.getFinishedBooks();
       this.getProgress();
     })
@@ -68,7 +67,6 @@ export class ReadingChallengeComponent {
         this.finishedBooksCarrousel.push(this.finishedBooks[i])
       }
     }
-    console.log("Finished this year", this.finishedBooks);
   }
   getProgress() {
     let progress = (this.finishedBooks.length * 100) / this.currentReader.readingChallenge;

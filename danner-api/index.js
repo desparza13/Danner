@@ -38,7 +38,6 @@ rutas(app);
 
 mongoose.connect(mongoUrl).then(()=>{
     const server = app.listen(port,function(){
-        console.log(mongoUrl);
         console.log('app is running in port '+port)
     });
 
@@ -66,22 +65,18 @@ mongoose.connect(mongoUrl).then(()=>{
         })
 
         socket.on('joinReader',(data)=>{
-            console.log('SE UNIO')
             let idReader = data.idReader;
             socket.join(idReader);
         })
         socket.on('sendRequest',(data)=>{
-            console.log('SE ENVIO' + JSON.stringify(data));
             let idReader = data.idReceiver;
             socket.to(idReader).emit('newRequest',data)
         })
         socket.on('deleteRequest',(data)=>{
-            console.log('SE ENVIO' + JSON.stringify(data));
             let idReader = data.idReceiver;
             socket.to(idReader).emit('request',data)
         })
         socket.on('sendNotification',(data)=>{
-            console.log('SE ENVIO' + JSON.stringify(data));
             let idReader = data.userId;
             socket.to(idReader).emit('newNotification',data)
         })
@@ -91,7 +86,6 @@ mongoose.connect(mongoUrl).then(()=>{
         })
     })
 }).catch(err=>{
-    console.log(mongoUrl);
     console.log("No se pudo conectar a la base de datos", err);
 })
 

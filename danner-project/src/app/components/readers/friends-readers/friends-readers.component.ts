@@ -53,9 +53,7 @@ export class FriendsReadersComponent {
   getCurrentReader(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.currentReader=response;
-      console.log("Reader",this.currentReader)
       this.friends = this.currentReader.friends;
-      console.log(this.friends)
       this.filteredFriends = this.friends;
       this.dataSource.data = this.friends;
     });
@@ -83,11 +81,12 @@ export class FriendsReadersComponent {
       if (result){
         this.readerService.getOneReader(friendId).subscribe((response:any)=>{
           friendProfile=response;
-          console.log(friendProfile)
           friendProfile.friends = friendProfile.friends.filter((friend:any) => friend._id !== this.currentReader._id);
           this.readerService.updateReader(friendProfile, friendProfile._id).subscribe(
             (response: any) => {
-              console.log(response);
+              this.snackBar.open('Friend removed successfully', 'Close', {
+                duration: 3000
+              });
             },
             (error) => {
               console.log(error);
@@ -102,7 +101,6 @@ export class FriendsReadersComponent {
             this.snackBar.open('Friend removed successfully', 'Close', {
               duration: 3000
             });
-            console.log("update response",response)
             this.getCurrentReader()
           },
           (error) => {

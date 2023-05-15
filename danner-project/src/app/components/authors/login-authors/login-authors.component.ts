@@ -26,7 +26,6 @@ export class LoginAuthorsComponent {
   ngOnInit() {
     this.authService.deleteToken();
     this.authService.deleteLoginUser();
-    console.log(this.title);
     this._authorService.getAuthors().subscribe((response: any) => {
       this.authors = response;
     }
@@ -44,7 +43,6 @@ export class LoginAuthorsComponent {
 
   changeTitle() {
     this.title = !this.title;
-    console.log(this.title);
   }
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {

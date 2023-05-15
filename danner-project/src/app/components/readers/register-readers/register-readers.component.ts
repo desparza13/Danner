@@ -113,7 +113,6 @@ export class RegisterReadersComponent {
     this.reader.user = this.user.value || '';
     this._readerService.postReader(this.reader).subscribe((response1: any)=>{      
       this.id = response1._id;
-      console.log(this.file);
       if (this.file){
         
         this.fileName = this.file.name;
@@ -172,7 +171,6 @@ export class RegisterReadersComponent {
   onFileSelected(event:any) {
     const file:File = event.target.files[0];
     this.fileName = file.name;
-    console.log(file);
     this.file = file;
   }
 }

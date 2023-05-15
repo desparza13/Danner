@@ -54,7 +54,6 @@ const AuthorsController={
             image: req.body.image,
             password: req.body.password
         };
-        console.log(req.body.password);
         if(req.body.password){
             updatedAuthor.password= bcrypt.hashSync(req.body.password,10);
         }else{
@@ -69,12 +68,10 @@ const AuthorsController={
             })
     },
     login:(req,res)=>{
-        console.log(req.body);
         const password = req.body.password;
         model.findOne({
             email: req.body.email,
         }).then(response=> {
-            console.log(response)
             const payload = {
                 id: response._id,
                 name: response.name,
@@ -124,14 +121,11 @@ const AuthorsController={
         const idToken = req.body.googleToken;
         googleClient.verifyIdToken({ idToken: idToken }).then(response => {
             const user = response.getPayload();
-            console.log('Si se valido el token', user);
             // Buscar el usuario, obtener el ID, generar el token con JWT y responder el token
             model.findOne({
                 email: user.email
             }).then(response=> {
-                console.log(response)
                 if(response) {
-                    console.log("Encuentra")
                     const payload = {
                         id: response._id,
                         name: response.name,
@@ -143,7 +137,6 @@ const AuthorsController={
                     const token = jwt.sign(payload, authorKey);
                     res.status(200).send({token:token,id:response._id});
                 } else {
-                    console.log("No encuentra")
                     //si no se encuentra
                     let newAuthor = {
                         name: user.name,
@@ -153,7 +146,6 @@ const AuthorsController={
                         image: user.picture,
                         password: user.jti
                     };
-                    console.log("Nuevo autor", newAuthor)
                     model(newAuthor).save()
                         .then(author=>{
                             res.status(200).send(author);

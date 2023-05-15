@@ -37,7 +37,6 @@ export class LoginService {
     let options = {
       headers: httpHeaders
     }; 
-    console.log("googleLoginAuthors en service")
     return this.httpClient.post(url, { googleToken: idToken}, options)
   }
 
@@ -47,7 +46,6 @@ export class LoginService {
     let options = {
       headers: httpHeaders
     }; 
-    console.log("googleLoginReaders en service")
     return this.httpClient.post(url, { googleToken: idToken}, options)
   }
 

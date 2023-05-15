@@ -21,9 +21,7 @@ router.get('/image/:filename', (req, res) => {
     res.sendFile(path.join(__dirname, '../../uploads', req.params.filename));
 });
 router.get('/decode/:token',function(req,res){ //Ruta para decodificar el token
-    console.log('Entre');
     const tok = req.params.token
-    console.log(tok);
     try{
         var decoded = jwt.verify(tok, authorKey); //intentar decodificar con llave de autor
         res.status(200).send(decoded);

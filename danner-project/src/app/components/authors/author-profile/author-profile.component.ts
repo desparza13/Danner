@@ -111,7 +111,6 @@ export class AuthorProfileComponent {
             } else {
               delete updatedProfile.password;
             }
-            console.log(updatedProfile);
             this.authorService.updateAuthor(updatedProfile, this.id).subscribe((response: any) => {
               this.isEditModeEnabled = false;
               this.snackBar.open('Profile updated successfully', 'Close', {
@@ -132,7 +131,6 @@ export class AuthorProfileComponent {
           } else {
             delete updatedProfile.password;
           }
-          console.log(updatedProfile);
           this.authorService.updateAuthor(updatedProfile, this.profile._id).subscribe(
             (response: any) => {
               this.isEditModeEnabled = false;
@@ -155,7 +153,6 @@ export class AuthorProfileComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.fileName = file.name;
-    console.log(file);
     this.file = file;
   }
 }

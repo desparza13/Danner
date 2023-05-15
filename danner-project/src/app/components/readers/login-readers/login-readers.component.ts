@@ -27,7 +27,6 @@ export class LoginReadersComponent {
   credentials:  Credentials = { email: '', password: '' };
 
   ngOnInit() {
-    console.log(this.title);
     this.authService.deleteToken();
     this.authService.deleteLoginUser();
     this._readerServide.getReaders().subscribe((response: any) => {
@@ -44,7 +43,6 @@ export class LoginReadersComponent {
     ) 
     {
     this.socialAuthService.authState.subscribe((user: SocialUser) => { //verificar si se inicio sesión con Google
-      console.log("reader")
         if (user) {
           this.loginService.googleLoginReaders(user.idToken).subscribe((response:any)=> { //Hacemos llamada de login con google a la api
             if(response.token){//Si ya existia en la BD una cuenta 
@@ -67,7 +65,6 @@ export class LoginReadersComponent {
 
   changeTitle() {
     this.title = !this.title;
-    console.log(this.title);
   }
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {

@@ -136,7 +136,6 @@ export class AddBookAuthorsComponent {
   onFileSelected(event:any) {
     const file:File = event.target.files[0];
     this.fileName = file.name;
-    console.log(file);
     this.file = file;
   }
 }

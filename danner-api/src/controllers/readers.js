@@ -83,13 +83,11 @@ const ReadersController={
             })
     },
     login:(req,res)=>{
-        console.log(req.body);
         const password = req.body.password;
 
         model.findOne({
             email: req.body.email
         }).then(response=> {
-            console.log(response)
             const payload = {
                 id: response._id,
                 name: response.name,
@@ -108,7 +106,6 @@ const ReadersController={
                 res.status(404).send('Something went wrong'+ error);
             }
             // if(response) {
-            //     console.log('A');
             //     const payload = {
             //         id: response._id,
             //         name: response.name,
@@ -141,14 +138,11 @@ const ReadersController={
         const idToken = req.body.googleToken;
         googleClient.verifyIdToken({ idToken: idToken }).then(response => {
             const user = response.getPayload();
-            console.log('Si se valido el token', user);
             // Buscar el usuario, obtener el ID, generar el token con JWT y responder el token
             model.findOne({
                 email: user.email
             }).then(response=> {
-                console.log(response)
                 if(response) {
-                    console.log("Encuentra")
                     const payload = {
                         id: response._id,
                         name: response.name,
@@ -160,7 +154,6 @@ const ReadersController={
                     const token = jwt.sign(payload, readerKey);
                     res.status(200).send({token:token,id:response._id});
                 } else {
-                    console.log("No encuentra")
                     //si no se encuentra
                     let newReader = {
                         name: user.name,
@@ -175,7 +168,6 @@ const ReadersController={
                         friends:[],
                         readingChallenge: 1
                     };
-                    console.log("Nuevo lector", newReader)
                     model(newReader).save()
                         .then(reader=>{
                             res.status(200).send(reader);

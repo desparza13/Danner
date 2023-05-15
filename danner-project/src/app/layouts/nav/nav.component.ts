@@ -17,7 +17,6 @@ export class NavComponent {
     private router:Router){
     this.authService.authStatus.subscribe((status:boolean)=>{//Revisamos si hay algun usuario loggeado
       this.isAuth = status;
-      console.log(this.isAuth);
       if(this.isAuth){//Si hay un usuario loggeado
         let token = this.authService.getToken(); //obtenemos el token
         this.loginService.decode(token).subscribe((response:any)=>{//decodificamos el token

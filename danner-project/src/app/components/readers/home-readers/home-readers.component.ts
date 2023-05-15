@@ -52,7 +52,6 @@ export class HomeReadersComponent {
 
   ngOnInit(){
     this.readerId = this.authService.getLoginUser();
-    console.log("Reader id", this.readerId);
     //Get initial data from the database
     this.getCurrentReader();
     //Initialize filtered books as original books
@@ -86,9 +85,7 @@ export class HomeReadersComponent {
   }
   //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentReader(){
-    console.log(this.readerId)
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
-      console.log(response);
       this.currentReader=response;
       this.getCurrentlyReadingBooks();
       this.getTbrBooks();
@@ -98,7 +95,6 @@ export class HomeReadersComponent {
   }
   //Get books functions
   getCurrentlyReadingBooks(){
-    console.log(this.currentReader);
     this.currentBooks = this.currentReader.reading;
     this.filteredCurrentBooks = this.currentBooks;
   }
@@ -169,7 +165,6 @@ export class HomeReadersComponent {
     }
     this.allBooks = allBooksWithPossibleDuplicates;
     this.filteredAllBooks = this.allBooks
-    console.log("ALL",this.allBooks)
 }
   //Filtering
   //Get selected rating values

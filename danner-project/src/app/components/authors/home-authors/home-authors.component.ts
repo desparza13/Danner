@@ -46,7 +46,6 @@ export class HomeAuthorsComponent {
     this.getCurrentAuthor();
     //Initialize filtered books as original books
     this.filteredAuthorBooks = this.authorBooks;
-    console.log(this.filteredAuthorBooks.length);
     //Whenever the search bar texts changes filterBooks, this way while the user types he/she can see the books with that filter criteria (like netflix)
     this.searchControl.valueChanges.subscribe(() => {
       this.filterBooks();
@@ -68,7 +67,6 @@ export class HomeAuthorsComponent {
   }
   //Get current reader and their list of books (finished, currently reading, to be read and finished)
   getCurrentAuthor(){
-    console.log(this.authorId);
     this.authorService.getOneAuthor(this.authorId).subscribe((response:any)=>{
       this.currentAuthor=response;
       this.getAllBooks();
@@ -80,8 +78,6 @@ export class HomeAuthorsComponent {
       this.allBooks = response;
       this.authorBooks = this.allBooks.filter((book:any) => book.author == this.currentAuthor.name);
       this.filteredAuthorBooks = this.authorBooks;
-      console.log(this.filteredAuthorBooks.length);
-
       this.filterBooks();
       this.isLoading = false;
 

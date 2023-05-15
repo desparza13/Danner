@@ -101,7 +101,6 @@ export class RegisterAuthorsComponent {
         const formData = new FormData();
         formData.append("file", this.file);
         this._authorService.uploadPhoto(formData, this.id).subscribe((response: any) => {
-          console.log("Response file", response1);
           let updatedAuthor = {
             name: response1.name,
             user: response1.user,
@@ -109,9 +108,7 @@ export class RegisterAuthorsComponent {
             city: response1.city,
             image: environment.apiUrl + "image/" + this.id + "." + ext
           }
-          console.log(updatedAuthor.image);
           this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response: any) => {
-            console.log(response);
             this.credentials.email = response1.email;
             this.credentials.password = this.author.password;
             this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
@@ -154,7 +151,6 @@ export class RegisterAuthorsComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.fileName = file.name;
-    console.log(file);
     this.file = file;
   }
 }

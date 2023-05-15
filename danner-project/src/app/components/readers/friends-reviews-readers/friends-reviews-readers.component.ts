@@ -74,7 +74,6 @@ export class FriendsReviewsReadersComponent {
       return this.friends.includes(review.userId._id)
     })
     this.isLoading=false;
-    console.log(this.filterReviews);
   }
   likeIcon(review:Review){
     let likes = review.likes.map((element: any) => {

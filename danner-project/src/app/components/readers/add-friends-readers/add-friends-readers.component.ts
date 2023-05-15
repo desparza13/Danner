@@ -72,9 +72,7 @@ export class AddFriendsReadersComponent {
   getReaders() {
     this.readerService.getReaders().subscribe((response: any) => {
       this.readers = response;
-      console.log("All readers", this.readers);
       this.filteredReaders = this.readers.filter((reader: Reader) => reader._id != this.currentReader._id);
-      console.log("Filtered readers", this.filteredReaders);
       this.dataSource.data = this.filteredReaders;
       this.dataSource.paginator = this.paginator;
     });
@@ -106,11 +104,8 @@ export class AddFriendsReadersComponent {
     return this.checkPending(friendId);
   }
   checkPending(friendId: string) {
-    // console.log("requests sent",this.requests)
     let requestsSent = this.requests.filter((request: any) => this.currentReader._id == request.idSender._id);
-    // console.log("requests filter1",requestsSent)
     requestsSent = requestsSent.filter((request: any) => friendId == request.idReceiver._id);
-    // console.log("requests filter2",requestsSent)
     if (requestsSent.length > 0) {
       return "undo"
     }else if(this.requests.some((request: any) => {
@@ -131,14 +126,12 @@ export class AddFriendsReadersComponent {
     } else if(this.requests.some((request: any) => {
       return request.idReceiver._id === this.readerId && request.idSender._id === friendId
     })){
-      console.log('pendiente');
     }
     else {
       this.addFriend(friendId);
     }
   }
   undoRequest(friendId:string,requestId: string) {
-    console.log(requestId);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -151,8 +144,6 @@ export class AddFriendsReadersComponent {
 
         this.requestService.deleteRequest(requestId).subscribe((response: any) => {
           this.socket.emit('deleteRequest', response); //Mandar la solcitud de amistad
-
-          console.log(response)
           this.getRequests();
           this.snackBar.open('Friend request deleted', 'Close', {
             duration: 3000
@@ -183,7 +174,6 @@ export class AddFriendsReadersComponent {
           status: false
         }
         this.requestService.postRequest(request).subscribe((response: any) => {
-          console.log(response)
           this.socket.emit('sendRequest', response); //Mandar la solcitud de amistad
           this.getRequests();
 
@@ -200,7 +190,6 @@ export class AddFriendsReadersComponent {
   }
   removeFriend(friendId: string) {
     let updatedReader = this.currentReader
-    console.log(updatedReader);
     let friendProfile
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
@@ -209,17 +198,13 @@ export class AddFriendsReadersComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result) {
         this.readerService.getOneReader(friendId).subscribe((response: any) => {
           friendProfile = response;
-          console.log(friendProfile)
           friendProfile.friends = friendProfile.friends.filter((friend: any) => friend._id !== this.currentReader._id);
           this.readerService.updateReader(friendProfile, friendProfile._id).subscribe(
             (response: any) => {
-              console.log(response);
               this.getRequests();
-
             },
             (error) => {
               console.log(error);
@@ -236,7 +221,6 @@ export class AddFriendsReadersComponent {
             this.snackBar.open('Friend removed successfully', 'Close', {
               duration: 3000
             });
-            console.log("update response", response)
             this.getData()
           },
           (error) => {

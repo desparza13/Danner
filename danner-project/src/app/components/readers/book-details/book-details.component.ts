@@ -77,11 +77,8 @@ export class BookDetailsComponent {
 
     //Detectar nuevas reviews
     this.socket.on('newReview', (data: any) => {
-      console.log('alguien envio un mensaje');
-      console.log(data);
       this.reviewService.getOneReview(data._id).subscribe((response: any) => {
         this.filterReviews.push(response);
-        console.log(this.filterReviews);
         this.isLoading = false;
       }, (error) => {
         console.log(error);
@@ -110,7 +107,6 @@ export class BookDetailsComponent {
   }
   getData() {
     this.readerService.getOneReader(this.readerId).subscribe((response: any) => {
-      console.log(response);
       this.profile = response;
       this.friends = response.friends.map((friend: Reader) => friend._id);
       this.current = response.reading.map((book: any) => book.bookId._id);
@@ -180,7 +176,6 @@ export class BookDetailsComponent {
         this.snackBar.open('Currently reading list edited successfully', 'Close', {
           duration: 3000
         });
-        console.log("update response", response)
         this.getData()
       },
       (error) => {
@@ -217,7 +212,6 @@ export class BookDetailsComponent {
     );
   }
   modifyTbrList() {
-    console.log("Tbr", this.tbr)
     if (this.tbr.includes(this.book._id)) {
       this.profile.toBeRead = this.profile.toBeRead.filter((book: any) => book._id !== this.book._id);
     } else {
@@ -239,7 +233,6 @@ export class BookDetailsComponent {
     );
   }
   likeReview(review: Review) {
-    console.log(review);
     let likes = review.likes.map((element: any) => {
       if(element.userId.hasOwnProperty('_id')){
         return element.userId._id;
@@ -248,7 +241,6 @@ export class BookDetailsComponent {
         return element.userId;
       }
     });
-    console.log(likes);
     if (likes.includes(this.readerId)) {
 
       review.likes = review.likes.filter((element: any) =>{
@@ -264,7 +256,6 @@ export class BookDetailsComponent {
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {
-        console.log(response);
         this.socket.emit('sendNotification', response); //Mandar la solcitud de amistad
         review = response;
         this.socket.emit('leaveReader',{idReader:response.userId});
@@ -290,12 +281,9 @@ export class BookDetailsComponent {
 
     this.reviewService.postReview(review).subscribe((response: any) => {
       this.socket.emit('sendReview', response); //Mandar la review
-      console.log('REVIEW');
-      console.log(response);
       this.isLoading = true;
       this.reviewService.getOneReview(response._id).subscribe((response: any) => {
         this.filterReviews.push(response);
-        console.log(this.filterReviews);
         this.isLoading = false;
       }, (error) => {
         console.log(error);

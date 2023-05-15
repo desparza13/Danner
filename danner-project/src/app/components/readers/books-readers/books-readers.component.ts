@@ -44,7 +44,6 @@ export class BooksReadersComponent implements OnInit {
       this.copyOfSearch = this.search;
       this.search = searchValue;
       this.flag = true;
-      console.log(this.search);
       //Get initial data from the database
       this.getAllBooks();
     })
@@ -52,7 +51,6 @@ export class BooksReadersComponent implements OnInit {
     //Initialize filtered books as original books
     this.filteredAllBooks = this.allBooks;
     //Whenever the search bar texts changes filterBooks, this way while the user types he/she can see the books with that filter criteria (like netflix)
-    console.log(this.flag);
     this.searchControl.valueChanges.subscribe(() => {
       this.filterBooks();
     });
@@ -121,7 +119,6 @@ export class BooksReadersComponent implements OnInit {
     }
   }
   filterBySearchValues() {
-    console.log(this.flag);
     if (this.flag) {
       this.searchValue = this.search;
       this.flag = !this.flag;
@@ -129,16 +126,11 @@ export class BooksReadersComponent implements OnInit {
     } else {
       this.searchValue = this.searchControl.value
     }
-
-    console.log(this.searchValue);
     if (this.searchValue != null && this.searchValue != '') {
       const search = this.searchValue.toLowerCase();
-      console.log(search)
-      console.log(this.allBooks);
       this.filteredAllBooks = this.allBooks.filter((book: any) =>
         book.title.toLowerCase().includes(search)
       );
-      console.log(this.filteredAllBooks)
     } else {
       this.filteredAllBooks = this.allBooks;
     }

@@ -20,7 +20,6 @@ const fileFilter = (req, file, cb)=>{
 } 
 const upload = multer({storage:multerStorage, fileFilter: fileFilter});
 router.post('/uploadPhoto/:id', upload.single('file'),(req,res)=>{
-        console.log('Body: ', req.body, req.file.data);
         res.send();
 })
 /**
