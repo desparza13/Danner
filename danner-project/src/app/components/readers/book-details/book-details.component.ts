@@ -132,8 +132,16 @@ export class BookDetailsComponent {
     })
     this.isLoading = false;
   }
+
   likeIcon(review: Review) {
-    let likes = review.likes.map((reader: Reader) => reader._id);
+    let likes = review.likes.map((element: any) => {
+      if(element.userId.hasOwnProperty('_id')){
+        return element.userId._id;
+      }
+      else{
+        return element.userId;
+      }
+    });
     if (likes.includes(this.readerId)) {
       return "favorite"
     }
@@ -231,15 +239,36 @@ export class BookDetailsComponent {
     );
   }
   likeReview(review: Review) {
-    let likes = review.likes.map((reader: Reader) => reader._id);
+    console.log(review);
+    let likes = review.likes.map((element: any) => {
+      if(element.userId.hasOwnProperty('_id')){
+        return element.userId._id;
+      }
+      else{
+        return element.userId;
+      }
+    });
+    console.log(likes);
     if (likes.includes(this.readerId)) {
-      review.likes = review.likes.filter((reader: any) => reader._id !== this.readerId);
+
+      review.likes = review.likes.filter((element: any) =>{
+        if(element.userId.hasOwnProperty('_id')){
+          return element.userId._id !== this.readerId;
+        }
+        else{
+          return element.userId !== this.readerId;
+        }});
     } else {
-      review.likes.push(this.profile);
+      this.socket.emit('joinReader',{idReader:review.userId._id}); //Añadir al lector al grupo del amigo
+      review.likes.push({userId:this.readerId, date: new Date().getTime()});
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {
+        console.log(response);
+        this.socket.emit('sendNotification', response); //Mandar la solcitud de amistad
         review = response;
+        this.socket.emit('leaveReader',{idReader:response.userId});
+
       },
       (error) => {
         console.log(error);

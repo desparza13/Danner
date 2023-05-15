@@ -3,9 +3,10 @@ import { Review } from 'src/app/shared/interfaces/review';
 import { ReviewService } from 'src/app/shared/services/review.service';
 import { Reader } from 'src/app/shared/interfaces/reader';
 import { ReaderService } from 'src/app/shared/services/reader.service';
-import { response } from 'express';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-friends-reviews-readers',
@@ -33,6 +34,8 @@ export class FriendsReviewsReadersComponent {
   friends: Array<String> = [];
   reviews: Array<Review> = [];
   filterReviews: Array<Review> = [];
+  socket: any;
+
   constructor(
     private reviewService: ReviewService,
     private readerService: ReaderService,
@@ -43,7 +46,7 @@ export class FriendsReviewsReadersComponent {
   }
   ngOnInit() {
     this.readerId = this.authService.getLoginUser();
-
+    this.socket = io(environment.apiUrl)
     this.getData();
   }
   getData(){
@@ -74,22 +77,45 @@ export class FriendsReviewsReadersComponent {
     console.log(this.filterReviews);
   }
   likeIcon(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
+    let likes = review.likes.map((element: any) => {
+      if(element.userId.hasOwnProperty('_id')){
+        return element.userId._id;
+      }
+      else{
+        return element.userId;
+      }
+    });
     if(likes.includes(this.readerId)){
       return "favorite"
     }
     return "favorite_border"
   }
   likeReview(review:Review){
-    let likes = review.likes.map((reader:Reader) => reader._id);
+    let likes = review.likes.map((element: any) => {
+      if(element.userId.hasOwnProperty('_id')){
+        return element.userId._id;
+      }
+      else{
+        return element.userId;
+      }
+    });
     if(likes.includes(this.readerId)){
-      review.likes = review.likes.filter((reader:any) => reader._id !== this.readerId);
+      review.likes = review.likes.filter((element: any) =>{
+        if(element.userId.hasOwnProperty('_id')){
+          return element.userId._id !== this.readerId;
+        }
+        else{
+          return element.userId !== this.readerId;
+        }});
     }else{
-      review.likes.push(this.profile);
+      this.socket.emit('joinReader',{idReader:review.userId._id}); //Añadir al lector al grupo del amigo
+      review.likes.push({userId:this.readerId, date: Date.now()});
     }
     this.reviewService.updateReview(review, review._id).subscribe(
       (response: any) => {
+        this.socket.emit('sendNotification', response); //Mandar la solcitud de amistad
         review = response;
+        this.socket.emit('leaveReader',{idReader:response.userId});
       },
       (error)=>{
         console.log(error);

@@ -37,14 +37,14 @@ export class RegisterAuthorsComponent {
   }
   fileName = '';
   route: string = '';
-  credentials:  Credentials = { email: '', password: '' };
-  file:any;
+  credentials: Credentials = { email: '', password: '' };
+  file: any;
   constructor(private dialog: MatDialog,
     private _authorService: AuthorService,
     private router: Router,
     private loginService: LoginService,
-    private authService:AuthService,
-    private http:HttpClient) {
+    private authService: AuthService,
+    private http: HttpClient) {
 
   }
   getEmailErrorMessage() {
@@ -100,25 +100,25 @@ export class RegisterAuthorsComponent {
         const ext = this.fileName.split('.').pop();
         const formData = new FormData();
         formData.append("file", this.file);
-        this._authorService.uploadPhoto(formData, this.id).subscribe((response:any)=>{
-          console.log("Response file",response1);
+        this._authorService.uploadPhoto(formData, this.id).subscribe((response: any) => {
+          console.log("Response file", response1);
           let updatedAuthor = {
             name: response1.name,
             user: response1.user,
             email: response1.email,
             city: response1.city,
-            image: environment.apiUrl+"image/"+this.id +"."+ext,
+            image: environment.apiUrl + "image/" + this.id + "." + ext,
             password: response1.password
           }
           console.log(updatedAuthor.image);
-          this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response:any)=>{
+          this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response: any) => {
             console.log(response);
             this.credentials.email = response1.email;
-            this.credentials.password = response1.password;      
+            this.credentials.password = response1.password;
             this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
               // Recibimos el token
               this.authService.setToken(data.token);
-              this.authService.setLoginUser(data.id,'author');
+              this.authService.setLoginUser(data.id, 'author');
               // Send to readers Home
               this.router.navigate(['/authors']);
             }, (error) => {
@@ -132,10 +132,28 @@ export class RegisterAuthorsComponent {
           })
         });
       }
+      else {
+        this.credentials.email = response1.email;
+        this.credentials.password = response1.password;
+        this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
+          // Recibimos el token
+          this.authService.setToken(data.token);
+          this.authService.setLoginUser(data.id, 'author');
+          // Send to readers Home
+          this.router.navigate(['/authors']);
+        }, (error) => {
+          const dialogRef = this.dialog.open(NotificationDialogComponent, {
+            width: '400px',
+            data: {
+              message: 'Something went wrong when connecting, please log in again.'
+            }
+          });
+        });
+      }
     })
   }
-  onFileSelected(event:any) {
-    const file:File = event.target.files[0];
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
     this.fileName = file.name;
     console.log(file);
     this.file = file;

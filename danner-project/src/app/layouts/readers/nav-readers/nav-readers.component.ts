@@ -16,10 +16,6 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 
-interface Notification {
-  likes: [],
-  book: string
-}
 
 @Component({
   selector: 'app-nav-readers',
@@ -27,8 +23,8 @@ interface Notification {
   styleUrls: ['./nav-readers.component.scss']
 })
 
-export class NavReadersComponent implements OnInit{
-  books:boolean = false;
+export class NavReadersComponent implements OnInit {
+  books: boolean = false;
   search: string = '';
   currentUser: any;
   userId = ''
@@ -50,10 +46,9 @@ export class NavReadersComponent implements OnInit{
   friendName: string = '';
   requests: Array<FriendshipRequest> = [];
   reviews: Array<Review> = [];
-  notifications: Array<Notification> = [];
-  filterReviews: Array<Review> = [];
+  filterReviews: any = [];
+  filterLikes: any = [];
   filterRequests: Array<FriendshipRequest> = [];
-  lengthRequests:number =0;
   lengthNotifications: number = 0;
   subscription: Subscription = new Subscription;
   searchValue = '';
@@ -63,31 +58,56 @@ export class NavReadersComponent implements OnInit{
     this.userId = this.authService.getLoginUser();
     this.socket = io(environment.apiUrl);
 
-    this.socket.on('newRequest',(data: any)=>{
+    this.socket.on('newRequest', (data: any) => {
       console.log('RECIBISTE');
       console.log(data);
-      this.friendshipRequestService.getOneRequest(data._id).subscribe((response:any)=>{
+      this.friendshipRequestService.getOneRequest(data._id).subscribe((response: any) => {
         console.log(response);
-
         this.filterRequests.push(response);
       })
     })
 
+    this.socket.on('newNotification', (data: any) => {
+      console.log('RECIBISTE');
+      console.log(data);
+      this.reviewService.getOneReview(data._id).subscribe((response: any) => {
+        console.log(response);
+        console.log(this.filterReviews);
+        //Filtrar dependiendo si ya esta la review en la lista o no
+        let reviews = this.filterReviews.map((review: any) => {
+          if (review._id == response._id) {
+            review.likes = response.likes;
+            return review;
+          }
+          else {
+            return review;
+          }
+        })
+        console.log(reviews);
+        //Ajustar cantidad de notificaciones
+        this.lengthNotifications = 0;
+        reviews.forEach((review: any) => {
+          this.lengthNotifications += review.likes.length;
+
+        })
+      })
+    })
+
     //Unir al lector a su grupo 
-    this.socket.emit('joinReader',{idReader:this.userId});
+    this.socket.emit('joinReader', { idReader: this.userId });
 
     this.getReviews();
     this.getRequests();
     this.getCurrentReader();
-    this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue)=>{
+    this.subscription = this._searchValueService.getSearchValue().subscribe((searchValue) => {
       this.searchValue = searchValue;
     })
 
-    
+
   }
 
-  sendSearch(){
-    this.books=true;
+  sendSearch() {
+    this.books = true;
     console.log(this.search);
     this._searchValueService.setSearchValue(this.search);
     console.log('redirigir');
@@ -106,7 +126,7 @@ export class NavReadersComponent implements OnInit{
       console.log(response);
     }), (error: HttpErrorResponse) => {
       // Handle error
-      
+
     }
   }
 
@@ -115,10 +135,11 @@ export class NavReadersComponent implements OnInit{
     this.friendshipRequestService.getRequests().subscribe((response: any) => {
       this.requests = response;
       console.log(response);
+      //Filter the requests by active reader
+      this.getFilterRequests();
     })
 
-    //Filter the requests by active reader
-    this.getFilterRequests();
+
   }
 
   //Get active reader reviews
@@ -126,11 +147,11 @@ export class NavReadersComponent implements OnInit{
     this.reviewService.getReviews().subscribe((response: any) => {
       this.reviews = response;
       console.log(response);
-      
+      //Filter the reviews by active reader
+      this.getFilterReviews();
     })
 
-    //Filter the reviews by active reader
-    this.getFilterReviews();
+
   }
 
   //Filter the reviews by active reader
@@ -138,16 +159,17 @@ export class NavReadersComponent implements OnInit{
     console.log('filtrar');
     console.log(this.reviews);
     const filter = this.reviews.filter((review) => {
-
       return review.userId._id === this.reader._id;
     });
     this.filterReviews = filter;
     console.log(this.filterReviews)
     console.log(this.filterReviews);
-    this.filterReviews.forEach((review)=>{
-      this.lengthNotifications+= review.likes.length;
+    this.lengthNotifications = 0;
+    this.filterReviews.forEach((review: any) => {
+      this.lengthNotifications += review.likes.length;
 
     })
+    console.log(this.filterLikes);
     console.log(this.lengthNotifications);
     console.log(this.filterReviews)
   }
@@ -161,8 +183,6 @@ export class NavReadersComponent implements OnInit{
     });
     console.log(filter)
     this.filterRequests = filter;
-    this.lengthRequests= this.filterRequests.length;
-    console.log(this.lengthRequests);
   }
 
   //Function that is activated when the notification button is clicked.
@@ -173,18 +193,22 @@ export class NavReadersComponent implements OnInit{
   //Function that is activated when the FriendshipRequest button is clicked.
   iconWrapRequests() {
     this.getRequests();
+  }
+
+  getDate(like: Date) {
+    console.log(typeof (like))
 
   }
 
-  updateRequest( idRequest: string){
+  updateRequest(idRequest: string) {
     this.friendshipRequestService.updateRequest({ status: true }, idRequest).subscribe(response => {
       console.log(response);
       this.getRequests();
     })
   }
 
-  deleteRequest(idRequest: string){
-    this.friendshipRequestService.deleteRequest(idRequest).subscribe((response:any)=>{
+  deleteRequest(idRequest: string) {
+    this.friendshipRequestService.deleteRequest(idRequest).subscribe((response: any) => {
       console.log(response);
       this.getRequests();
     })
@@ -209,14 +233,14 @@ export class NavReadersComponent implements OnInit{
     //update the current reader friends
     this.readerService.updateReader(this.reader, this.reader._id).subscribe()
 
-    this.readerService.getOneReader(idReader).subscribe((response:any)=>{
-        friend = response;
-        friend.friends.push(this.reader._id);
-        this.readerService.updateReader(friend, idReader).subscribe()
-        this.updateRequest(idRequest);
-        this.openConfirmSnackBar(name,'Aceptar');
+    this.readerService.getOneReader(idReader).subscribe((response: any) => {
+      friend = response;
+      friend.friends.push(this.reader._id);
+      this.readerService.updateReader(friend, idReader).subscribe()
+      this.updateRequest(idRequest);
+      this.openConfirmSnackBar(name, 'Aceptar');
     })
-    
+
   }
 
   signOut() {
@@ -232,17 +256,21 @@ export class NavReadersComponent implements OnInit{
   }
 
   openConfirmSnackBar(message: string, action: string) {
-    this._snackBar.open('Se acepto la solicitud de ' + message, action);
-    
+    this._snackBar.open('Se acepto la solicitud de ' + message, action, {
+      duration: 3000
+    });
+
   }
 
   openDeleteSnackBar(message: string, action: string) {
-    this._snackBar.open('Se rechazo la solicitud de ' + message, action);
+    this._snackBar.open('Se rechazo la solicitud de ' + message, action, {
+      duration: 3000
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-        //Desconectar el socket y sacar al lector su grupo
-        this.socket.emit('leaveReader',{idReader:this.userId});
+    //Desconectar el socket y sacar al lector su grupo
+    this.socket.emit('leaveReader', { idReader: this.userId });
   }
 }

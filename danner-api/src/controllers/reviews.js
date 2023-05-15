@@ -5,7 +5,7 @@ const ReviewsController={
         model.find({}).populate([
             {path: 'bookId',model:'book'},
             {path: 'userId', model:'reader'},
-            {path: 'likes',model:'reader'}
+            {path: 'likes.userId',model:'reader'}
         ]).then(reviews=>{
                 res.status(200).send(reviews);
             })
@@ -18,7 +18,7 @@ const ReviewsController={
         model.findById(id).populate([
             {path: 'bookId',model:'book'},
             {path: 'userId', model:'reader'},
-            {path: 'likes',model:'reader'}
+            {path: 'likes.userId',model:'reader'}
         ]).then(review=>{
                 res.status(200).send(review);
             })
