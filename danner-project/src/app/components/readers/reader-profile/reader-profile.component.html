@@ -49,16 +49,19 @@
               Email is invalid
             </mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <a mat-raised-button color="primary" class="changePsw"
+            (click)="changePassword=!changePassword">Change my password</a>
+
+          <mat-form-field *ngIf="changePassword">
             <mat-label>Enter your password</mat-label>
-            <input matInput type="password" placeholder="Password" formControlName="password"/>
-            <mat-error *ngIf="profileForm.get('password').hasError('required')">
+            <input matInput type="password" placeholder="Password" [formControl]="password"/>
+            <mat-error *ngIf="password.hasError('required')">
               Password is required
             </mat-error>
-            <mat-error *ngIf="profileForm.get('password').hasError('minlength')">
+            <mat-error *ngIf="password.hasError('minlength')">
               Password must have at least 6 characters
             </mat-error>
-            <mat-error *ngIf="profileForm.get('password').hasError('pattern')">
+            <mat-error *ngIf="password.hasError('pattern')">
               Password must contain at least 6 characters, 1 capital letter and 1 number.
             </mat-error>
           </mat-form-field>
@@ -95,7 +98,7 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="confirmEdit()" [disabled]="profileForm.invalid">Save</button>
+        <button mat-raised-button color="primary" (click)="confirmEdit()" [disabled]="profileForm.invalid || (changePassword && password.invalid)">Save</button>
         <button mat-button (click)="cancelEdit()">Cancel</button>
       </mat-card-actions>
     </mat-card>

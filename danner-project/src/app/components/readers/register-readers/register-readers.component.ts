@@ -127,7 +127,6 @@ export class RegisterReadersComponent {
             email: response1.email,
             city: response1.city,
             image: environment.apiUrl+"image/"+this.id +"."+ext,
-            password: response1.password,
             read: response1.read,
             toBeRead: response1.toBeRead,
             reading:response1.reading,
@@ -136,7 +135,7 @@ export class RegisterReadersComponent {
           }
           this._readerService.updateReader(updatedReader, this.id).subscribe((response:any)=>{
             this.credentials.email = response1.email;
-            this.credentials.password = response1.password;
+            this.credentials.password = this.reader.password;
             this.loginService.loginReaders(this.credentials).subscribe((data:any) =>{
               this.authService.setToken(data.token);
               this.authService.setLoginUser(data.id,'reader','DB');
@@ -154,7 +153,7 @@ export class RegisterReadersComponent {
       }
       else{
         this.credentials.email = response1.email;
-        this.credentials.password = response1.password;
+        this.credentials.password = this.reader.password;
         this.loginService.loginReaders(this.credentials).subscribe((data:any) =>{
           this.authService.setToken(data.token);
           this.authService.setLoginUser(data.id,'reader','DB');

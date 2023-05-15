@@ -1,4 +1,5 @@
 const {Schema,model} = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const readerSchema = new Schema({
         name: {type:String, required:true},
@@ -16,4 +17,9 @@ const readerSchema = new Schema({
         readingChallenge: {type:Number}
 })
 
+readerSchema.pre('save', function(next) {//antes de que se haga un save se encripta la contraseña
+        let reader = this;
+        reader.password = bcrypt.hashSync(reader.password, 10);
+        next();
+    })
 module.exports = model('reader', readerSchema)

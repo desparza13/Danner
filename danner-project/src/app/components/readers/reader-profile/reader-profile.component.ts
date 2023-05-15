@@ -38,6 +38,8 @@ export class ReaderProfileComponent {
   };
   profileForm: any;
   typeUser= '';
+  changePassword: boolean = false;
+  password = new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')])
 
   constructor(
     private readerService: ReaderService,
@@ -49,7 +51,6 @@ export class ReaderProfileComponent {
     this.profileForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$')]],
       city: ['', Validators.required],
       readingChallenge: [1, Validators.min(1)]
     });
@@ -87,7 +88,6 @@ export class ReaderProfileComponent {
     this.profileForm.reset({
       name: this.profile.name,
       email: this.profile.email,
-      password: this.profile.password,
       city: this.profile.city,
       readingChallenge: this.profile.readingChallenge
     });
@@ -103,7 +103,7 @@ export class ReaderProfileComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const updatedProfile: Reader = {
+        const updatedProfile = {
           ...this.profile,
           ...this.profileForm.value
         };
@@ -117,6 +117,11 @@ export class ReaderProfileComponent {
           formData.append("file", this.file);
           this.readerService.uploadPhoto(formData, this.id).subscribe((response: any)=>{
             updatedProfile.image=environment.apiUrl+"image/"+this.id +"."+ext;
+            if (this.changePassword) {
+              updatedProfile.password = this.password.value || '';
+            } else {
+              delete updatedProfile.password;
+            }
             this.readerService.updateReader(updatedProfile, this.id).subscribe((response:any)=>{
                 this.isEditModeEnabled = false;
                 this.snackBar.open('Profile updated successfully', 'Close', {
@@ -132,6 +137,11 @@ export class ReaderProfileComponent {
             })
           })
         }else{
+          if (this.changePassword) {
+            updatedProfile.password = this.password.value || '';
+          } else {
+            delete updatedProfile.password;
+          }
           this.readerService.updateReader(updatedProfile, this.profile._id).subscribe(
             (response: any) => {
               this.isEditModeEnabled = false;

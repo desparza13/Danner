@@ -107,14 +107,13 @@ export class RegisterAuthorsComponent {
             user: response1.user,
             email: response1.email,
             city: response1.city,
-            image: environment.apiUrl + "image/" + this.id + "." + ext,
-            password: response1.password
+            image: environment.apiUrl + "image/" + this.id + "." + ext
           }
           console.log(updatedAuthor.image);
           this._authorService.updateAuthor(updatedAuthor, this.id).subscribe((response: any) => {
             console.log(response);
             this.credentials.email = response1.email;
-            this.credentials.password = response1.password;
+            this.credentials.password = this.author.password;
             this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
               // Recibimos el token
               this.authService.setToken(data.token);
@@ -134,7 +133,7 @@ export class RegisterAuthorsComponent {
       }
       else {
         this.credentials.email = response1.email;
-        this.credentials.password = response1.password;
+        this.credentials.password = this.author.password;
         this.loginService.loginAuthors(this.credentials).subscribe((data: any) => {
           // Recibimos el token
           this.authService.setToken(data.token);

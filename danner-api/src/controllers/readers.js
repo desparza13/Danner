@@ -1,5 +1,6 @@
 const model = require('../models/reader');
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 const readerKey = process.env.READER_KEY;
 const jwt = require('jsonwebtoken');
@@ -68,6 +69,11 @@ const ReadersController={
             friends: req.body.friends,
             readingChallenge:req.body.readingChallenge
         };
+        if(req.body.password){
+            updatedReader.password= bcrypt.hashSync(req.body.password,10);
+        }else{
+            delete updatedReader.password;
+        }
         model.findByIdAndUpdate(id, updatedReader, {new:true})
             .then(reader=>{
                 res.status(200).send(reader);
@@ -78,28 +84,43 @@ const ReadersController={
     },
     login:(req,res)=>{
         console.log(req.body);
+        const password = req.body.password;
+
         model.findOne({
-            email: req.body.email,
-            password: req.body.password
+            email: req.body.email
         }).then(response=> {
             console.log(response)
-            if(response) {
-                console.log('A');
-                const payload = {
-                    id: response._id,
-                    name: response.name,
-                    email: response.email,
-                    user: response.user,
-                    role: "reader"
-                }
-                // Si encontro al usuario, generamos el token\
-                const token = jwt.sign(payload, readerKey);
-                
-                res.status(200).send({token:token,id:response._id});
-            } else {
-                //si no se encuentra
-                res.status(400).send('Something went wrong');
+            const payload = {
+                id: response._id,
+                name: response.name,
+                email: response.email,
+                user: response.user,
+                role: "reader"
             }
+            if(bcrypt.compareSync(password,response.password)){
+                try{
+                    const token = jwt.sign(payload,readerKey);
+                    res.status(201).send({token:token,id:response._id});
+                }catch(err){
+                    res.status(500).send('Something went wrong'+ err);
+                }
+            }else{
+                res.status(404).send('Something went wrong'+ error);
+            }
+            // if(response) {
+            //     console.log('A');
+            //     const payload = {
+            //         id: response._id,
+            //         name: response.name,
+            //         email: response.email,
+            //         user: response.user,
+            //         role: "reader"
+            //     }
+            //     // Si encontro al usuario, generamos el token\
+            //     const token = jwt.sign(payload, readerKey);
+                
+            //     res.status(200).send({token:token,id:response._id});
+            // } 
         })
         .catch(error => {
             res.status(400).send('Something went wrong'+ error);
