@@ -14,6 +14,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ReaderProfileComponent {
   readerId="";
+  fileName = '';
+  file:any;
+  id = '';
   reader: any;
   isLoading = true;
   isError = false;
@@ -105,24 +108,52 @@ export class ReaderProfileComponent {
         };
         updatedProfile._id = this.profile._id;
         updatedProfile.__v = this.profile.__v;
-
-        this.readerService.updateReader(updatedProfile, this.profile._id).subscribe(
-          (response: any) => {
-            this.isEditModeEnabled = false;
-            this.snackBar.open('Profile updated successfully', 'Close', {
-              duration: 3000
-            });
-            this.profile = response;
-          },
-          (error) => {
-            console.log(error);
-            this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
-              duration: 3000
-            });
-          }
-        );
+        this.id = updatedProfile._id;
+        if (this.file){
+          this.fileName = this.file.name;
+          const ext = this.fileName.split('.').pop();
+          const formData = new FormData();
+          formData.append("file", this.file);
+          this.readerService.uploadPhoto(formData, this.id).subscribe((response: any)=>{
+            this.readerService.updateReader(updatedProfile, this.id).subscribe((response:any)=>{
+                this.isEditModeEnabled = false;
+                this.snackBar.open('Profile updated successfully', 'Close', {
+                duration: 3000
+                });
+                this.profile = response;            
+            },
+            (error)=>{
+              console.log(error);
+              this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
+                duration: 3000
+              });         
+            })
+          })
+        }else{
+          this.readerService.updateReader(updatedProfile, this.profile._id).subscribe(
+            (response: any) => {
+              this.isEditModeEnabled = false;
+              this.snackBar.open('Profile updated successfully', 'Close', {
+                duration: 3000
+              });
+              this.profile = response;
+            },
+            (error) => {
+              console.log(error);
+              this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
+                duration: 3000
+              });
+            }
+          );
+        }
       }
     });
+  }
+  onFileSelected(event:any) {
+    const file:File = event.target.files[0];
+    this.fileName = file.name;
+    console.log(file);
+    this.file = file;
   }
 }
 
