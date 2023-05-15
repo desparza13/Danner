@@ -7,6 +7,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-reader-profile',
   templateUrl: './reader-profile.component.html',
@@ -55,13 +56,11 @@ export class ReaderProfileComponent {
 
   ngOnInit(): void {
     this.readerId = this.authService.getLoginUser();
-
     this.getCurrentReader();
   }
   getCurrentReader(){
     this.readerService.getOneReader(this.readerId).subscribe((response:any)=>{
       this.profile=response;
-      console.log("Reader",this.profile);
       this.isLoading = false;
       this.profileForm.patchValue({
         name: this.profile.name,

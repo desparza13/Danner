@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-authors-book-details',
   templateUrl: './authors-book-details.component.html',
@@ -29,6 +29,9 @@ export class AuthorsBookDetailsComponent {
     pages: 0,
     showDescription: false
   }
+  fileName = '';
+  file:any;
+  id = '';
   bookForm: FormGroup;
   bookId = ''
   isLoading: boolean = true;
@@ -48,8 +51,7 @@ export class AuthorsBookDetailsComponent {
         genre: ['', Validators.required],
         date: ['', Validators.required],
         description: ['', Validators.required],
-        pages: [1, [Validators.required, Validators.min(1)]],
-        image: ['', Validators.required]
+        pages: [1, [Validators.required, Validators.min(1)]]
       });
   }
   ngOnInit(){
@@ -99,23 +101,44 @@ export class AuthorsBookDetailsComponent {
           ...this.bookForm.value
         }
         updatedBook._id = this.book._id;
+        this.id = updatedBook._id;
         updatedBook.author = this.book.author;
         updatedBook.averageRating = this.book.averageRating;
         updatedBook.showDescription = this.book.showDescription;
-
-        this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
-          this.isEditing = false;
-          this.snackBar.open('Book updated successfully', 'Close', {
-            duration: 3000,
-          });
-          this.book = response;
-        },
-        (error) => {
-          console.log(error);
-          this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
-            duration: 3000
-          });
-        })
+        if(this.file){
+          this.fileName = this.file.name;
+          const ext = this.fileName.split('.').pop();
+          const formData = new FormData();
+          formData.append("file", this.file);
+          this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
+            updatedBook.image = environment.apiUrl+"image/"+this.id +"."+ext;
+            this.isEditing = false;
+            this.snackBar.open('Book updated successfully', 'Close', {
+              duration: 3000,
+            });
+            this.book = response;
+          },
+          (error) => {
+            console.log(error);
+            this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
+              duration: 3000
+            });
+          })
+        }else{
+          this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
+            this.isEditing = false;
+            this.snackBar.open('Book updated successfully', 'Close', {
+              duration: 3000,
+            });
+            this.book = response;
+          },
+          (error) => {
+            console.log(error);
+            this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
+              duration: 3000
+            });
+          })
+        }
       }
     })
   }
@@ -137,5 +160,10 @@ export class AuthorsBookDetailsComponent {
     })
     this.isLoading=false;
   }
-
+  onFileSelected(event:any) {
+    const file:File = event.target.files[0];
+    this.fileName = file.name;
+    console.log(file);
+    this.file = file;
+  }
 }

@@ -6,6 +6,7 @@ import { Author } from 'src/app/shared/interfaces/author';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-author-profile',
@@ -15,6 +16,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class AuthorProfileComponent {
   authorId="";
   author:any;
+  fileName = '';
+  file:any;
+  id = '';
   isLoading = true;
   isError = false;
   isEditModeEnabled = false;
@@ -46,13 +50,11 @@ export class AuthorProfileComponent {
 
   ngOnInit(): void {
     this.authorId = this.authorId = this.authService.getLoginUser();
-    console.log(this.authorId);
     this.getCurrentReader();
   }
   getCurrentReader(){
     this.authorService.getOneAuthor(this.authorId).subscribe((response:any)=>{
       this.profile=response;
-      console.log(this.profile)
       this.isLoading = false;
       this.profileForm.patchValue({
         name: this.profile.name,
@@ -97,24 +99,53 @@ export class AuthorProfileComponent {
         };
         updatedProfile._id = this.profile._id;
         updatedProfile.__v = this.profile.__v;
-
-        this.authorService.updateAuthor(updatedProfile, this.profile._id).subscribe(
-          (response: any) => {
-            this.isEditModeEnabled = false;
-            this.snackBar.open('Profile updated successfully', 'Close', {
-              duration: 3000
-            });
-            this.profile = response;
-          },
-          (error) => {
-            console.log(error);
-            this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
-              duration: 3000
-            });
-          }
-        );
+        this.id = updatedProfile._id;
+        if (this.file){
+          this.fileName = this.file.name;
+          const ext = this.fileName.split('.').pop();
+          const formData = new FormData();
+          formData.append("file", this.file);
+          this.authorService.uploadPhoto(formData, this.id).subscribe((response:any)=>{
+            updatedProfile.image=environment.apiUrl+"image/"+this.id +"."+ext;
+            this.authorService.updateAuthor(updatedProfile, this.id).subscribe((response:any)=>{
+              this.isEditModeEnabled = false;
+              this.snackBar.open('Profile updated successfully', 'Close', {
+                duration: 3000
+              });
+              this.profile = response;
+            },
+            (error)=>{
+              console.log(error);
+              this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
+                duration: 3000
+              });      
+            })
+          })
+        }else{
+          this.authorService.updateAuthor(updatedProfile, this.profile._id).subscribe(
+            (response: any) => {
+              this.isEditModeEnabled = false;
+              this.snackBar.open('Profile updated successfully', 'Close', {
+                duration: 3000
+              });
+              this.profile = response;
+            },
+            (error) => {
+              console.log(error);
+              this.snackBar.open('There was an error updating your profile. Please try again later.', 'Close', {
+                duration: 3000
+              });
+            }
+          );
+        }
       }
     });
+  }
+  onFileSelected(event:any) {
+    const file:File = event.target.files[0];
+    this.fileName = file.name;
+    console.log(file);
+    this.file = file;
   }
 }
 

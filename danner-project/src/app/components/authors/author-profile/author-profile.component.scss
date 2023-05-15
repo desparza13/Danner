@@ -84,7 +84,9 @@
         color: white;
     }
 }
-
+.file-input {
+    display: none;
+}
 .error-message {
     display: flex;
     justify-content: center;
