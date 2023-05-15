@@ -6,7 +6,7 @@ import { Reader } from 'src/app/shared/interfaces/reader';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-reader-profile',
   templateUrl: './reader-profile.component.html',
@@ -115,6 +115,7 @@ export class ReaderProfileComponent {
           const formData = new FormData();
           formData.append("file", this.file);
           this.readerService.uploadPhoto(formData, this.id).subscribe((response: any)=>{
+            updatedProfile.image=environment.apiUrl+"image/"+this.id +"."+ext;
             this.readerService.updateReader(updatedProfile, this.id).subscribe((response:any)=>{
                 this.isEditModeEnabled = false;
                 this.snackBar.open('Profile updated successfully', 'Close', {
