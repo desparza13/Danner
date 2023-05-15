@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../readers/confirmation-dialog/confirmation-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { response } from 'express';
 @Component({
   selector: 'app-authors-book-details',
   templateUrl: './authors-book-details.component.html',
@@ -110,19 +111,21 @@ export class AuthorsBookDetailsComponent {
           const ext = this.fileName.split('.').pop();
           const formData = new FormData();
           formData.append("file", this.file);
-          this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
+          this.bookService.uploadPhoto(formData, this.id).subscribe((response:any)=>{
             updatedBook.image = environment.apiUrl+"image/"+this.id +"."+ext;
-            this.isEditing = false;
-            this.snackBar.open('Book updated successfully', 'Close', {
-              duration: 3000,
-            });
-            this.book = response;
-          },
-          (error) => {
-            console.log(error);
-            this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
-              duration: 3000
-            });
+            this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
+              this.isEditing = false;
+              this.snackBar.open('Book updated successfully', 'Close', {
+                duration: 3000,
+              });
+              this.book = response;
+            },
+            (error) => {
+              console.log(error);
+              this.snackBar.open('There was an error updating your book. Please try again later.', 'Close', {
+                duration: 3000
+              });
+            })
           })
         }else{
           this.bookService.updateBook(updatedBook, this.book._id).subscribe((response:any)=>{
