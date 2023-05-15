@@ -50,13 +50,15 @@
                                     </div>
                                 </li>
                                 <div *ngFor="let review of filterReviews">
-                                    <li mat-menu-item *ngFor="let like of filterLikes">
+                                    <li mat-menu-item *ngFor="let like of review.likes.reverse()">
                                         <div class="noti">
                                             <div class="notify_icon">
                                                 <img src={{like.userId.image}} class="icon">
                                             </div>
                                             <div class="notify_data">
-                                                {{getDate(like.date)}}
+                                                <div class="date">
+                                                    {{like.date | date:'dd/MM/YY hh:mm:ss'}}
+                                                </div>
                                                 <div class="title">
                                                     {{like.userId.name}}
                                                 </div>
@@ -78,7 +80,7 @@
                         <div class="icon_wrap">
                             <button matTooltip="Friends Requests" mat-icon-button  class="request-icon"
                                 [matMenuTriggerFor]="requests" (click)="iconWrapRequests()">
-                                <mat-icon matBadgeOverlap="false" matBadgeSize="medium" matBadge="0">group_add</mat-icon>
+                                <mat-icon >group_add</mat-icon>
                             </button>
                         </div>
                         <mat-menu xPosition="before" #requests="matMenu">

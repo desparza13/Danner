@@ -24,7 +24,7 @@
                     <mat-tab label="Login">
                         <mat-card-content>
                             <div class="loginForm">
-                                <form >
+                                <form (submit)="login()">
                                     <div>
                                         <mat-form-field appearance="fill">
                                             <mat-label>Email</mat-label>
@@ -39,17 +39,17 @@
                                             <mat-label>Enter your password</mat-label>
                                             <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password"
                                                 required>
-                                            <button mat-icon-button matSuffix (click)="hide = !hide"
+                                            <a mat-icon-button matSuffix (click)="hide = !hide"
                                                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                            </button>
+                                            </a>
                                             <mat-error
                                                 *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
 
                                         </mat-form-field>
                                     </div>
                                     <div class="login-btn">
-                                        <button (click)="login()" color="accent" mat-raised-button
+                                        <button color="accent" mat-raised-button
                                             [disabled]="email.invalid || password.invalid">
                                             Login
                                         </button>

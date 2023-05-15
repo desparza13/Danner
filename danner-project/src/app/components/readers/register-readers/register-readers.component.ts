@@ -113,7 +113,9 @@ export class RegisterReadersComponent {
     this.reader.user = this.user.value || '';
     this._readerService.postReader(this.reader).subscribe((response1: any)=>{      
       this.id = response1._id;
+      console.log(this.file);
       if (this.file){
+        
         this.fileName = this.file.name;
         const ext = this.fileName.split('.').pop();
         const formData = new FormData();
@@ -148,6 +150,22 @@ export class RegisterReadersComponent {
               });
             })
           })
+        })
+      }
+      else{
+        this.credentials.email = response1.email;
+        this.credentials.password = response1.password;
+        this.loginService.loginReaders(this.credentials).subscribe((data:any) =>{
+          this.authService.setToken(data.token);
+          this.authService.setLoginUser(data.id,'reader');
+          this.router.navigate(['readers']);
+        },(error)=>{
+          const dialogRef = this.dialog.open(NotificationDialogComponent, {
+            width: '400px',
+            data: {
+              message: 'Something went wrong when connecting, please log in again.'
+            }
+          });
         })
       }
     })
